@@ -77,7 +77,7 @@ namespace Pick_One.Character.PlayerSpecialities
 
         internal void SetState(PlayerState currentState)
         {
-            CurrentState = CurrentState;
+            CurrentState = currentState;
         }
     }
 }

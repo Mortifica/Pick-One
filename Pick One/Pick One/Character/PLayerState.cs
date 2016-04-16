@@ -7,6 +7,7 @@
         MovingRight,
         Jump,
         WallClimbUp,
-        WallClimbDown
+        WallClimbDown,
+        Falling
     }
 }
