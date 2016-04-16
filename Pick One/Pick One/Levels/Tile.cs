@@ -59,7 +59,7 @@ namespace Pick_One.Levels
             Type = type;
             Location = GetVector(x, y);
             sprite = GetSprite(content);
-            Rectangle = new Rectangle(x, y, sprite.Texture.Width, sprite.Texture.Height);
+            Rectangle = new Rectangle(x * TILE_SIZE, y * TILE_SIZE, sprite.Texture.Width, sprite.Texture.Height);
         }
 
         #endregion
