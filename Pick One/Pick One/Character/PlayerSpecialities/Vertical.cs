@@ -10,8 +10,14 @@ namespace Pick_One.Character.PlayerSpecialities
     public class Vertical : AbstractPlayerSpeciality
     {
 
-        public Vertical()
+        public Vertical(PlayerSpriteContainer sprites)
         {
+            StandingSprite = sprites.StandingSprite;
+            MovingLeft = sprites.MovingLeftSprite;
+            MovingRight = sprites.MovingRightSprite;
+            Jump = sprites.StandingSprite;
+            WallClimbDown = sprites.WallClimbDownSprite;
+            WallClimbUp = sprites.WallClimbUpSprite;
             Movement = new MovementContainer();
             Movement.UpwardMovement = 1.0f;
             Movement.DownwardMovement = 1.0f;
@@ -20,16 +26,6 @@ namespace Pick_One.Character.PlayerSpecialities
             IsStretchable = false;
             IsClimbable = false;
             IsJumpable = true;
-        }
-
-        public override AbstractPlayerSpeciality GetNextTransform()
-        {
-            return new WallClimb();
-        }
-
-        public override AbstractPlayerSpeciality GetPreviousTransform()
-        {
-            return new Stretch();
         }
     }
 }
