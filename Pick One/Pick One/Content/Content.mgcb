@@ -253,3 +253,15 @@
 /processorParam:Quality=Best
 /build:squish_three.ogg
 
+#begin hover.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:hover.ogg
+
+#begin poof.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:poof.ogg
+

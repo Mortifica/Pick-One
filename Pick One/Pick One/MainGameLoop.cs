@@ -148,6 +148,8 @@ namespace Pick_One
             var tutorialTheme = Content.Load<Song>("tutorial");
             var levelTheme = Content.Load<Song>("LevelTheme");
 
+            
+
             //MediaPlayer.IsRepeating = true;
            // MediaLibrary mediaLibrary = new MediaLibrary();
             
@@ -155,7 +157,7 @@ namespace Pick_One
             //SongCollection songs = mediaLibrary.Songs;
             //Song song = songs[0];
 
-            //MediaPlayer.Play(poofSound);
+            MediaPlayer.Play(jumpSound);
             //MediaPlayer.Volume = 2;
             // TODO: use this.Content to load your game content here
         }
