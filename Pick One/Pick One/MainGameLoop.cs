@@ -9,6 +9,8 @@ using Pick_One.Character;
 using Pick_One.Levels;
 using System.Linq;
 using System;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
 
 namespace Pick_One
 {
@@ -130,6 +132,31 @@ namespace Pick_One
                 WallClimbDownSprite = new Sprite(standingPlayer, 1, 4, 7)
             });
 
+            // load sounds
+            var deathSound = Content.Load<Song>("death");
+            var countdownSound = Content.Load<Song>("countdown");
+            var goSound = Content.Load<Song>("go");
+            var finishSound = Content.Load<Song>("finish");
+            var hoverSound = Content.Load<Song>("hover");
+            var squishOneSound = Content.Load<Song>("squish_one");
+            var squishTwoSound = Content.Load<Song>("squish_two");
+            var squishThreeSound = Content.Load<Song>("squish_three");
+            var jumpSound = Content.Load<Song>("jump");
+            var poofSound = Content.Load<Song>("poof");
+            var menuOptionChangeSound = Content.Load<Song>("MenuSelect");
+            var menuSelectSound = Content.Load<Song>("select");
+            var tutorialTheme = Content.Load<Song>("tutorial");
+            var levelTheme = Content.Load<Song>("LevelTheme");
+
+            //MediaPlayer.IsRepeating = true;
+           // MediaLibrary mediaLibrary = new MediaLibrary();
+            
+
+            //SongCollection songs = mediaLibrary.Songs;
+            //Song song = songs[0];
+
+            //MediaPlayer.Play(poofSound);
+            //MediaPlayer.Volume = 2;
             // TODO: use this.Content to load your game content here
         }
 

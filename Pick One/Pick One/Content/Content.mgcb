@@ -241,3 +241,15 @@
 /processorParam:TextureFormat=Color
 /build:test_Hover_Standing_Animation.png
 
+#begin test.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:test.mp3
+
+#begin squish_three.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:squish_three.ogg
+
