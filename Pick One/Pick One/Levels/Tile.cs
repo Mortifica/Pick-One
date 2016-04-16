@@ -33,7 +33,7 @@ namespace Pick_One.Levels
             get;
         }
 
-        private Rectangle Rectangle
+        public Rectangle Rectangle
         {
             get;
         }
