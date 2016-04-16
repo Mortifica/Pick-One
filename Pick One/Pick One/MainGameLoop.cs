@@ -51,7 +51,8 @@ namespace Pick_One
                 WatchedKeys = Player.GetWatchedKeys(),
                 IsPaused = false
             });
-
+            Camera.Focus = Player;
+            Camera.FocusOffest = new Vector3(350, 250, 0);
 
         }
 
@@ -71,36 +72,30 @@ namespace Pick_One
             Level = LevelFactory.GenerateLevel(Content, testMap);
 
             var standingPlayer = Content.Load<Texture2D>(@"test_Circle_Standing_Animation");
+            var movingPlayer = Content.Load<Texture2D>(@"test_Circle_Moving_Animation");
+            var fallingPlayer = Content.Load<Texture2D>(@"test_Circle_Falling_Animation");
+            var climbingPlayer = Content.Load<Texture2D>(@"test_Circle_WallClimb_Animation");
 
             PlayerSpriteContainers = new List<PlayerSpriteContainer>();
-            PlayerSpriteContainers.Add(new PlayerSpriteContainer()
+            PlayerSpriteContainers.Add(new PlayerSpriteContainer() // Normal
             {
                 StandingSprite = new Sprite(standingPlayer,1,4,7),
-                MovingLeftSprite = new Sprite(standingPlayer, 1, 4, 7),
+                MovingLeftSprite = new Sprite(movingPlayer, 1, 4, 7),
+                MovingRightSprite = new Sprite(movingPlayer, 1, 4, 7),
+                JumpingSprite = new Sprite(standingPlayer, 1, 4, 7),
+                WallClimbUpSprite = new Sprite(standingPlayer, 1, 4, 7),
+                WallClimbDownSprite = new Sprite(standingPlayer, 1, 4, 7)
+            });
+            PlayerSpriteContainers.Add(new PlayerSpriteContainer() // Speed
+            {
+                StandingSprite = new Sprite(fallingPlayer, 1, 4, 7),
+                MovingLeftSprite = new Sprite(climbingPlayer, 1,4, 7),
                 MovingRightSprite = new Sprite(standingPlayer, 1, 4, 7),
                 JumpingSprite = new Sprite(standingPlayer, 1, 4, 7),
                 WallClimbUpSprite = new Sprite(standingPlayer, 1, 4, 7),
                 WallClimbDownSprite = new Sprite(standingPlayer, 1, 4, 7)
             });
-            PlayerSpriteContainers.Add(new PlayerSpriteContainer()
-            {
-                StandingSprite = new Sprite(standingPlayer, 1, 4, 7),
-                MovingLeftSprite = new Sprite(standingPlayer, 1, 7),
-                MovingRightSprite = new Sprite(standingPlayer, 1, 7),
-                JumpingSprite = new Sprite(standingPlayer, 1, 4, 7),
-                WallClimbUpSprite = new Sprite(standingPlayer, 1, 4, 7),
-                WallClimbDownSprite = new Sprite(standingPlayer, 1, 4, 7)
-            });
-            PlayerSpriteContainers.Add(new PlayerSpriteContainer()
-            {
-                StandingSprite = new Sprite(standingPlayer, 1, 4, 7),
-                MovingLeftSprite = new Sprite(standingPlayer, 1, 4, 7),
-                MovingRightSprite = new Sprite(standingPlayer, 1, 4, 7),
-                JumpingSprite = new Sprite(standingPlayer, 1, 4, 7),
-                WallClimbUpSprite = new Sprite(standingPlayer, 1, 4, 7),
-                WallClimbDownSprite = new Sprite(standingPlayer, 1, 4, 7)
-            });
-            PlayerSpriteContainers.Add(new PlayerSpriteContainer()
+            PlayerSpriteContainers.Add(new PlayerSpriteContainer() // Stretch
             {
                 StandingSprite = new Sprite(standingPlayer, 1, 4, 7),
                 MovingLeftSprite = new Sprite(standingPlayer, 1, 4, 7),
@@ -109,7 +104,16 @@ namespace Pick_One
                 WallClimbUpSprite = new Sprite(standingPlayer, 1, 4, 7),
                 WallClimbDownSprite = new Sprite(standingPlayer, 1, 4, 7)
             });
-            PlayerSpriteContainers.Add(new PlayerSpriteContainer()
+            PlayerSpriteContainers.Add(new PlayerSpriteContainer() // Vertical
+            {
+                StandingSprite = new Sprite(standingPlayer, 1, 4, 7),
+                MovingLeftSprite = new Sprite(standingPlayer, 1, 4, 7),
+                MovingRightSprite = new Sprite(standingPlayer, 1, 4, 7),
+                JumpingSprite = new Sprite(standingPlayer, 1, 4, 7),
+                WallClimbUpSprite = new Sprite(standingPlayer, 1, 4, 7),
+                WallClimbDownSprite = new Sprite(standingPlayer, 1, 4, 7)
+            });
+            PlayerSpriteContainers.Add(new PlayerSpriteContainer() // Climbing
             {
                 StandingSprite = new Sprite(standingPlayer, 1, 4, 7),
                 MovingLeftSprite = new Sprite(standingPlayer, 1, 4, 7),
@@ -141,7 +145,7 @@ namespace Pick_One
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
+            PlayStateKeyListener.Update(Keyboard.GetState(), gameTime);
             // TODO: Add your update logic here
             CurrentState.Update(gameTime);
             Player.Update();

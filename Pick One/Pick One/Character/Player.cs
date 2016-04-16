@@ -9,13 +9,28 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
+using Pick_One.Camera;
 
 namespace Pick_One.Character
 {
-    public class Player : AbstractCharacter, IInputSubscriber
+    public class Player : AbstractCharacter, IInputSubscriber, ICameraFocus
     {
         private List<Keys> KeysForMovement { get; set; }
         private List<Keys> KeysForTransform { get; set; }
+
+        public Vector2 Location
+        {
+            get
+            {
+                return new Vector2(PlayerLocation.XLocation, PlayerLocation.YLocation);
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         private Vector2 MovementVector;
         private bool IsTouchingWall;
         public Player(Vector2 initialLocation, List<PlayerSpriteContainer> container)
@@ -190,12 +205,42 @@ namespace Pick_One.Character
                     {
                         if (CurrentPlayerSpeciality.IsClimbable) //ClimbingDown
                         {
-                            CurrentState = PlayerState.WallClimbDown;
-                            return true;
+                            if (CurrentState != PlayerState.WallClimbDown)
+                            {
+                                CurrentState = PlayerState.WallClimbDown;
+                                return true;
+                            }
+                        }
+                        else
+                        {
+                            if(CurrentState != PlayerState.Falling) // Falling
+                            {
+                                CurrentState = PlayerState.Falling;
+                                return true;
+                            }
                         }
                     }
                 }
 
+            }
+            else
+            {
+                if(MovementVector.X > 0)//moving right
+                {
+                    if (CurrentState != PlayerState.MovingRight)
+                    {
+                        CurrentState = PlayerState.MovingRight;
+                        return true;
+                    }
+                }
+                else//moving left
+                {
+                    if (CurrentState != PlayerState.MovingLeft)
+                    {
+                        CurrentState = PlayerState.MovingLeft;
+                        return true;
+                    }
+                }
             }
             return false;
         }
