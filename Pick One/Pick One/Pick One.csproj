@@ -40,9 +40,21 @@
   <ItemGroup>
     <Compile Include="BasicClasses\CollisionManager.cs" />
     <Compile Include="BasicClasses\GameState.cs" />
+    <Compile Include="BasicClasses\HitBox.cs" />
+    <Compile Include="BasicClasses\Location.cs" />
     <Compile Include="BasicClasses\Sprite.cs" />
     <Compile Include="Camera\Camera2D.cs" />
     <Compile Include="Camera\ICameraFocus.cs" />
+    <Compile Include="Character\AbstractCharacter.cs" />
+    <Compile Include="BasicClasses\MovementContainer.cs" />
+    <Compile Include="Character\PlayerSpecialities\AbstractPlayerSpeciality.cs" />
+    <Compile Include="Character\PlayerSpecialities\Vertical.cs" />
+    <Compile Include="Character\PlayerSpecialities\Normal.cs" />
+    <Compile Include="Character\Player.cs" />
+    <Compile Include="Character\PlayerSpecialities\Speed.cs" />
+    <Compile Include="Character\PlayerSpecialities\Stretch.cs" />
+    <Compile Include="Character\PlayerSpecialities\WallClimb.cs" />
+    <Compile Include="Character\PlayerState.cs" />
     <Compile Include="Input\IInputSubscriber.cs" />
     <Compile Include="Input\KeyAction.cs" />
     <Compile Include="Input\KeyboardChangeState.cs" />
@@ -65,6 +77,9 @@
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Character\Visuals\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />

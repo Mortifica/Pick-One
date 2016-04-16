@@ -5,6 +5,7 @@ using Pick_One.BasicClasses;
 using System.Collections.Generic;
 using Pick_One.Camera;
 using Pick_One.Input;
+using Pick_One.Character;
 
 namespace Pick_One
 {
@@ -43,10 +44,10 @@ namespace Pick_One
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            spriteBatch = new SpriteBatch(GraphicsDevice);            
             CurrentState = new StartState(this);
             Camera = new Camera2D(CurrentState);
-            
+
             // TODO: use this.Content to load your game content here
         }
 
@@ -56,6 +57,7 @@ namespace Pick_One
         /// </summary>
         protected override void UnloadContent()
         {
+
             // TODO: Unload any non ContentManager content here
         }
 
@@ -101,7 +103,7 @@ namespace Pick_One
         /// <summary>
         /// Start State
         /// </summary>
-        public class StartState : GameState, IInputSubscriber 
+        public class StartState : GameState, IInputSubscriber
         {
 
             public StartState(MainGameLoop game)
@@ -111,7 +113,7 @@ namespace Pick_One
             }
             private void init()
             {
-                
+
             }
 
             public override void Update(GameTime gameTime)
@@ -163,7 +165,8 @@ namespace Pick_One
         /// </summary>
         public class PlayState : GameState, IInputSubscriber
         {
-
+            public Player Player { get; set; }
+            public KeyboardListener PlayStateKeyListener { get; set; }
             public PlayState(MainGameLoop game)
                 : base(game)
             {
@@ -171,6 +174,13 @@ namespace Pick_One
             }
             private void init()
             {
+                PlayStateKeyListener = new KeyboardListener();
+                Player = new Player();
+                PlayStateKeyListener.AddSubscriber(new KeyboardSubscriber() {
+                    Subscriber = Player,
+                    WatchedKeys = Player.GetWatchedKeys(),
+                    IsPaused = false
+                });
 
             }
 
