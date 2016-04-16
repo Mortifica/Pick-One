@@ -23,6 +23,7 @@ namespace Pick_One
         public KeyboardListener PlayStateKeyListener { get; set; }
         public Player Player { get; set; }
         private List<Tile> Level;
+        private CollisionManager Collision;
         public List<PlayerSpriteContainer> PlayerSpriteContainers { get; set; }
 
         public MainGameLoop()
@@ -41,6 +42,14 @@ namespace Pick_One
         {
             // TODO: Add your initialization logic here
             base.Initialize();
+
+            var rectList = new List<Rectangle>();
+            foreach (var tile in Level)
+            {
+                rectList.Add(tile.Rectangle);
+            }
+            Collision = new CollisionManager(rectList.ToArray());
+
             PlayStateKeyListener = new KeyboardListener();
             Vector2 startingPlace = Level.Single(tile => tile.Type == Tile.TileTypes.StartPosition).Location;//= Level.Single(tile => tile.).Location;
             startingPlace.Y -= 32;
