@@ -10,25 +10,39 @@ using System.Threading.Tasks;
 
 namespace Pick_One.Levels
 {
-    class Tile
+    public class Tile
     {
         #region Private Varibles
 
         private const int TILE_SIZE = 32;
 
-        private Type type;
         private Texture2D texture;
         private Sprite sprite;
 
-        private Vector2 location;
+        #endregion
+
+        #region Properties
+
+        public TileTypes Type
+        {
+            get;
+        }
+
         public Vector2 Location
         {
-            get { return new Vector2(location.X, location.Y); }
+            get;
+        }
+
+        public Rectangle Rectangle
+        {
+            get;
         }
 
         #endregion
 
-        public enum Type
+        #region Enum
+
+        public enum TileTypes
         {
             Empty,
             StartPosition,
@@ -36,24 +50,33 @@ namespace Pick_One.Levels
             Floor
         }
 
-        public Tile(ContentManager content, Type type, int x, int y)
+        #endregion
+
+        #region Constructor
+
+        public Tile(ContentManager content, TileTypes type, int x, int y)
         {
-            this.type = type;
-            location = GetVector(x, y);
-            sprite = GetSprite(content, type);
+            Type = type;
+            Location = GetVector(x, y);
+            sprite = GetSprite(content);
+            Rectangle = new Rectangle(x, y, sprite.Texture.Width, sprite.Texture.Height);
         }
 
-        private Sprite GetSprite(ContentManager content, Type type)
+        #endregion
+
+        #region Private Methods
+
+        private Sprite GetSprite(ContentManager content)
         {
-            if (type == Type.Floor)
+            if (Type == TileTypes.Floor)
             {
                 texture = content.Load<Texture2D>(@"test_Ground_Texture");
             }
-            else if (type == Type.StartPosition)
+            else if (Type == TileTypes.StartPosition)
             {
                 texture = content.Load<Texture2D>(@"test_Ground_Texture");
             }
-            else if (type == Type.EndPosition)
+            else if (Type == TileTypes.EndPosition)
             {
                 texture = content.Load<Texture2D>(@"test_Finish_Texture");
             }
@@ -66,9 +89,15 @@ namespace Pick_One.Levels
             return new Vector2(x * TILE_SIZE, y * TILE_SIZE);
         }
 
+        #endregion
+
+        #region Public Methods
+
         public void Draw(SpriteBatch spriteBatch)
         {
-            sprite.Draw(spriteBatch, location);
+            sprite.Draw(spriteBatch, Location);
         }
+
+        #endregion
     }
 }

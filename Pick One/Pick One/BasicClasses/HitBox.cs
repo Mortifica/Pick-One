@@ -9,13 +9,17 @@ namespace Pick_One.BasicClasses
 {
     public class HitBox
     {
-        public Rectangle HitBoxRectangle { get; set; }
+        public Rectangle HitBoxRectangle;
         public bool IsPassthroughableFromTop { get; set; }
         public bool IsPassthroughableFromBottom { get; set; }
-
+        public HitBox(float x, float y, float height, float width)
+        {
+            HitBoxRectangle = new Rectangle((int)x,(int)y,(int)width,(int)height);
+        }
         internal void Update(float xLocation, float yLocation)
         {
-            throw new NotImplementedException();
+            HitBoxRectangle.X = (int)xLocation;
+            HitBoxRectangle.Y = (int)yLocation;
         }
     }
 }
