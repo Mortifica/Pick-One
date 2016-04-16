@@ -161,9 +161,14 @@ namespace Pick_One.Character
         private void CheckMovement()
         {
             var newRectangle = new Rectangle(PlayerHitbox.HitBoxRectangle.X, PlayerHitbox.HitBoxRectangle.Y, PlayerHitbox.HitBoxRectangle.Width, PlayerHitbox.HitBoxRectangle.Height);
+            var newRectangleX = new Rectangle(PlayerHitbox.HitBoxRectangle.X, PlayerHitbox.HitBoxRectangle.Y, PlayerHitbox.HitBoxRectangle.Width, PlayerHitbox.HitBoxRectangle.Height);
+            var newRectangleY = new Rectangle(PlayerHitbox.HitBoxRectangle.X, PlayerHitbox.HitBoxRectangle.Y, PlayerHitbox.HitBoxRectangle.Width, PlayerHitbox.HitBoxRectangle.Height);
 
             newRectangle.X += (int)MovementVector.X;
             newRectangle.Y += (int)MovementVector.Y;
+
+            newRectangleX.X += (int)MovementVector.X;
+            newRectangleY.Y += (int)MovementVector.Y;
             var checkResults = CollisionManager.CheckCollision(newRectangle);
             if (checkResults.Item1)//True if Hit something
             {
@@ -172,8 +177,8 @@ namespace Pick_One.Character
                 {
                     if (MovementVector.X != 0 && newRectangle.Intersects(item.Rectangle))
                     {
-                        var newRectangleRight = new Rectangle(newRectangle.X, newRectangle.Y, newRectangle.Width, newRectangle.Height);
-                        var newRectangleLeft = new Rectangle(newRectangle.X, newRectangle.Y, newRectangle.Width, newRectangle.Height);
+                        var newRectangleRight = new Rectangle(newRectangleX.X, newRectangleY.Y, newRectangle.Width, newRectangle.Height);
+                        var newRectangleLeft = new Rectangle(newRectangleX.X, newRectangleY.Y, newRectangle.Width, newRectangle.Height);
                         newRectangleRight.X = (int)(newRectangleRight.X + (MovementVector.X * -1));
                         newRectangleLeft.X = (int)(newRectangleLeft.X + (MovementVector.X * -1));
 
@@ -181,17 +186,19 @@ namespace Pick_One.Character
                         {
                             // If false, this helped?
                             newRectangle = newRectangleRight;
+                            newRectangleX = newRectangleRight;
                         }
                         else if (!newRectangleLeft.Intersects(item.Rectangle))
                         {
                             // If false, this helped?
                             newRectangle = newRectangleLeft;
+                            newRectangleX = newRectangleLeft;
                         }
                     }
                     if (MovementVector.Y != 0 && newRectangle.Intersects(item.Rectangle))
                     {
-                        var newRectangleUp = new Rectangle(newRectangle.X, newRectangle.Y, newRectangle.Width, newRectangle.Height);
-                        var newRectangleDown = new Rectangle(newRectangle.X, newRectangle.Y, newRectangle.Width, newRectangle.Height);
+                        var newRectangleUp = new Rectangle(newRectangleX.X, newRectangleY.Y, newRectangle.Width, newRectangle.Height);
+                        var newRectangleDown = new Rectangle(newRectangleX.X, newRectangleY.Y, newRectangle.Width, newRectangle.Height);
                         newRectangleUp.Y = (int)(newRectangleUp.Y + (MovementVector.Y * -1));
                         newRectangleDown.Y = (int)(newRectangleDown.Y + (MovementVector.Y * -1));
 
@@ -199,11 +206,13 @@ namespace Pick_One.Character
                         {
                             // If false, this helped?
                             newRectangle = newRectangleUp;
+                            newRectangleY = newRectangleUp;
                         }
                         else if (!newRectangleDown.Intersects(item.Rectangle))
                         {
                             // If false, this helped?
                             newRectangle = newRectangleDown;
+                            newRectangleY = newRectangleDown;
                         }
 
 
