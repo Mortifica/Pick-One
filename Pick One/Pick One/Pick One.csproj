@@ -38,6 +38,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="BasicClasses\CollisionFactory.cs" />
     <Compile Include="BasicClasses\CollisionManager.cs" />
     <Compile Include="BasicClasses\GameState.cs" />
     <Compile Include="BasicClasses\HitBox.cs" />
