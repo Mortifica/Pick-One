@@ -33,8 +33,9 @@ namespace Pick_One.Character
 
         private Vector2 MovementVector;
         private bool IsTouchingWall;
-        public Player(Vector2 initialLocation, List<PlayerSpriteContainer> container)
+        public Player(Vector2 initialLocation, List<PlayerSpriteContainer> container, CollisionManager collisionManager)
         {
+            CollisionManager = collisionManager;
             MovementVector = new Vector2();
             PlayerLocation = new Location();
             PlayerLocation.XLocation = initialLocation.X;
@@ -48,7 +49,7 @@ namespace Pick_One.Character
             NormalSpeciality.PrevTransform = WallClimbSpeciality;
             CurrentPlayerSpeciality = NormalSpeciality;
             IsTouchingWall = false;
-            PlayerHitbox = new HitBox(PlayerLocation.XLocation, PlayerLocation.YLocation,32,32);
+            PlayerHitbox = new HitBox(PlayerLocation.XLocation, PlayerLocation.YLocation, 32, 32);
             CurrentState = PlayerState.Standing;
 
             KeysForMovement = new List<Keys>
@@ -66,7 +67,8 @@ namespace Pick_One.Character
                 Keys.D1,
                 Keys.D2,
                 Keys.D3,
-                Keys.D4
+                Keys.D4,
+                Keys.D5
             };
 
         }
@@ -142,7 +144,10 @@ namespace Pick_One.Character
         public void Update()
         {
             //move, Update Sprite Animation, Transform, Update Hitbox
+
+            CheckMovement();
             ApplyMovement();
+
             UpdateSprite();
             PlayerHitbox.Update(PlayerLocation.XLocation, PlayerLocation.YLocation);
 
@@ -150,6 +155,48 @@ namespace Pick_One.Character
             //Clear Objects that need to for next update
             MovementVector.X = 0;
             MovementVector.Y = 0;
+        }
+
+        private void CheckMovement()
+        {
+            var newRectangle = new Rectangle(PlayerHitbox.HitBoxRectangle.X, PlayerHitbox.HitBoxRectangle.Y, PlayerHitbox.HitBoxRectangle.Width, PlayerHitbox.HitBoxRectangle.Height);
+
+            newRectangle.X += (int)MovementVector.X;
+            newRectangle.Y += (int)MovementVector.Y;
+            var checkResults = CollisionManager.CheckCollision(newRectangle);
+            if (checkResults.Item1)//True if Hit something
+            {
+                foreach(var item in checkResults.Item2)
+                {
+                    if (MovementVector.X > 0)
+                    {
+                        if (newRectangle.X < item.Rectangle.X)
+                        {
+                            IsTouchingWall = true;
+                            newRectangle.X = item.Rectangle.X - 32;
+                        }
+                    }
+                    if (MovementVector.X < 0)
+                    {
+                        if (item.Rectangle.X < newRectangle.X)
+                        {
+                            IsTouchingWall = true;
+                            newRectangle.X = item.Rectangle.X + 32;
+                        }
+                    }
+                    if(item.Rectangle.Y > newRectangle.Y)
+                    {
+                        newRectangle.Y = item.Rectangle.Y - 32;
+                    }
+                    if (item.Rectangle.Y < newRectangle.Y)
+                    {
+                        newRectangle.Y = item.Rectangle.Y + 32;
+                    }
+                }
+                MovementVector.X = PlayerHitbox.HitBoxRectangle.X - newRectangle.X;
+                MovementVector.Y = PlayerHitbox.HitBoxRectangle.Y - newRectangle.Y;
+                PlayerHitbox.HitBoxRectangle = newRectangle;
+            }
         }
 
         private void UpdateSprite()
@@ -213,7 +260,7 @@ namespace Pick_One.Character
                         }
                         else
                         {
-                            if(CurrentState != PlayerState.Falling) // Falling
+                            if (CurrentState != PlayerState.Falling) // Falling
                             {
                                 CurrentState = PlayerState.Falling;
                                 return true;
@@ -225,7 +272,7 @@ namespace Pick_One.Character
             }
             else
             {
-                if(MovementVector.X > 0)//moving right
+                if (MovementVector.X > 0)//moving right
                 {
                     if (CurrentState != PlayerState.MovingRight)
                     {

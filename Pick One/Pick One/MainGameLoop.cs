@@ -47,7 +47,7 @@ namespace Pick_One
             PlayStateKeyListener = new KeyboardListener();
             Vector2 startingPlace = Level.Single(tile => tile.Type == Tile.TileTypes.StartPosition).Location;//= Level.Single(tile => tile.).Location;
             startingPlace.Y -= 32;
-            Player = new Player(startingPlace, PlayerSpriteContainers);
+            Player = new Player(startingPlace, PlayerSpriteContainers, Collision);
             PlayStateKeyListener.AddSubscriber(new KeyboardSubscriber()
             {
                 Subscriber = Player,
