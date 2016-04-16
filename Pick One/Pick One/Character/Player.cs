@@ -84,34 +84,34 @@ namespace Pick_One.Character
                     speciality = CurrentPlayerSpeciality.NextTransform;
                     break;
                 case Keys.D1:
-                    if (CurrentPlayerSpeciality.GetType() != typeof(Normal))
-                    {
+                  //  if (CurrentPlayerSpeciality.GetType() != typeof(Normal))
+                   // {
                         speciality = NormalSpeciality;
-                    }
+                   // }
                     break;
                 case Keys.D2:
-                    if (CurrentPlayerSpeciality.GetType() != typeof(Speed))
-                    {
+                   // if (CurrentPlayerSpeciality.GetType() != typeof(Speed))
+                   // {
                         speciality = SpeedSpeciality;
-                    }
+                    //}
                     break;
                 case Keys.D3:
-                    if (CurrentPlayerSpeciality.GetType() != typeof(Stretch))
-                    {
+                    //if (CurrentPlayerSpeciality.GetType() != typeof(Stretch))
+                   // {
                         speciality = StretchSpeciality;
-                    }
+                   // }
                     break;
                 case Keys.D4:
-                    if (CurrentPlayerSpeciality.GetType() != typeof(Vertical))
-                    {
+                  //  if (CurrentPlayerSpeciality.GetType() != typeof(Vertical))
+                   // {
                         speciality = VerticalSpeciality;
-                    }
+                   // }
                     break;
                 case Keys.D5:
-                    if (CurrentPlayerSpeciality.GetType() != typeof(WallClimb))
-                    {
+                 //   if (CurrentPlayerSpeciality.GetType() != typeof(WallClimb))
+                   // {
                         speciality = WallClimbSpeciality;
-                    }
+                  //  }
                     break;
             }
             CurrentPlayerSpeciality = speciality;
@@ -155,6 +155,7 @@ namespace Pick_One.Character
             //Clear Objects that need to for next update
             MovementVector.X = 0;
             MovementVector.Y = 0;
+            IsTouchingWall = false;
         }
 
         private void CheckMovement()
@@ -166,36 +167,54 @@ namespace Pick_One.Character
             var checkResults = CollisionManager.CheckCollision(newRectangle);
             if (checkResults.Item1)//True if Hit something
             {
+
                 foreach(var item in checkResults.Item2)
                 {
+
                     if (MovementVector.X > 0)
                     {
-                        if (newRectangle.X < item.Rectangle.X)
+                        if (newRectangle.X + CurrentPlayerSpeciality.Width > item.Rectangle.X)
                         {
                             IsTouchingWall = true;
-                            newRectangle.X = item.Rectangle.X - 32;
+                            newRectangle.X = (int)PlayerLocation.XLocation + (item.Rectangle.X - ((int)PlayerLocation.XLocation + (int)CurrentPlayerSpeciality.Width));
                         }
+                        //if (newRectangle.X + 32 > item.Rectangle.X)
+                        //{
+                        //    IsTouchingWall = true;
+
+                        //    newRectangle.X = item.Rectangle.X - 32;
+                        //}
                     }
-                    if (MovementVector.X < 0)
+                    if (MovementVector.X < 0 )
                     {
-                        if (item.Rectangle.X < newRectangle.X)
+                        if (newRectangle.X < item.Rectangle.X + item.Rectangle.Width)
                         {
                             IsTouchingWall = true;
-                            newRectangle.X = item.Rectangle.X + 32;
+                            newRectangle.X = ((int)item.Rectangle.X + (int)item.Rectangle.Width);
                         }
                     }
-                    if(item.Rectangle.Y > newRectangle.Y)
+                    if (MovementVector.Y > 0)
                     {
-                        newRectangle.Y = item.Rectangle.Y - 32;
+                        if (newRectangle.Y + CurrentPlayerSpeciality.Height > item.Rectangle.Y )
+                        {
+                            newRectangle.Y = (int)PlayerLocation.YLocation + (item.Rectangle.Y - ((int)PlayerLocation.YLocation + (int)CurrentPlayerSpeciality.Height));
+                        }
                     }
-                    if (item.Rectangle.Y < newRectangle.Y)
+                    if (MovementVector.Y < 0)
                     {
-                        newRectangle.Y = item.Rectangle.Y + 32;
+                        if (newRectangle.Y < item.Rectangle.Y + item.Rectangle.Height)
+                        {
+                            newRectangle.Y = ((int)item.Rectangle.Y + (int)item.Rectangle.Height);
+                        }
                     }
                 }
-                MovementVector.X = PlayerHitbox.HitBoxRectangle.X - newRectangle.X;
-                MovementVector.Y = PlayerHitbox.HitBoxRectangle.Y - newRectangle.Y;
+                MovementVector.X =  newRectangle.X - PlayerLocation.XLocation;
+               // if (IsTouchingWall && CurrentPlayerSpeciality.IsClimbable)
+               // {
+                    MovementVector.Y = newRectangle.Y - PlayerLocation.YLocation;
+             //   }
                 PlayerHitbox.HitBoxRectangle = newRectangle;
+                
             }
         }
 
@@ -335,10 +354,10 @@ namespace Pick_One.Character
             switch (action.Key)
             {
                 case Keys.W:
-                    MoveVertically(CurrentPlayerSpeciality.Movement.UpwardMovement);
+                    MoveVertically(-CurrentPlayerSpeciality.Movement.UpwardMovement);
                     break;
                 case Keys.S:
-                    MoveVertically(-CurrentPlayerSpeciality.Movement.DownwardMovement);
+                    MoveVertically(CurrentPlayerSpeciality.Movement.DownwardMovement);
                     break;
                 case Keys.A:
                     MoveHorizontally(-CurrentPlayerSpeciality.Movement.LeftMovement);
@@ -355,7 +374,6 @@ namespace Pick_One.Character
         }
         private void MoveVertically(float movement)
         {
-            if (IsTouchingWall)
                 MovementVector.Y += movement;
         }
         public void SetIsTouchingWall(bool isTouchingWall)

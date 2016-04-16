@@ -18,10 +18,10 @@ namespace Pick_One.Character.PlayerSpecialities
             WallClimbDown = sprites.WallClimbDownSprite;
             WallClimbUp = sprites.WallClimbUpSprite;
             Movement = new MovementContainer();
-            Movement.UpwardMovement = 1.0f;
-            Movement.DownwardMovement = 1.0f;
-            Movement.LeftMovement = 0.5f;
-            Movement.RightMovement = 0.5f;
+            Movement.UpwardMovement = 2.0f;
+            Movement.DownwardMovement = 2.0f;
+            Movement.LeftMovement = 1.0f;
+            Movement.RightMovement = 1.0f;
             IsStretchable = false;
             IsClimbable = true;
         }

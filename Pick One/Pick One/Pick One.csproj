@@ -80,6 +80,8 @@
     <Content Include="Content\TestLevel.png" />
     <Content Include="Content\test_Circle_Falling_Animation.png" />
     <Content Include="Content\test_Circle_Moving_Animation.png" />
+    <Content Include="Content\test_Circle_Moving_Leftt_Animation.png" />
+    <Content Include="Content\test_Circle_Moving_Right_Animation.png" />
     <Content Include="Content\test_Circle_Standing_Animation.png" />
     <Content Include="Content\test_Circle_WallClimb_Animation.png" />
     <Content Include="Content\test_Finish_Texture.png" />
