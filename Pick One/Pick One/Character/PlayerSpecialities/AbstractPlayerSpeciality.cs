@@ -26,7 +26,10 @@ namespace Pick_One.Character.PlayerSpecialities
         public AbstractPlayerSpeciality PrevTransform { get; set; }
         public PlayerState CurrentState { get; set; }
 
-        public float Width { get; set; }
+        public float Width
+        {
+            get; set;
+        }
         public float Height { get; set; }
 
         internal void UpdateSprite()

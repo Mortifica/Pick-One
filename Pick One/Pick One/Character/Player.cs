@@ -49,7 +49,7 @@ namespace Pick_One.Character
             NormalSpeciality.PrevTransform = WallClimbSpeciality;
             CurrentPlayerSpeciality = NormalSpeciality;
             IsTouchingWall = false;
-            PlayerHitbox = new HitBox(PlayerLocation.XLocation, PlayerLocation.YLocation, 32, 32);
+            PlayerHitbox = new HitBox(PlayerLocation.XLocation, PlayerLocation.YLocation, CurrentPlayerSpeciality.Height, CurrentPlayerSpeciality.Width);
             CurrentState = PlayerState.Standing;
 
             KeysForMovement = new List<Keys>
@@ -115,6 +115,8 @@ namespace Pick_One.Character
                     break;
             }
             CurrentPlayerSpeciality = speciality;
+            PlayerHitbox.HitBoxRectangle.Width = (int)CurrentPlayerSpeciality.Width;
+            PlayerHitbox.HitBoxRectangle.Height = (int)CurrentPlayerSpeciality.Height;
         }
         public MovementContainer GetMovement()
         {
@@ -176,17 +178,21 @@ namespace Pick_One.Character
                         var newRectangleLeft = new Rectangle(newRectangle.X, newRectangle.Y, newRectangle.Width, newRectangle.Height);
                         newRectangleRight.X = (int)(newRectangleRight.X + (MovementVector.X * -1));
                         newRectangleLeft.X = (int)(newRectangleLeft.X + (MovementVector.X * -1));
-
+                        bool hitwall = false;
                         if (!newRectangleRight.Intersects(item.Rectangle))
                         {
+                            hitwall = true;
                             // If false, this helped?
                             newRectangle = newRectangleRight;
+                            
                         }
                         else if (!newRectangleLeft.Intersects(item.Rectangle))
                         {
+                            hitwall = true;
                             // If false, this helped?
                             newRectangle = newRectangleLeft;
                         }
+                        IsTouchingWall = hitwall;
                     }
                     if (MovementVector.Y != 0 && newRectangle.Intersects(item.Rectangle))
                     {
@@ -209,78 +215,10 @@ namespace Pick_One.Character
 
                     }
 
-
-
-                    //    if (MovementVector.X > 0 && newRectangle.Intersects(item.Rectangle))
-                    //    {
-                    //        if (newRectangle.X + CurrentPlayerSpeciality.Width > item.Rectangle.X) // This means it's over the X, but might not be over the Y
-                    //        {
-                    //            IsTouchingWall = true;
-                    //            var newRectangle2 = new Rectangle(newRectangle.X, newRectangle.Y, newRectangle.Width, newRectangle.Height);
-                    //            newRectangle2.X = (int)PlayerLocation.XLocation + (item.Rectangle.X - ((int)PlayerLocation.XLocation + (int)CurrentPlayerSpeciality.Width));
-
-                    //            if (!newRectangle2.Intersects(item.Rectangle))
-                    //            {
-                    //                // If false, this helped?
-                    //                newRectangle = newRectangle2;
-                    //            }
-                    //        }
-                    //        //if (newRectangle.X + 32 > item.Rectangle.X)
-                    //        //{
-                    //        //    IsTouchingWall = true;
-
-                    //        //    newRectangle.X = item.Rectangle.X - 32;
-                    //        //}
-                    //    }
-                    //    if (MovementVector.X < 0 && newRectangle.Intersects(item.Rectangle))
-                    //    {
-                    //        if (newRectangle.X < item.Rectangle.X + item.Rectangle.Width)
-                    //        {
-                    //            IsTouchingWall = true;
-                    //            var newRectangle2 = new Rectangle(newRectangle.X, newRectangle.Y, newRectangle.Width, newRectangle.Height);
-                    //            newRectangle2.X = ((int)item.Rectangle.X + (int)item.Rectangle.Width);
-
-                    //            if (!newRectangle2.Intersects(item.Rectangle))
-                    //            {
-                    //                // If false, this helped?
-                    //                newRectangle = newRectangle2;
-                    //            }
-                    //        }
-                    //    }
-                    //    if (MovementVector.Y > 0 && newRectangle.Intersects(item.Rectangle))
-                    //    {
-                    //        if (newRectangle.Y + CurrentPlayerSpeciality.Height > item.Rectangle.Y )
-                    //        {
-                    //            var newRectangle2 = new Rectangle(newRectangle.X, newRectangle.Y, newRectangle.Width, newRectangle.Height);
-                    //            newRectangle2.Y = (int)PlayerLocation.YLocation + (item.Rectangle.Y - ((int)PlayerLocation.YLocation + (int)CurrentPlayerSpeciality.Height));
-
-                    //            if (!newRectangle2.Intersects(item.Rectangle))
-                    //            {
-                    //                // If false, this helped?
-                    //                newRectangle = newRectangle2;
-                    //            }
-                    //        }
-                    //    }
-                    //    if (MovementVector.Y < 0 && newRectangle.Intersects(item.Rectangle))
-                    //    {
-                    //        if (newRectangle.Y < item.Rectangle.Y + item.Rectangle.Height)
-                    //        {
-                    //            var newRectangle2 = new Rectangle(newRectangle.X, newRectangle.Y, newRectangle.Width, newRectangle.Height);
-                    //            newRectangle2.Y = ((int)item.Rectangle.Y - (int)item.Rectangle.Height);
-
-                    //            if (!newRectangle2.Intersects(item.Rectangle))
-                    //            {
-                    //                // If false, this helped?
-                    //                newRectangle = newRectangle2;
-                    //            }
-                    //        }
-                    //    }
-                    //}
                     MovementVector.X = newRectangle.X - PlayerLocation.XLocation;
-                    // if (IsTouchingWall && CurrentPlayerSpeciality.IsClimbable)
-                    // {
+
                     MovementVector.Y = newRectangle.Y - PlayerLocation.YLocation;
-                    //   }
+
                     PlayerHitbox.HitBoxRectangle = newRectangle;
 
                 }

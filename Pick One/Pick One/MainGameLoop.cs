@@ -76,10 +76,19 @@ namespace Pick_One
             Level = LevelFactory.GenerateLevel(Content, testMap);
             Collision = new CollisionManager(Level);
 
+            //Normal
             var standingPlayer = Content.Load<Texture2D>(@"test_Circle_Standing_Animation");
             var movingPlayer = Content.Load<Texture2D>(@"test_Circle_Moving_Animation");
             var movingPlayerLeft = Content.Load<Texture2D>(@"test_Circle_Moving_Leftt_Animation");
             var movingPlayerRight = Content.Load<Texture2D>(@"test_Circle_Moving_Right_Animation");
+
+
+            //Hover
+            var hoverStanding = Content.Load<Texture2D>(@"test_Hover_Standing_Animation");
+            var hoverMovingLeft = Content.Load<Texture2D>(@"test_Hover_Moving_Left_Animation");
+            var hoverMovingRight = Content.Load<Texture2D>(@"test_Hover_Moving_Right_Animation");
+
+            //
             var fallingPlayer = Content.Load<Texture2D>(@"test_Circle_Falling_Animation");
             var climbingPlayer = Content.Load<Texture2D>(@"test_Circle_WallClimb_Animation");
 
@@ -104,9 +113,9 @@ namespace Pick_One
             });
             PlayerSpriteContainers.Add(new PlayerSpriteContainer() // Stretch
             {
-                StandingSprite = new Sprite(standingPlayer, 1, 4, 7),
-                MovingLeftSprite = new Sprite(standingPlayer, 1, 4, 7),
-                MovingRightSprite = new Sprite(standingPlayer, 1, 4, 7),
+                StandingSprite = new Sprite(hoverStanding, 1, 4, 7),
+                MovingLeftSprite = new Sprite(hoverMovingLeft, 1, 4, 7),
+                MovingRightSprite = new Sprite(hoverMovingRight, 1, 4, 7),
                 JumpingSprite = new Sprite(standingPlayer, 1, 4, 7),
                 WallClimbUpSprite = new Sprite(standingPlayer, 1, 4, 7),
                 WallClimbDownSprite = new Sprite(standingPlayer, 1, 4, 7)

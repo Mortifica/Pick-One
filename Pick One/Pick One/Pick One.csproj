@@ -86,6 +86,9 @@
     <Content Include="Content\test_Circle_WallClimb_Animation.png" />
     <Content Include="Content\test_Finish_Texture.png" />
     <Content Include="Content\test_Ground_Texture.png" />
+    <Content Include="Content\test_Hover_Moving_Left_Animation.png" />
+    <Content Include="Content\test_Hover_Moving_Right_Animation.png" />
+    <Content Include="Content\test_Hover_Standing_Animation.png" />
     <Content Include="Content\test_Start_Texture.png" />
     <Content Include="Icon.ico" />
   </ItemGroup>
