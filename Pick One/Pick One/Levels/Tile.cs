@@ -19,7 +19,12 @@ namespace Pick_One.Levels
         private Type type;
         private Texture2D texture;
         private Sprite sprite;
+
         private Vector2 location;
+        public Vector2 Location
+        {
+            get { return new Vector2(location.X, location.Y); }
+        }
 
         #endregion
 
@@ -58,7 +63,7 @@ namespace Pick_One.Levels
 
         private Vector2 GetVector(int x, int y)
         {
-            return new Vector2(x* TILE_SIZE, y* TILE_SIZE);
+            return new Vector2(x * TILE_SIZE, y * TILE_SIZE);
         }
 
         public void Draw(SpriteBatch spriteBatch)
