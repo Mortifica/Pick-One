@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Pick_One.Camera;
 using Pick_One.Input;
 using Pick_One.Character;
+using Pick_One.Levels;
 
 namespace Pick_One
 {
@@ -18,6 +19,8 @@ namespace Pick_One
         private SpriteBatch spriteBatch;
         private GameState CurrentState { get; set; }
         private Camera2D Camera;
+        private List<Tile> Level;
+
         public MainGameLoop()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -33,8 +36,9 @@ namespace Pick_One
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
             base.Initialize();
+
+
         }
 
         /// <summary>
@@ -44,9 +48,14 @@ namespace Pick_One
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);            
+            spriteBatch = new SpriteBatch(GraphicsDevice);
             CurrentState = new StartState(this);
             Camera = new Camera2D(CurrentState);
+            
+
+            var testMap = Content.Load<Texture2D>(@"TestLevel");
+            Level = LevelFactory.GenerateLevel(Content, testMap);
+
 
             // TODO: use this.Content to load your game content here
         }
@@ -88,7 +97,7 @@ namespace Pick_One
             spriteBatch.Begin(
                                 SpriteSortMode.BackToFront,
                                 BlendState.AlphaBlend,
-                                null,
+                                SamplerState.PointClamp,
                                 null,
                                 null,
                                 null,
@@ -97,13 +106,15 @@ namespace Pick_One
 
             CurrentState.Draw(spriteBatch);
 
+            Level.ForEach(x => { x.Draw(spriteBatch); });
+
             spriteBatch.End();
             base.Draw(gameTime);
         }
         /// <summary>
         /// Start State
         /// </summary>
-        public class StartState : GameState, IInputSubscriber
+        public class StartState : GameState, IInputSubscriber 
         {
 
             public StartState(MainGameLoop game)
@@ -113,7 +124,7 @@ namespace Pick_One
             }
             private void init()
             {
-
+                
             }
 
             public override void Update(GameTime gameTime)
