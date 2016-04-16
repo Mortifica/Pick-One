@@ -170,27 +170,27 @@ namespace Pick_One.Character
                 {
                     if (MovementVector.X > 0)
                     {
-                        if (newRectangle.X < item.X)
+                        if (newRectangle.X < item.Rectangle.X)
                         {
                             IsTouchingWall = true;
-                            newRectangle.X = item.X - 32;
+                            newRectangle.X = item.Rectangle.X - 32;
                         }
                     }
                     if (MovementVector.X < 0)
                     {
-                        if (item.X < newRectangle.X)
+                        if (item.Rectangle.X < newRectangle.X)
                         {
                             IsTouchingWall = true;
-                            newRectangle.X = item.X + 32;
+                            newRectangle.X = item.Rectangle.X + 32;
                         }
                     }
-                    if(item.Y > newRectangle.Y)
+                    if(item.Rectangle.Y > newRectangle.Y)
                     {
-                        newRectangle.Y = item.Y - 32;
+                        newRectangle.Y = item.Rectangle.Y - 32;
                     }
-                    if (item.Y < newRectangle.Y)
+                    if (item.Rectangle.Y < newRectangle.Y)
                     {
-                        newRectangle.Y = item.Y + 32;
+                        newRectangle.Y = item.Rectangle.Y + 32;
                     }
                 }
                 MovementVector.X = PlayerHitbox.HitBoxRectangle.X - newRectangle.X;
