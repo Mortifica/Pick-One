@@ -49,6 +49,9 @@
     <Compile Include="Input\KeyboardListener.cs" />
     <Compile Include="Input\KeyboardSubscriber.cs" />
     <Compile Include="Input\MouseListener.cs" />
+    <Compile Include="Levels\LevelColorMap.cs" />
+    <Compile Include="Levels\LevelFactory.cs" />
+    <Compile Include="Levels\Tile.cs" />
     <Compile Include="MainGameLoop.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
