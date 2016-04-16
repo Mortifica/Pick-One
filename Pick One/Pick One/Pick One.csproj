@@ -78,6 +78,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\TestLevel.png" />
+    <Content Include="Content\test_Circle_Falling_Animation.png" />
+    <Content Include="Content\test_Circle_Moving_Animation.png" />
+    <Content Include="Content\test_Circle_Standing_Animation.png" />
+    <Content Include="Content\test_Circle_WallClimb_Animation.png" />
+    <Content Include="Content\test_Finish_Texture.png" />
+    <Content Include="Content\test_Ground_Texture.png" />
+    <Content Include="Content\test_Start_Texture.png" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -85,6 +93,14 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Character\Visuals\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Content\death.ogg" />
+    <None Include="Content\finish.ogg" />
+    <None Include="Content\jump.ogg" />
+    <None Include="Content\rotate.ogg" />
+    <None Include="Content\squish.ogg" />
+    <None Include="Content\tutorial.ogg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
