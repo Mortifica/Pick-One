@@ -181,3 +181,9 @@
 /processorParam:TextureFormat=Color
 /build:test_Circle_WallClimb_Animation.png
 
+#begin hover.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:hover.ogg
+
