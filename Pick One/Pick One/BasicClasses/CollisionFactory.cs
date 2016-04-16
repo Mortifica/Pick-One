@@ -11,15 +11,14 @@ namespace Pick_One.BasicClasses
     public static class CollisionFactory
     {
 
-        public static CollisionManager GenerateCollision(params Vector2[] vectors)
+        public static CollisionManager GenerateCollision(params Rectangle[] rectangles)
         {
-
-            foreach (var vector in vectors)
+            CollisionManager collisionManager = new CollisionManager();
+            foreach (var rectangle in rectangles)
             {
-                //new Rectangle(vector.X, vector.Y, );
+                //collisionManager.Add(rectangle);
             }
-
-            return null;
+            return collisionManager;
         }
 
     }
