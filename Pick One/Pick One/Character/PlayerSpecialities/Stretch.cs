@@ -20,8 +20,8 @@ namespace Pick_One.Character.PlayerSpecialities
             Movement = new MovementContainer();
             Movement.UpwardMovement = 0.0f;
             Movement.DownwardMovement = 0.0f;
-            Movement.LeftMovement = 0.5f;
-            Movement.RightMovement = 0.5f;
+            Movement.LeftMovement = 1.0f;
+            Movement.RightMovement = 1.0f;
             IsStretchable = true;
             IsClimbable = false;
         }

@@ -26,27 +26,42 @@ namespace Pick_One.Character.PlayerSpecialities
         public AbstractPlayerSpeciality PrevTransform { get; set; }
         public PlayerState CurrentState { get; set; }
 
+        public float Width { get; set; }
+        public float Height { get; set; }
+
         internal void UpdateSprite()
         {
             switch (CurrentState)
             {
                 case PlayerState.Standing:
                     StandingSprite.Update();
+                    Width = StandingSprite.Texture.Width / StandingSprite.Columns;
+                    Height = StandingSprite.Texture.Height;
                     break;
                 case PlayerState.Jump:
                     Jump.Update();
+                    Width = Jump.Texture.Width / StandingSprite.Columns;
+                    Height = Jump.Texture.Height;
                     break;
                 case PlayerState.MovingLeft:
                     MovingLeft.Update();
+                    Width = MovingLeft.Texture.Width / StandingSprite.Columns;
+                    Height = MovingLeft.Texture.Height;
                     break;
                 case PlayerState.MovingRight:
                     MovingRight.Update();
+                    Width = MovingRight.Texture.Width / StandingSprite.Columns;
+                    Height = MovingRight.Texture.Height;
                     break;
                 case PlayerState.WallClimbDown:
                     WallClimbDown.Update();
+                    Width = WallClimbDown.Texture.Width / StandingSprite.Columns;
+                    Height = WallClimbDown.Texture.Height;
                     break;
                 case PlayerState.WallClimbUp:
                     WallClimbUp.Update();
+                    Width = WallClimbUp.Texture.Width / StandingSprite.Columns;
+                    Height = WallClimbUp.Texture.Height;
                     break;
             }
         }

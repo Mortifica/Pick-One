@@ -80,6 +80,8 @@ namespace Pick_One
 
             var standingPlayer = Content.Load<Texture2D>(@"test_Circle_Standing_Animation");
             var movingPlayer = Content.Load<Texture2D>(@"test_Circle_Moving_Animation");
+            var movingPlayerLeft = Content.Load<Texture2D>(@"test_Circle_Moving_Leftt_Animation");
+            var movingPlayerRight = Content.Load<Texture2D>(@"test_Circle_Moving_Right_Animation");
             var fallingPlayer = Content.Load<Texture2D>(@"test_Circle_Falling_Animation");
             var climbingPlayer = Content.Load<Texture2D>(@"test_Circle_WallClimb_Animation");
 
@@ -87,8 +89,8 @@ namespace Pick_One
             PlayerSpriteContainers.Add(new PlayerSpriteContainer() // Normal
             {
                 StandingSprite = new Sprite(standingPlayer,1,4,7),
-                MovingLeftSprite = new Sprite(movingPlayer, 1, 4, 7),
-                MovingRightSprite = new Sprite(movingPlayer, 1, 4, 7),
+                MovingLeftSprite = new Sprite(movingPlayerLeft, 1, 4, 7),
+                MovingRightSprite = new Sprite(movingPlayerRight, 1, 4, 7),
                 JumpingSprite = new Sprite(standingPlayer, 1, 4, 7),
                 WallClimbUpSprite = new Sprite(standingPlayer, 1, 4, 7),
                 WallClimbDownSprite = new Sprite(standingPlayer, 1, 4, 7)
