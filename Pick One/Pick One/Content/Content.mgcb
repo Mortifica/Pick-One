@@ -73,3 +73,39 @@
 /processorParam:TextureFormat=Color
 /build:test_Circle_Standing_Animation.png
 
+#begin death.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:death.ogg
+
+#begin finish.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:finish.ogg
+
+#begin jump.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:jump.ogg
+
+#begin rotate.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:rotate.ogg
+
+#begin squish.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:squish.ogg
+
+#begin tutorial.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:tutorial.ogg
+
