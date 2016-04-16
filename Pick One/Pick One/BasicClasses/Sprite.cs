@@ -128,7 +128,7 @@ namespace Pick_One.BasicClasses
             else
             {
                 updateFrame++;
-                if (updateFrame % moveSpeed == 0)
+                if (updateFrame % UpdateFrameSpeed == 0)
                     currentFrame++;
 
                 if (currentFrame == totalFrames)

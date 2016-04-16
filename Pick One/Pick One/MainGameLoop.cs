@@ -7,6 +7,7 @@ using Pick_One.Camera;
 using Pick_One.Input;
 using Pick_One.Character;
 using Pick_One.Levels;
+using System.Linq;
 
 namespace Pick_One
 {
@@ -41,7 +42,9 @@ namespace Pick_One
             // TODO: Add your initialization logic here
             base.Initialize();
             PlayStateKeyListener = new KeyboardListener();
-            Player = new Player(new Vector2(1.0f, 1.0f), PlayerSpriteContainers);
+            Vector2 startingPlace = Level.Single(tile => tile.Type == Tile.TileTypes.StartPosition).Location;//= Level.Single(tile => tile.).Location;
+            startingPlace.Y -= 32;
+            Player = new Player(startingPlace, PlayerSpriteContainers);
             PlayStateKeyListener.AddSubscriber(new KeyboardSubscriber()
             {
                 Subscriber = Player,
@@ -67,53 +70,53 @@ namespace Pick_One
             var testMap = Content.Load<Texture2D>(@"TestLevel");
             Level = LevelFactory.GenerateLevel(Content, testMap);
 
-            var standingPlayer = Content.Load<Texture2D>(@"test_Ground_Texture");
+            var standingPlayer = Content.Load<Texture2D>(@"test_Circle_Standing_Animation");
 
             PlayerSpriteContainers = new List<PlayerSpriteContainer>();
             PlayerSpriteContainers.Add(new PlayerSpriteContainer()
             {
-                StandingSprite = new Sprite(standingPlayer,1,6),
-                MovingLeftSprite = new Sprite(standingPlayer, 1, 6),
-                MovingRightSprite = new Sprite(standingPlayer, 1, 6),
-                JumpingSprite = new Sprite(standingPlayer, 1, 6),
-                WallClimbUpSprite = new Sprite(standingPlayer, 1, 6),
-                WallClimbDownSprite = new Sprite(standingPlayer, 1, 6)
+                StandingSprite = new Sprite(standingPlayer,1,4,7),
+                MovingLeftSprite = new Sprite(standingPlayer, 1, 4, 7),
+                MovingRightSprite = new Sprite(standingPlayer, 1, 4, 7),
+                JumpingSprite = new Sprite(standingPlayer, 1, 4, 7),
+                WallClimbUpSprite = new Sprite(standingPlayer, 1, 4, 7),
+                WallClimbDownSprite = new Sprite(standingPlayer, 1, 4, 7)
             });
             PlayerSpriteContainers.Add(new PlayerSpriteContainer()
             {
-                StandingSprite = new Sprite(standingPlayer, 1, 6),
-                MovingLeftSprite = new Sprite(standingPlayer, 1, 6),
-                MovingRightSprite = new Sprite(standingPlayer, 1, 6),
-                JumpingSprite = new Sprite(standingPlayer, 1, 6),
-                WallClimbUpSprite = new Sprite(standingPlayer, 1, 6),
-                WallClimbDownSprite = new Sprite(standingPlayer, 1, 6)
+                StandingSprite = new Sprite(standingPlayer, 1, 4, 7),
+                MovingLeftSprite = new Sprite(standingPlayer, 1, 7),
+                MovingRightSprite = new Sprite(standingPlayer, 1, 7),
+                JumpingSprite = new Sprite(standingPlayer, 1, 4, 7),
+                WallClimbUpSprite = new Sprite(standingPlayer, 1, 4, 7),
+                WallClimbDownSprite = new Sprite(standingPlayer, 1, 4, 7)
             });
             PlayerSpriteContainers.Add(new PlayerSpriteContainer()
             {
-                StandingSprite = new Sprite(standingPlayer, 1, 6),
-                MovingLeftSprite = new Sprite(standingPlayer, 1, 6),
-                MovingRightSprite = new Sprite(standingPlayer, 1, 6),
-                JumpingSprite = new Sprite(standingPlayer, 1, 6),
-                WallClimbUpSprite = new Sprite(standingPlayer, 1, 6),
-                WallClimbDownSprite = new Sprite(standingPlayer, 1, 6)
+                StandingSprite = new Sprite(standingPlayer, 1, 4, 7),
+                MovingLeftSprite = new Sprite(standingPlayer, 1, 4, 7),
+                MovingRightSprite = new Sprite(standingPlayer, 1, 4, 7),
+                JumpingSprite = new Sprite(standingPlayer, 1, 4, 7),
+                WallClimbUpSprite = new Sprite(standingPlayer, 1, 4, 7),
+                WallClimbDownSprite = new Sprite(standingPlayer, 1, 4, 7)
             });
             PlayerSpriteContainers.Add(new PlayerSpriteContainer()
             {
-                StandingSprite = new Sprite(standingPlayer, 1, 6),
-                MovingLeftSprite = new Sprite(standingPlayer, 1, 6),
-                MovingRightSprite = new Sprite(standingPlayer, 1, 6),
-                JumpingSprite = new Sprite(standingPlayer, 1, 6),
-                WallClimbUpSprite = new Sprite(standingPlayer, 1, 6),
-                WallClimbDownSprite = new Sprite(standingPlayer, 1, 6)
+                StandingSprite = new Sprite(standingPlayer, 1, 4, 7),
+                MovingLeftSprite = new Sprite(standingPlayer, 1, 4, 7),
+                MovingRightSprite = new Sprite(standingPlayer, 1, 4, 7),
+                JumpingSprite = new Sprite(standingPlayer, 1, 4, 7),
+                WallClimbUpSprite = new Sprite(standingPlayer, 1, 4, 7),
+                WallClimbDownSprite = new Sprite(standingPlayer, 1, 4, 7)
             });
             PlayerSpriteContainers.Add(new PlayerSpriteContainer()
             {
-                StandingSprite = new Sprite(standingPlayer, 1, 6),
-                MovingLeftSprite = new Sprite(standingPlayer, 1, 6),
-                MovingRightSprite = new Sprite(standingPlayer, 1, 6),
-                JumpingSprite = new Sprite(standingPlayer, 1, 6),
-                WallClimbUpSprite = new Sprite(standingPlayer, 1, 6),
-                WallClimbDownSprite = new Sprite(standingPlayer, 1, 6)
+                StandingSprite = new Sprite(standingPlayer, 1, 4, 7),
+                MovingLeftSprite = new Sprite(standingPlayer, 1, 4, 7),
+                MovingRightSprite = new Sprite(standingPlayer, 1, 4, 7),
+                JumpingSprite = new Sprite(standingPlayer, 1, 4, 7),
+                WallClimbUpSprite = new Sprite(standingPlayer, 1, 4, 7),
+                WallClimbDownSprite = new Sprite(standingPlayer, 1, 4, 7)
             });
 
             // TODO: use this.Content to load your game content here
@@ -141,7 +144,7 @@ namespace Pick_One
 
             // TODO: Add your update logic here
             CurrentState.Update(gameTime);
-
+            Player.Update();
             base.Update(gameTime);
         }
 

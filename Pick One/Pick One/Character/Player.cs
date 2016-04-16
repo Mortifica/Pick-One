@@ -33,6 +33,7 @@ namespace Pick_One.Character
             NormalSpeciality.PrevTransform = WallClimbSpeciality;
             CurrentPlayerSpeciality = NormalSpeciality;
             IsTouchingWall = false;
+            PlayerHitbox = new HitBox(PlayerLocation.XLocation, PlayerLocation.YLocation,32,32);
             CurrentState = PlayerState.Standing;
 
             KeysForMovement = new List<Keys>
@@ -139,6 +140,14 @@ namespace Pick_One.Character
         private void UpdateSprite()
         {
             bool didTransition = TransitionState();
+            if (!didTransition)
+            {
+                CurrentPlayerSpeciality.UpdateSprite();
+            }
+            else
+            {
+                CurrentPlayerSpeciality.SetState(CurrentState);
+            }
         }
 
         private bool TransitionState()
@@ -199,7 +208,7 @@ namespace Pick_One.Character
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            base.Draw(PlayerLocation.XLocation, PlayerLocation.YLocation, spriteBatch, 1);
+            CurrentPlayerSpeciality.Draw(spriteBatch, new Vector2(PlayerLocation.XLocation, PlayerLocation.YLocation));
         }
 
         public void NotifyOfChange(List<KeyAction> actions, GameTime gameTime)
