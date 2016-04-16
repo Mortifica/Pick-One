@@ -205,3 +205,15 @@
 /processorParam:TextureFormat=Color
 /build:test_Circle_Moving_Right_Animation.png
 
+#begin poof.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:poof.ogg
+
+#begin hover.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:hover.ogg
+
