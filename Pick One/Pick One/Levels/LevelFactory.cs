@@ -28,15 +28,15 @@ namespace Pick_One.Levels
                     var color = mapArray[(texture.Width * y) + x];
                     if (color == LevelColorMap.StartPosition)
                     {
-                        listPosition.Add(new Tile(content, Tile.Type.StartPosition, x, y));
+                        listPosition.Add(new Tile(content, Tile.TileTypes.StartPosition, x, y));
                     }
                     else if (color == LevelColorMap.EndPosition)
                     {
-                        listPosition.Add(new Tile(content, Tile.Type.EndPosition, x, y));
+                        listPosition.Add(new Tile(content, Tile.TileTypes.EndPosition, x, y));
                     }
                     else if (color == LevelColorMap.FloorColor)
                     {
-                        listPosition.Add(new Tile(content, Tile.Type.Floor, x, y));
+                        listPosition.Add(new Tile(content, Tile.TileTypes.Floor, x, y));
                     }
                     else
                     {
