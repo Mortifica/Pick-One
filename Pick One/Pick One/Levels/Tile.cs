@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Pick_One.Levels
 {
-    class Tile
+    public class Tile
     {
         #region Private Varibles
 

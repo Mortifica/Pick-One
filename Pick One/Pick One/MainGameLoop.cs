@@ -8,6 +8,7 @@ using Pick_One.Input;
 using Pick_One.Character;
 using Pick_One.Levels;
 using System.Linq;
+using System;
 
 namespace Pick_One
 {
@@ -43,13 +44,6 @@ namespace Pick_One
             // TODO: Add your initialization logic here
             base.Initialize();
 
-            var rectList = new List<Rectangle>();
-            foreach (var tile in Level)
-            {
-                rectList.Add(tile.Rectangle);
-            }
-            Collision = new CollisionManager(rectList.ToArray());
-
             PlayStateKeyListener = new KeyboardListener();
             Vector2 startingPlace = Level.Single(tile => tile.Type == Tile.TileTypes.StartPosition).Location;//= Level.Single(tile => tile.).Location;
             startingPlace.Y -= 32;
@@ -79,6 +73,7 @@ namespace Pick_One
 
             var testMap = Content.Load<Texture2D>(@"TestLevel");
             Level = LevelFactory.GenerateLevel(Content, testMap);
+            Collision = new CollisionManager(Level);
 
             var standingPlayer = Content.Load<Texture2D>(@"test_Circle_Standing_Animation");
             var movingPlayer = Content.Load<Texture2D>(@"test_Circle_Moving_Animation");
@@ -145,6 +140,12 @@ namespace Pick_One
             // TODO: Unload any non ContentManager content here
         }
 
+        // Frame counts for keeping an eye on performace
+        private int ticks = 0;
+        private int frameRate = 0;
+        private int frameCounter = 0;
+        private TimeSpan elapsedTime = TimeSpan.Zero;
+
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
@@ -159,6 +160,19 @@ namespace Pick_One
             CurrentState.Update(gameTime);
             Player.Update();
             base.Update(gameTime);
+
+
+            // Update the title bar so we can see FPS easier.
+            ticks++;
+            elapsedTime += gameTime.ElapsedGameTime;
+            if (elapsedTime > TimeSpan.FromSeconds(1))
+            {
+                elapsedTime -= TimeSpan.FromSeconds(1);
+                frameRate = frameCounter;
+                Window.Title = $"Pick One   FPS:{frameRate}   Ticks:{ticks}";
+                frameCounter = 0;
+                ticks = 0;
+            }
         }
 
         /// <summary>
@@ -167,6 +181,8 @@ namespace Pick_One
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+            frameCounter++;
+
             GraphicsDevice.Clear(Color.CornflowerBlue);
             // TODO: Add your drawing code here
             spriteBatch.Begin(
