@@ -19,7 +19,10 @@ namespace Pick_One
         private SpriteBatch spriteBatch;
         private GameState CurrentState { get; set; }
         private Camera2D Camera;
+        public KeyboardListener PlayStateKeyListener { get; set; }
+        public Player Player { get; set; }
         private List<Tile> Level;
+        public List<PlayerSpriteContainer> PlayerSpriteContainers { get; set; }
 
         public MainGameLoop()
         {
@@ -37,6 +40,14 @@ namespace Pick_One
         {
             // TODO: Add your initialization logic here
             base.Initialize();
+            PlayStateKeyListener = new KeyboardListener();
+            Player = new Player(new Vector2(1.0f, 1.0f), PlayerSpriteContainers);
+            PlayStateKeyListener.AddSubscriber(new KeyboardSubscriber()
+            {
+                Subscriber = Player,
+                WatchedKeys = Player.GetWatchedKeys(),
+                IsPaused = false
+            });
 
 
         }
@@ -56,6 +67,54 @@ namespace Pick_One
             var testMap = Content.Load<Texture2D>(@"TestLevel");
             Level = LevelFactory.GenerateLevel(Content, testMap);
 
+            var standingPlayer = Content.Load<Texture2D>(@"test_Ground_Texture");
+
+            PlayerSpriteContainers = new List<PlayerSpriteContainer>();
+            PlayerSpriteContainers.Add(new PlayerSpriteContainer()
+            {
+                StandingSprite = new Sprite(standingPlayer,1,6),
+                MovingLeftSprite = new Sprite(standingPlayer, 1, 6),
+                MovingRightSprite = new Sprite(standingPlayer, 1, 6),
+                JumpingSprite = new Sprite(standingPlayer, 1, 6),
+                WallClimbUpSprite = new Sprite(standingPlayer, 1, 6),
+                WallClimbDownSprite = new Sprite(standingPlayer, 1, 6)
+            });
+            PlayerSpriteContainers.Add(new PlayerSpriteContainer()
+            {
+                StandingSprite = new Sprite(standingPlayer, 1, 6),
+                MovingLeftSprite = new Sprite(standingPlayer, 1, 6),
+                MovingRightSprite = new Sprite(standingPlayer, 1, 6),
+                JumpingSprite = new Sprite(standingPlayer, 1, 6),
+                WallClimbUpSprite = new Sprite(standingPlayer, 1, 6),
+                WallClimbDownSprite = new Sprite(standingPlayer, 1, 6)
+            });
+            PlayerSpriteContainers.Add(new PlayerSpriteContainer()
+            {
+                StandingSprite = new Sprite(standingPlayer, 1, 6),
+                MovingLeftSprite = new Sprite(standingPlayer, 1, 6),
+                MovingRightSprite = new Sprite(standingPlayer, 1, 6),
+                JumpingSprite = new Sprite(standingPlayer, 1, 6),
+                WallClimbUpSprite = new Sprite(standingPlayer, 1, 6),
+                WallClimbDownSprite = new Sprite(standingPlayer, 1, 6)
+            });
+            PlayerSpriteContainers.Add(new PlayerSpriteContainer()
+            {
+                StandingSprite = new Sprite(standingPlayer, 1, 6),
+                MovingLeftSprite = new Sprite(standingPlayer, 1, 6),
+                MovingRightSprite = new Sprite(standingPlayer, 1, 6),
+                JumpingSprite = new Sprite(standingPlayer, 1, 6),
+                WallClimbUpSprite = new Sprite(standingPlayer, 1, 6),
+                WallClimbDownSprite = new Sprite(standingPlayer, 1, 6)
+            });
+            PlayerSpriteContainers.Add(new PlayerSpriteContainer()
+            {
+                StandingSprite = new Sprite(standingPlayer, 1, 6),
+                MovingLeftSprite = new Sprite(standingPlayer, 1, 6),
+                MovingRightSprite = new Sprite(standingPlayer, 1, 6),
+                JumpingSprite = new Sprite(standingPlayer, 1, 6),
+                WallClimbUpSprite = new Sprite(standingPlayer, 1, 6),
+                WallClimbDownSprite = new Sprite(standingPlayer, 1, 6)
+            });
 
             // TODO: use this.Content to load your game content here
         }
@@ -107,7 +166,7 @@ namespace Pick_One
             CurrentState.Draw(spriteBatch);
 
             Level.ForEach(x => { x.Draw(spriteBatch); });
-
+            Player.Draw(spriteBatch);
             spriteBatch.End();
             base.Draw(gameTime);
         }
@@ -176,22 +235,17 @@ namespace Pick_One
         /// </summary>
         public class PlayState : GameState, IInputSubscriber
         {
-            public Player Player { get; set; }
-            public KeyboardListener PlayStateKeyListener { get; set; }
+            
+
             public PlayState(MainGameLoop game)
                 : base(game)
             {
-                init();
+                
+                init(game);
             }
-            private void init()
+            private void init(MainGameLoop game)
             {
-                PlayStateKeyListener = new KeyboardListener();
-                Player = new Player();
-                PlayStateKeyListener.AddSubscriber(new KeyboardSubscriber() {
-                    Subscriber = Player,
-                    WatchedKeys = Player.GetWatchedKeys(),
-                    IsPaused = false
-                });
+                
 
             }
 
