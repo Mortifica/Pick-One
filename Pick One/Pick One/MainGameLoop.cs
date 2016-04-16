@@ -55,7 +55,8 @@ namespace Pick_One
                 IsPaused = false
             });
             Camera.Focus = Player;
-            Camera.FocusOffest = new Vector3(350, 250, 0);
+            Camera.Zoom = 2;
+            Camera.FocusOffest = new Vector3(graphics.PreferredBackBufferWidth / 4, graphics.PreferredBackBufferHeight / 4, 0);
 
         }
 

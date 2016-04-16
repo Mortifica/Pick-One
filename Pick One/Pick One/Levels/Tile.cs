@@ -28,14 +28,16 @@ namespace Pick_One.Levels
             get;
         }
 
+        private Vector2 location;
         public Vector2 Location
         {
-            get;
+            get { return location; }
         }
 
+        private Rectangle rectangle;
         public Rectangle Rectangle
         {
-            get;
+            get { return rectangle; }
         }
 
         #endregion
@@ -57,36 +59,35 @@ namespace Pick_One.Levels
         public Tile(ContentManager content, TileTypes type, int x, int y)
         {
             Type = type;
-            Location = GetVector(x, y);
-            sprite = GetSprite(content);
-            Rectangle = new Rectangle(x * TILE_SIZE, y * TILE_SIZE, sprite.Texture.Width, sprite.Texture.Height);
+            sprite = GetSprite(content, x, y);
         }
 
         #endregion
 
         #region Private Methods
 
-        private Sprite GetSprite(ContentManager content)
+        private Sprite GetSprite(ContentManager content, int x, int y)
         {
             if (Type == TileTypes.Floor)
             {
                 texture = content.Load<Texture2D>(@"test_Ground_Texture");
+                location = new Vector2(x * texture.Width, y * texture.Height);
+                rectangle = new Rectangle(x * texture.Width, y * texture.Height, texture.Width, texture.Height);
             }
             else if (Type == TileTypes.StartPosition)
             {
                 texture = content.Load<Texture2D>(@"test_Ground_Texture");
+                location = new Vector2(x * texture.Width, y * texture.Height);
+                rectangle = new Rectangle(x * texture.Width, y * texture.Height, texture.Width, texture.Height);
             }
             else if (Type == TileTypes.EndPosition)
             {
                 texture = content.Load<Texture2D>(@"test_Finish_Texture");
+                location = new Vector2(x * texture.Width, y * texture.Height);
+                rectangle = new Rectangle(x * texture.Width, y * texture.Height, texture.Width, texture.Height);
             }
 
-            return new Sprite(texture, 1, 1); // If we need to animate this needs to change.
-        }
-
-        private Vector2 GetVector(int x, int y)
-        {
-            return new Vector2(x * TILE_SIZE, y * TILE_SIZE);
+            return new Sprite(texture, 1, 1); // If we need to animate this can be nested into the if statement.
         }
 
         #endregion
