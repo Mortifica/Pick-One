@@ -1,4 +1,5 @@
-﻿using Pick_One.BasicClasses;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Pick_One.BasicClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,14 @@ namespace Pick_One.Character.PlayerSpecialities
 {
     public class Normal : AbstractPlayerSpeciality
     {
-        public Normal()
+        public Normal(PlayerSpriteContainer sprites)
         {
+            StandingSprite = sprites.StandingSprite;
+            MovingLeft = sprites.MovingLeftSprite;
+            MovingRight = sprites.MovingRightSprite;
+            Jump = sprites.StandingSprite;
+            WallClimbDown = sprites.WallClimbDownSprite;
+            WallClimbUp = sprites.WallClimbUpSprite; 
             Movement = new MovementContainer();
             Movement.UpwardMovement = 0.0f;
             Movement.DownwardMovement = 0.0f;
@@ -19,15 +26,6 @@ namespace Pick_One.Character.PlayerSpecialities
             IsStretchable = false;
             IsClimbable = false;
         }
-
-        public override AbstractPlayerSpeciality GetNextTransform()
-        {
-            return new Speed();
-        }
-
-        public override AbstractPlayerSpeciality GetPreviousTransform()
-        {
-            return new WallClimb();
-        }
+        
     }
 }

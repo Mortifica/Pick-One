@@ -18,10 +18,20 @@ namespace Pick_One.Character
         private List<Keys> KeysForTransform { get; set; }
         private Vector2 MovementVector;
         private bool IsTouchingWall;
-        public Player()
+        public Player(Vector2 initialLocation, List<PlayerSpriteContainer> container)
         {
             MovementVector = new Vector2();
-            PlayerSpeciality = new Normal();
+            PlayerLocation = new Location();
+            PlayerLocation.XLocation = initialLocation.X;
+            PlayerLocation.YLocation = initialLocation.Y;
+            NormalSpeciality = new Normal(container[0]);
+            SpeedSpeciality = new Speed(container[1]);
+            StretchSpeciality = new Stretch(container[2]);
+            VerticalSpeciality = new Vertical(container[3]);
+            WallClimbSpeciality = new WallClimb(container[4]);
+            NormalSpeciality.NextTransform = SpeedSpeciality;
+            NormalSpeciality.PrevTransform = WallClimbSpeciality;
+            CurrentPlayerSpeciality = NormalSpeciality;
             IsTouchingWall = false;
             CurrentState = PlayerState.Standing;
 
@@ -50,55 +60,55 @@ namespace Pick_One.Character
             switch (key)
             {
                 case Keys.Left:
-                    speciality = PlayerSpeciality.GetPreviousTransform();
+                    speciality = CurrentPlayerSpeciality.PrevTransform;
                     break;
                 case Keys.Right:
-                    speciality = PlayerSpeciality.GetNextTransform();
+                    speciality = CurrentPlayerSpeciality.NextTransform;
                     break;
                 case Keys.D1:
-                    if (PlayerSpeciality.GetType() != typeof(Normal))
+                    if (CurrentPlayerSpeciality.GetType() != typeof(Normal))
                     {
-                        speciality = new Normal();
+                        speciality = NormalSpeciality;
                     }
                     break;
                 case Keys.D2:
-                    if (PlayerSpeciality.GetType() != typeof(Speed))
+                    if (CurrentPlayerSpeciality.GetType() != typeof(Speed))
                     {
-                        speciality = new Speed();
+                        speciality = SpeedSpeciality;
                     }
                     break;
                 case Keys.D3:
-                    if (PlayerSpeciality.GetType() != typeof(Stretch))
+                    if (CurrentPlayerSpeciality.GetType() != typeof(Stretch))
                     {
-                        speciality = new Stretch();
+                        speciality = StretchSpeciality;
                     }
                     break;
                 case Keys.D4:
-                    if (PlayerSpeciality.GetType() != typeof(Vertical))
+                    if (CurrentPlayerSpeciality.GetType() != typeof(Vertical))
                     {
-                        speciality = new Vertical();
+                        speciality = VerticalSpeciality;
                     }
                     break;
                 case Keys.D5:
-                    if (PlayerSpeciality.GetType() != typeof(WallClimb))
+                    if (CurrentPlayerSpeciality.GetType() != typeof(WallClimb))
                     {
-                        speciality = new WallClimb();
+                        speciality = WallClimbSpeciality;
                     }
                     break;
             }
-            PlayerSpeciality = speciality;
+            CurrentPlayerSpeciality = speciality;
         }
         public MovementContainer GetMovement()
         {
-            return PlayerSpeciality.Movement;
+            return CurrentPlayerSpeciality.Movement;
         }
         public bool IsStretchable()
         {
-            return PlayerSpeciality.IsStretchable;
+            return CurrentPlayerSpeciality.IsStretchable;
         }
         public bool IsClimbable()
         {
-            return PlayerSpeciality.IsClimbable;
+            return CurrentPlayerSpeciality.IsClimbable;
         }
         public HitBox GetHitbox()
         {
@@ -147,7 +157,7 @@ namespace Pick_One.Character
                 {
                     if (MovementVector.Y > 0.0f) // WallClimbUp OR Jumping
                     {
-                        if (PlayerSpeciality.IsClimbable) //ClimbingUp
+                        if (CurrentPlayerSpeciality.IsClimbable) //ClimbingUp
                         {
                             if (CurrentState != PlayerState.WallClimbUp)
                             {
@@ -157,7 +167,7 @@ namespace Pick_One.Character
                         }
                         else
                         {
-                            if (PlayerSpeciality.IsJumpable) //Jumping
+                            if (CurrentPlayerSpeciality.IsJumpable) //Jumping
                             {
                                 if (CurrentState != PlayerState.Jump)
                                 {
@@ -169,7 +179,7 @@ namespace Pick_One.Character
                     }
                     else //Moving Down
                     {
-                        if (PlayerSpeciality.IsClimbable) //ClimbingDown
+                        if (CurrentPlayerSpeciality.IsClimbable) //ClimbingDown
                         {
                             CurrentState = PlayerState.WallClimbDown;
                             return true;
@@ -189,7 +199,7 @@ namespace Pick_One.Character
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            base.Draw(PlayerLocation.XLocation, PlayerLocation.YLocation, spriteBatch);
+            base.Draw(PlayerLocation.XLocation, PlayerLocation.YLocation, spriteBatch, 1);
         }
 
         public void NotifyOfChange(List<KeyAction> actions, GameTime gameTime)
@@ -224,16 +234,16 @@ namespace Pick_One.Character
             switch (action.Key)
             {
                 case Keys.W:
-                    MoveVertically(PlayerSpeciality.Movement.UpwardMovement);
+                    MoveVertically(CurrentPlayerSpeciality.Movement.UpwardMovement);
                     break;
                 case Keys.S:
-                    MoveVertically(-PlayerSpeciality.Movement.DownwardMovement);
+                    MoveVertically(-CurrentPlayerSpeciality.Movement.DownwardMovement);
                     break;
                 case Keys.A:
-                    MoveHorizontally(-PlayerSpeciality.Movement.LeftMovement);
+                    MoveHorizontally(-CurrentPlayerSpeciality.Movement.LeftMovement);
                     break;
                 case Keys.D:
-                    MoveHorizontally(PlayerSpeciality.Movement.RightMovement);
+                    MoveHorizontally(CurrentPlayerSpeciality.Movement.RightMovement);
                     break;
             }
         }
@@ -253,9 +263,9 @@ namespace Pick_One.Character
         }
         private void PlayerJump()
         {
-            if (PlayerSpeciality.Movement.UpwardMovement > 0.0f)
+            if (CurrentPlayerSpeciality.Movement.UpwardMovement > 0.0f)
             {
-                MovementVector.X += PlayerSpeciality.Movement.UpwardMovement;
+                MovementVector.X += CurrentPlayerSpeciality.Movement.UpwardMovement;
             }
         }
 

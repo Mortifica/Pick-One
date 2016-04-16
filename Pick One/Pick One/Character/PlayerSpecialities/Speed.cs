@@ -9,8 +9,14 @@ namespace Pick_One.Character.PlayerSpecialities
 {
     public class Speed : AbstractPlayerSpeciality
     {
-        public Speed()
+        public Speed(PlayerSpriteContainer sprites)
         {
+            StandingSprite = sprites.StandingSprite;
+            MovingLeft = sprites.MovingLeftSprite;
+            MovingRight = sprites.MovingRightSprite;
+            Jump = sprites.StandingSprite;
+            WallClimbDown = sprites.WallClimbDownSprite;
+            WallClimbUp = sprites.WallClimbUpSprite;
             Movement = new MovementContainer();
             Movement.UpwardMovement = 0.0f;
             Movement.DownwardMovement = 0.0f;
@@ -18,16 +24,6 @@ namespace Pick_One.Character.PlayerSpecialities
             Movement.RightMovement = 2.0f;
             IsStretchable = false;
             IsClimbable = false;
-        }
-
-        public override AbstractPlayerSpeciality GetNextTransform()
-        {
-            return new Stretch();
-        }
-
-        public override AbstractPlayerSpeciality GetPreviousTransform()
-        {
-            return new Normal();
         }
     }
 }

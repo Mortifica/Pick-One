@@ -12,13 +12,18 @@ namespace Pick_One.Character
 {
     public abstract class AbstractCharacter
     {
-        protected AbstractPlayerSpeciality PlayerSpeciality { get; set; }
+        protected AbstractPlayerSpeciality CurrentPlayerSpeciality { get; set; }
+        protected Normal NormalSpeciality { get; set; }
+        protected Speed SpeedSpeciality { get; set; }
+        protected Stretch StretchSpeciality { get; set; }
+        protected Vertical VerticalSpeciality { get; set; }
+        protected WallClimb WallClimbSpeciality { get; set; }
         protected HitBox PlayerHitbox { get; set; }
         protected Location PlayerLocation { get; set; }
         public PlayerState CurrentState { get; set; }
-        public void Draw(float x, float y, SpriteBatch spriteBatch)
+        public void Draw(float x, float y, SpriteBatch spriteBatch, int size)
         {
-            PlayerSpeciality.StandingSprite.Draw(spriteBatch, new Vector2(x, y));
+            CurrentPlayerSpeciality.StandingSprite.Draw(spriteBatch, new Vector2(x, y), size);
         }
     }
 }

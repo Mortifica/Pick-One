@@ -9,8 +9,14 @@ namespace Pick_One.Character.PlayerSpecialities
 {
     public class Stretch : AbstractPlayerSpeciality
     {
-        public Stretch()
+        public Stretch(PlayerSpriteContainer sprites)
         {
+            StandingSprite = sprites.StandingSprite;
+            MovingLeft = sprites.MovingLeftSprite;
+            MovingRight = sprites.MovingRightSprite;
+            Jump = sprites.StandingSprite;
+            WallClimbDown = sprites.WallClimbDownSprite;
+            WallClimbUp = sprites.WallClimbUpSprite;
             Movement = new MovementContainer();
             Movement.UpwardMovement = 0.0f;
             Movement.DownwardMovement = 0.0f;
@@ -18,16 +24,6 @@ namespace Pick_One.Character.PlayerSpecialities
             Movement.RightMovement = 0.5f;
             IsStretchable = true;
             IsClimbable = false;
-        }
-
-        public override AbstractPlayerSpeciality GetNextTransform()
-        {
-            return new Vertical();
-        }
-
-        public override AbstractPlayerSpeciality GetPreviousTransform()
-        {
-            return new Speed();
         }
     }
 }
