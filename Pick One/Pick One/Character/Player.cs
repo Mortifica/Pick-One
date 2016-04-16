@@ -163,67 +163,129 @@ namespace Pick_One.Character
         private void CheckMovement()
         {
             var newRectangle = new Rectangle(PlayerHitbox.HitBoxRectangle.X, PlayerHitbox.HitBoxRectangle.Y, PlayerHitbox.HitBoxRectangle.Width, PlayerHitbox.HitBoxRectangle.Height);
+            var newXRectangle = new Rectangle(PlayerHitbox.HitBoxRectangle.X, PlayerHitbox.HitBoxRectangle.Y, PlayerHitbox.HitBoxRectangle.Width, PlayerHitbox.HitBoxRectangle.Height);
+            var newYRectangle = new Rectangle(PlayerHitbox.HitBoxRectangle.X, PlayerHitbox.HitBoxRectangle.Y, PlayerHitbox.HitBoxRectangle.Width, PlayerHitbox.HitBoxRectangle.Height);
 
             newRectangle.X += (int)MovementVector.X;
             newRectangle.Y += (int)MovementVector.Y;
+
+            newXRectangle.X += (int)MovementVector.X;
+
+            newYRectangle.Y += (int)MovementVector.Y;
+
             var checkResults = CollisionManager.CheckCollision(newRectangle);
-            if (checkResults.Item1)//True if Hit something
+            var checkXResults = CollisionManager.CheckCollision(newXRectangle);
+            var checkYResults = CollisionManager.CheckCollision(newYRectangle);
+
+            if (!checkResults.Item1)
             {
+                PlayerHitbox.HitBoxRectangle = newRectangle;
+                MovementVector.X = newRectangle.X - PlayerLocation.XLocation;
 
-                foreach (var item in checkResults.Item2)
-                {
-                    if (MovementVector.X != 0 && newRectangle.Intersects(item.Rectangle))
-                    {
-                        var newRectangleRight = new Rectangle(newRectangle.X, newRectangle.Y, newRectangle.Width, newRectangle.Height);
-                        var newRectangleLeft = new Rectangle(newRectangle.X, newRectangle.Y, newRectangle.Width, newRectangle.Height);
-                        newRectangleRight.X = (int)(newRectangleRight.X + (MovementVector.X * -1));
-                        newRectangleLeft.X = (int)(newRectangleLeft.X + (MovementVector.X * -1));
-                        bool hitwall = false;
-                        if (!newRectangleRight.Intersects(item.Rectangle))
-                        {
-                            hitwall = true;
-                            // If false, this helped?
-                            newRectangle = newRectangleRight;
-                            
-                        }
-                        else if (!newRectangleLeft.Intersects(item.Rectangle))
-                        {
-                            hitwall = true;
-                            // If false, this helped?
-                            newRectangle = newRectangleLeft;
-                        }
-                        IsTouchingWall = hitwall;
-                    }
-                    if (MovementVector.Y != 0 && newRectangle.Intersects(item.Rectangle))
-                    {
-                        var newRectangleUp = new Rectangle(newRectangle.X, newRectangle.Y, newRectangle.Width, newRectangle.Height);
-                        var newRectangleDown = new Rectangle(newRectangle.X, newRectangle.Y, newRectangle.Width, newRectangle.Height);
-                        newRectangleUp.Y = (int)(newRectangleUp.Y + (MovementVector.Y * -1));
-                        newRectangleDown.Y = (int)(newRectangleDown.Y + (MovementVector.Y * -1));
-
-                        if (!newRectangleUp.Intersects(item.Rectangle))
-                        {
-                            // If false, this helped?
-                            newRectangle = newRectangleUp;
-                        }
-                        else if (!newRectangleDown.Intersects(item.Rectangle))
-                        {
-                            // If false, this helped?
-                            newRectangle = newRectangleDown;
-                        }
-
-
-                    }
-
-                    MovementVector.X = newRectangle.X - PlayerLocation.XLocation;
-
-                    MovementVector.Y = newRectangle.Y - PlayerLocation.YLocation;
-
-                    PlayerHitbox.HitBoxRectangle = newRectangle;
-
-                }
+                MovementVector.Y = newRectangle.Y - PlayerLocation.YLocation;
             }
+            else if (!checkXResults.Item1)
+            {
+                PlayerHitbox.HitBoxRectangle = newXRectangle;
+                MovementVector.X = newRectangle.X - PlayerLocation.XLocation;
+
+                MovementVector.Y = 0;
+
+            }
+            else if (!checkYResults.Item1)
+            {
+                PlayerHitbox.HitBoxRectangle = newYRectangle;
+
+                MovementVector.X = 0;
+
+                MovementVector.Y = newRectangle.Y - PlayerLocation.YLocation;
+
+            }
+            else
+            {
+                MovementVector.X = 0;
+
+                MovementVector.Y = 0;
+            }            
+
+
+            //if (checkResults.Item1)//True if Hit something
+            //{
+
+            //    foreach(var item in checkResults.Item2)
+            //    {
+
+
+
+
+
+            //        if (MovementVector.X > 0)
+            //        {
+            //            if (newRectangle.X + CurrentPlayerSpeciality.Width > item.Rectangle.X)
+            //            {
+            //                IsTouchingWall = true;
+            //                newRectangle.X = (int)PlayerLocation.XLocation + (item.Rectangle.X - ((int)PlayerLocation.XLocation + (int)CurrentPlayerSpeciality.Width));
+            //                if (!newRectangle.Intersects(item.Rectangle))
+            //                {
+            //                    updated = true;
+            //                }
+            //            }
+            //            //if (newRectangle.X + 32 > item.Rectangle.X)
+            //            //{
+            //            //    IsTouchingWall = true;
+
+            //            //    newRectangle.X = item.Rectangle.X - 32;
+            //            //}
+            //        }
+            //        if (!updated && MovementVector.X < 0 )
+            //        {
+            //            if (newRectangle.X < item.Rectangle.X + item.Rectangle.Width)
+            //            {
+            //                IsTouchingWall = true;
+            //                newRectangle.X = ((int)item.Rectangle.X + (int)item.Rectangle.Width);
+            //            }
+            //            if (!newRectangle.Intersects(item.Rectangle))
+            //            {
+            //                updated = true;
+            //            }
+            //        }
+            //        if (!updated && MovementVector.Y > 0)
+            //        {
+            //            if (newRectangle.Y + CurrentPlayerSpeciality.Height > item.Rectangle.Y )
+            //            {
+            //                newRectangle.Y = (int)PlayerLocation.YLocation + (item.Rectangle.Y - ((int)PlayerLocation.YLocation + (int)CurrentPlayerSpeciality.Height));
+            //            }
+            //            if (!newRectangle.Intersects(item.Rectangle))
+            //            {
+            //                updated = true;
+            //            }
+            //        }
+            //        if (!updated && MovementVector.Y < 0)
+            //        {
+            //            if (newRectangle.Y < item.Rectangle.Y + item.Rectangle.Height)
+            //            {
+            //                newRectangle.Y = ((int)item.Rectangle.Y + (int)item.Rectangle.Height);
+            //            }
+            //            if (!newRectangle.Intersects(item.Rectangle))
+            //            {
+            //                updated = true;
+            //            }
+            //        }
+            //        checkResults = CollisionManager.CheckCollision(newRectangle);
+            //        if(checkResults.Item1)
+            //        {
+            //            break;
+            //        }
+            //        updated = false;
+            //    }
+
+
+            // //   }
+            //    PlayerHitbox.HitBoxRectangle = newRectangle;
+
+            //}
         }
+
 
         private void UpdateSprite()
         {
