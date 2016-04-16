@@ -163,7 +163,7 @@ namespace Pick_One.Character
             var newRectangle = new Rectangle(PlayerHitbox.HitBoxRectangle.X, PlayerHitbox.HitBoxRectangle.Y, PlayerHitbox.HitBoxRectangle.Width, PlayerHitbox.HitBoxRectangle.Height);
             var newXRectangle = new Rectangle(PlayerHitbox.HitBoxRectangle.X, PlayerHitbox.HitBoxRectangle.Y, PlayerHitbox.HitBoxRectangle.Width, PlayerHitbox.HitBoxRectangle.Height);
             var newYRectangle = new Rectangle(PlayerHitbox.HitBoxRectangle.X, PlayerHitbox.HitBoxRectangle.Y, PlayerHitbox.HitBoxRectangle.Width, PlayerHitbox.HitBoxRectangle.Height);
-            
+
             newRectangle.X += (int)MovementVector.X;
             newRectangle.Y += (int)MovementVector.Y;
 
@@ -176,12 +176,12 @@ namespace Pick_One.Character
             var checkYResults = CollisionManager.CheckCollision(newYRectangle);
 
             if (!checkResults.Item1)
-            {
+                {
                 PlayerHitbox.HitBoxRectangle = newRectangle;
                 MovementVector.X =  newRectangle.X - PlayerLocation.XLocation;
 
                 MovementVector.Y = newRectangle.Y - PlayerLocation.YLocation;
-            }
+                        }
             else if (!checkXResults.Item1)
             {
                 PlayerHitbox.HitBoxRectangle = newXRectangle;
@@ -190,20 +190,20 @@ namespace Pick_One.Character
                 MovementVector.Y = 0;
             }
             else if (!checkYResults.Item1)
-            {
+                    {
                 PlayerHitbox.HitBoxRectangle = newYRectangle;
 
                 MovementVector.X = 0;
 
                 MovementVector.Y = newRectangle.Y - PlayerLocation.YLocation;
 
-            }
+                        }
             else
-            {
+                    {
                 MovementVector.X = 0;
 
                 MovementVector.Y = 0;
-            }
+                        }
 
 
 
@@ -282,6 +282,7 @@ namespace Pick_One.Character
             //    PlayerHitbox.HitBoxRectangle = newRectangle;
                 
             //}
+        }
         }
 
         private void UpdateSprite()
