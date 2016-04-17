@@ -155,7 +155,7 @@ namespace Pick_One.Character
         {
             return PlayerLocation;
         }
-        public void Update()
+        public void Update(GameTime gameTime)
         {
             MovementVector.Y += 1;
 

@@ -219,7 +219,7 @@ namespace Pick_One
             PlayStateKeyListener.Update(Keyboard.GetState(), gameTime);
             // TODO: Add your update logic here
             CurrentState.Update(gameTime);
-            Player.Update();
+            Player.Update(gameTime);
             base.Update(gameTime);
 
 
