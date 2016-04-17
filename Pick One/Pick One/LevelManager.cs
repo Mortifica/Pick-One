@@ -83,7 +83,7 @@ namespace Pick_One
             else if (NextLevel == "LargeTestLevel1")
             {
                 // Next level
-                SetLevel("LargeTestLevel1", "");
+                SetLevel("LargeTestLevel1", "LargeTestLevel1");
             }
             else if (NextLevel == "TestLevel3")
             {
