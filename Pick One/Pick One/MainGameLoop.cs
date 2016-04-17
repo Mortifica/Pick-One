@@ -78,7 +78,7 @@ namespace Pick_One
             //Normal
             var standingPlayer = Content.Load<Texture2D>(@"test_Circle_Standing_Animation");
             var fallingPlayer = Content.Load<Texture2D>(@"test_Circle_Falling_Animation");
-            var movingPlayer = Content.Load<Texture2D>(@"test_Circle_Standing_Animation");
+            //var movingPlayer = Content.Load<Texture2D>(@"test_Circle_Standing_Animation");
             var movingPlayerLeft = Content.Load<Texture2D>(@"test_Circle_Moving_Left_Animation");
             var movingPlayerRight = Content.Load<Texture2D>(@"test_Circle_Moving_Right_Animation");
 
@@ -181,7 +181,6 @@ namespace Pick_One
             var menuSelectSound = Content.Load<Song>("select");
             var tutorialTheme = Content.Load<Song>("tutorial");
             var levelTheme = Content.Load<Song>("LevelTheme");
-
             
 
             //MediaPlayer.IsRepeating = true;
