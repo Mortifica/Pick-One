@@ -12,9 +12,9 @@ using System.Threading.Tasks;
 
 namespace Pick_One
 {
-    public sealed class GameManager
+    public sealed class LevelManager
     {
-        private static readonly Lazy<GameManager> lazy = new Lazy<GameManager>(() => new GameManager());
+        private static readonly Lazy<LevelManager> lazy = new Lazy<LevelManager>(() => new LevelManager());
 
         private static List<Tile> Level;
         private static string NextLevel;
@@ -22,13 +22,13 @@ namespace Pick_One
         private static CollisionManager Collision;
 
 
-        public static GameManager Instance { get { return lazy.Value; } }
+        public static LevelManager Instance { get { return lazy.Value; } }
 
         public static ContentManager Content { set; get; }
 
         public static Player Player { set; get; }
 
-        private GameManager()
+        private LevelManager()
         {
         }
 
@@ -69,7 +69,7 @@ namespace Pick_One
 
         public Vector2 GetPlayerStartingLocation()
         {
-            Vector2 startingPlace = GameManager.Instance.GetStartingPosition();
+            Vector2 startingPlace = LevelManager.Instance.GetStartingPosition();
             startingPlace.Y -= 32;
             return startingPlace;
         }
@@ -78,12 +78,12 @@ namespace Pick_One
         {
             if (NextLevel == "TestLevel")
             {
-                SetLevel("TestLevel", "TestLevel2");
+                SetLevel("TestLevel", "LargeTestLevel1");
             }
-            else if (NextLevel == "TestLevel2")
+            else if (NextLevel == "LargeTestLevel1")
             {
                 // Next level
-                SetLevel("TestLevel2", "TestLevel3");
+                SetLevel("LargeTestLevel1", "");
             }
             else if (NextLevel == "TestLevel3")
             {
