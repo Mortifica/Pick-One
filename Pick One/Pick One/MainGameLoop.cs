@@ -46,8 +46,8 @@ namespace Pick_One
             base.Initialize();
 
             // Set inital level
-            //GameManager.Instance.SetLevel(@"TestLevel");
-            GameManager.Instance.SetLevel(@"TestLevel2");
+            GameManager.Instance.SetLevel(@"TestLevel");
+            //GameManager.Instance.SetLevel(@"TestLevel2");
 
             PlayStateKeyListener = new KeyboardListener();
             Player = new Player(GameManager.Instance.GetPlayerStartingLocation(), PlayerSpriteContainers);
@@ -96,7 +96,11 @@ namespace Pick_One
             var fallingVertical = Content.Load<Texture2D>(@"test_Triangle_Falling_Animation");
             //var standingVertical = Content.Load<Texture2D>(@"test_Circle_Moving_Right_Animation");
 
-
+            //WallClimb
+            var standingClimb = Content.Load<Texture2D>(@"test_Square_Standing_Animation");
+            var movingLeftClimb = Content.Load<Texture2D>(@"test_Square_Moving_Left_Animation");
+            var movingRightClimb = Content.Load<Texture2D>(@"test_Square_Moving_Right_Animation");
+            
             //MiscTesting
             var climbingPlayer = Content.Load<Texture2D>(@"test_Circle_Moving_Animation");
 
@@ -151,15 +155,15 @@ namespace Pick_One
             });
             PlayerSpriteContainers.Add(new PlayerSpriteContainer() // Climbing
             {
-                StandingSprite = new Sprite(standingPlayer, 1, 4, 7),
-                MovingLeftSprite = new Sprite(movingPlayerLeft, 1, 4, 7),
-                FallingSprite = new Sprite(fallingPlayer, 1, 4, 7),
-                MovingRightSprite = new Sprite(movingPlayerRight, 1, 4, 7),
-                MidJumpSprite = new Sprite(standingPlayer, 1, 4, 7),
-                LandingSprite = new Sprite(standingPlayer, 1, 6, 7),
-                JumpingSprite = new Sprite(standingPlayer, 1, 4, 7),
-                WallClimbUpSprite = new Sprite(standingPlayer, 1, 4, 7),
-                WallClimbDownSprite = new Sprite(standingPlayer, 1, 4, 7)
+                StandingSprite = new Sprite(standingClimb, 1, 4, 7),
+                MovingLeftSprite = new Sprite(movingLeftClimb, 1, 7, 7),
+                FallingSprite = new Sprite(standingClimb, 1, 4, 7),
+                MovingRightSprite = new Sprite(movingRightClimb, 1, 7, 7),
+                MidJumpSprite = new Sprite(standingClimb, 1, 4, 7),
+                LandingSprite = new Sprite(standingClimb, 1, 6, 7),
+                JumpingSprite = new Sprite(standingClimb, 1, 4, 7),
+                WallClimbUpSprite = new Sprite(standingClimb, 1, 4, 7),
+                WallClimbDownSprite = new Sprite(standingClimb, 1, 4, 7)
             });
 
             // load sounds
