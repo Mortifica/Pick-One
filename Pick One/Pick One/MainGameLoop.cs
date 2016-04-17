@@ -30,6 +30,8 @@ namespace Pick_One
         public MainGameLoop()
         {
             graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferWidth = 1440;
+            graphics.PreferredBackBufferHeight = 900;
             Content.RootDirectory = "Content";
             LevelManager.Content = Content;
         }
