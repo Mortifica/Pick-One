@@ -40,8 +40,22 @@ namespace Pick_One.Levels
                     }
                     else
                     {
-                        // Empty won't be added to the list
-                        //listPosition.Add(new Tile(content, Tile.Type.Empty, 0, 0));
+                        if (color == LevelColorMap.UnclimbableWall)
+                        {
+                            listPosition.Add(new Tile(content, Tile.TileTypes.Unclimbable, x, y));
+                        }
+                        else
+                        {
+                            if (color == LevelColorMap.SlowFloor)
+                            {
+                                listPosition.Add(new Tile(content, Tile.TileTypes.Slow, x, y));
+                            }
+                            else
+                            {
+                                // Empty won't be added to the list
+                                //listPosition.Add(new Tile(content, Tile.Type.Empty, 0, 0));
+                            }
+                        }
                     }
                 }
             }

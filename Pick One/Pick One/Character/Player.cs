@@ -681,6 +681,10 @@ namespace Pick_One.Character
 
         private void MoveHorizontally(float movement)
         {
+            if(LevelManager.Instance.CheckCollision(new Rectangle((int)PlayerLocation.XLocation, (int)(PlayerLocation.YLocation + CurrentPlayerSpeciality.Height + 1), (int)CurrentPlayerSpeciality.Width, 1)).Item2.Where(level => level.Type == Levels.Tile.TileTypes.Slow).Count() > 0)
+            {
+                movement = movement / 2;
+            }
             MovementVector.X += movement;
         }
         private void MoveVertically(float movement)

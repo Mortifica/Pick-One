@@ -95,6 +95,18 @@ namespace Pick_One.Levels
                 location = new Vector2(x * texture.Width, y * texture.Height);
                 rectangle = new Rectangle(x * texture.Width, y * texture.Height, texture.Width, texture.Height);
             }
+            if (Type == TileTypes.Unclimbable)
+            {
+                texture = content.Load<Texture2D>(@"test_UnClimbable_Texture");
+                location = new Vector2(x * texture.Width, y * texture.Height);
+                rectangle = new Rectangle(x * texture.Width, y * texture.Height, texture.Width, texture.Height);
+            }
+            if (Type == TileTypes.Slow)
+            {
+                texture = content.Load<Texture2D>(@"test_Slow_Texture");
+                location = new Vector2(x * texture.Width, y * texture.Height);
+                rectangle = new Rectangle(x * texture.Width, y * texture.Height, texture.Width, texture.Height);
+            }
 
             return new Sprite(texture, 1, 1); // If we need to animate this can be nested into the if statement.
         }
