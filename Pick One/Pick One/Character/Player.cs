@@ -220,7 +220,7 @@ namespace Pick_One.Character
                 }
                 else
                 {
-                    if(IsJumping && !isJumpValid)
+                    if (IsJumping && !isJumpValid)
                     {
                         IsJumping = false;
                         TransitionState();
@@ -246,7 +246,7 @@ namespace Pick_One.Character
             IsTouchingWall = false;
         }
         //Uncomment to see max jump
-      //  float test = 0;
+        //  float test = 0;
         private void applyJump()
         {
 
@@ -255,7 +255,7 @@ namespace Pick_One.Character
             {
                 if (JumpTime > InitJumpTime)
                     MovementVector.Y -= (CurrentPlayerSpeciality.Movement.UpwardMovement * 2 / (JumpTime - InitJumpTime));
-              //  test += MovementVector.Y;
+                //  test += MovementVector.Y;
             }
             else
             {
@@ -633,23 +633,47 @@ namespace Pick_One.Character
 
         private void ProccessMovement(KeyAction action)
         {
-            bool blockLeft = LevelManager.Instance.GetBlocksAt(PlayerLocation.XLocation - 1, PlayerLocation.YLocation, CurrentPlayerSpeciality.Height, 1).Count() > 0;
-            bool blockRight = LevelManager.Instance.GetBlocksAt(PlayerLocation.XLocation + CurrentPlayerSpeciality.Width + 1, PlayerLocation.YLocation, CurrentPlayerSpeciality.Height, 1).Count() > 0;
+
+            var blocksLeft = LevelManager.Instance.CheckCollision(new Rectangle((int)PlayerLocation.XLocation - 1, (int)PlayerLocation.YLocation, (int)CurrentPlayerSpeciality.Height, 1));
+            var blocksRight = LevelManager.Instance.CheckCollision(new Rectangle((int)(PlayerLocation.XLocation + CurrentPlayerSpeciality.Width + 1), (int)PlayerLocation.YLocation, (int)CurrentPlayerSpeciality.Height, 1));
 
             switch (action.Key)
             {
                 case Keys.A:
+
                     MoveHorizontally(-CurrentPlayerSpeciality.Movement.LeftMovement);
-                    if (IsClimbable() && (blockLeft))
+                    if (IsClimbable())
                     {
-                        MoveVertically(-CurrentPlayerSpeciality.Movement.UpwardMovement);
+                        bool processMovement = false;
+                        if (blocksLeft.Item1)
+                        {
+                            if (blocksLeft.Item2.Where(tile => tile.Type == Levels.Tile.TileTypes.Unclimbable).Count() != blocksLeft.Item2.Count)
+                            {
+                                processMovement = true;
+                            }
+                        }
+                        if (processMovement)
+                        {
+                            MoveVertically(-CurrentPlayerSpeciality.Movement.UpwardMovement);
+                        }
                     }
                     break;
                 case Keys.D:
                     MoveHorizontally(CurrentPlayerSpeciality.Movement.RightMovement);
-                    if (IsClimbable() && (blockRight))
+                    if (IsClimbable())
                     {
-                        MoveVertically(-CurrentPlayerSpeciality.Movement.UpwardMovement);
+                        bool processMovement = false;
+                        if (blocksRight.Item1)
+                        {
+                            if (blocksRight.Item2.Where(tile => tile.Type == Levels.Tile.TileTypes.Unclimbable).Count() != blocksRight.Item2.Count)
+                            {
+                                processMovement = true;
+                            }
+                        }
+                        if (processMovement)
+                        {
+                            MoveVertically(-CurrentPlayerSpeciality.Movement.UpwardMovement);
+                        }
                     }
                     break;
             }
