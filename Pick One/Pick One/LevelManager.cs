@@ -66,7 +66,13 @@ namespace Pick_One
             else
                 return new Vector2(0, 0);
         }
-
+        public Vector2 GetFinishingPosition()
+        {
+            if (Level != null)
+                return Level.Single(tile => tile.Type == Tile.TileTypes.EndPosition).Location;//= Level.Single(tile => tile.).Location;
+            else
+                return new Vector2(0, 0);
+        }
         public Vector2 GetPlayerStartingLocation()
         {
             Vector2 startingPlace = LevelManager.Instance.GetStartingPosition();
