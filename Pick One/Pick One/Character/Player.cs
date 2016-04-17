@@ -37,10 +37,13 @@ namespace Pick_One.Character
             }
         }
 
+        public int MaxJump { get; private set; }
+
         private Vector2 MovementVector;
         private bool IsTouchingWall;
         public Player(Vector2 initialLocation, List<PlayerSpriteContainer> container)
         {
+            MaxJump = 117;
             InitJumpTime = 30;
             // CollisionManager = collisionManager;
             MovementVector = new Vector2();
@@ -192,12 +195,22 @@ namespace Pick_One.Character
 
 
             //move, Update Sprite Animation, Transform, Update Hitbox
-            bool isJumpValid = checkJumpingValidity();
-            if (IsJumping && isJumpValid)
+            if (IsJumping && CurrentPlayerSpeciality.IsJumpable)
             {
-                applyJump();
+                bool isJumpValid = checkJumpingValidity();
+                if (IsJumping && isJumpValid)
+                {
+                    applyJump();
+                }
+                if (!isJumpValid || InitJumpTime > JumpTime)
+                {
+                    CheckMovement();
+                }
             }
-            CheckMovement(isJumpValid);
+            else
+            {
+                CheckMovement();
+            }
             ApplyMovement();
 
             UpdateSprite();
@@ -208,7 +221,8 @@ namespace Pick_One.Character
             MovementVector.Y = 0;
             IsTouchingWall = false;
         }
-
+        //Uncomment to see max jump
+      //  float test = 0;
         private void applyJump()
         {
 
@@ -217,6 +231,7 @@ namespace Pick_One.Character
             {
                 if (JumpTime > InitJumpTime)
                     MovementVector.Y -= (CurrentPlayerSpeciality.Movement.UpwardMovement * 2 / (JumpTime - InitJumpTime));
+              //  test += MovementVector.Y;
             }
             else
             {
@@ -229,7 +244,7 @@ namespace Pick_One.Character
         {
             if (JumpTime == 0)
             {
-                var test = LevelManager.Instance.CheckCollision(new Rectangle((int)PlayerLocation.XLocation, (int)PlayerLocation.YLocation,
+                var test = LevelManager.Instance.CheckCollision(new Rectangle((int)PlayerLocation.XLocation, (int)PlayerLocation.YLocation - MaxJump,
                     (int)CurrentPlayerSpeciality.Width, (int)CurrentPlayerSpeciality.Height));
                 if (!test.Item1)
                 {
@@ -252,7 +267,7 @@ namespace Pick_One.Character
             MovementVector.Y += gravityStrength; // Gravity
         }
 
-        private void CheckMovement(bool isJumpValid)
+        private void CheckMovement()
         {
             var newRectangle = new Rectangle(PlayerHitbox.HitBoxRectangle.X, PlayerHitbox.HitBoxRectangle.Y, PlayerHitbox.HitBoxRectangle.Width, PlayerHitbox.HitBoxRectangle.Height);
             var newXRectangle = new Rectangle(PlayerHitbox.HitBoxRectangle.X, PlayerHitbox.HitBoxRectangle.Y, PlayerHitbox.HitBoxRectangle.Width, PlayerHitbox.HitBoxRectangle.Height);
