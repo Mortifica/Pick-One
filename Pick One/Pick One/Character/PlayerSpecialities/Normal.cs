@@ -10,15 +10,9 @@ namespace Pick_One.Character.PlayerSpecialities
 {
     public class Normal : AbstractPlayerSpeciality
     {
-        public Normal(PlayerSpriteContainer sprites)
+        public Normal(PlayerSpriteContainer sprites) : base(sprites)
         {
-            StandingSprite = sprites.StandingSprite;
-            MovingLeft = sprites.MovingLeftSprite;
-            MovingRight = sprites.MovingRightSprite;
-            Jump = sprites.StandingSprite;
-            WallClimbDown = sprites.WallClimbDownSprite;
-            WallClimbUp = sprites.WallClimbUpSprite;
-            Falling = sprites.FallingSprite;
+           
             Movement = new MovementContainer();
             Movement.UpwardMovement = 0.0f;
             Movement.DownwardMovement = 0.0f;

@@ -41,7 +41,7 @@ namespace Pick_One.Character
         public Player(Vector2 initialLocation, List<PlayerSpriteContainer> container)
         {
             InitJumpTime = 30;
-           // CollisionManager = collisionManager;
+            // CollisionManager = collisionManager;
             MovementVector = new Vector2();
             PlayerLocation = new Location();
             PlayerLocation.XLocation = initialLocation.X;
@@ -112,6 +112,7 @@ namespace Pick_One.Character
                     //  if (CurrentPlayerSpeciality.GetType() != typeof(Vertical))
                     // {
                     speciality = VerticalSpeciality;
+
                     // }
                     break;
                 case Keys.D5:
@@ -121,6 +122,8 @@ namespace Pick_One.Character
                     //  }
                     break;
             }
+            PlayerLocation.YLocation -= speciality.Height - CurrentPlayerSpeciality.Height;
+
             CurrentPlayerSpeciality = speciality;
             CurrentPlayerSpeciality.CurrentState = CurrentState;
             PlayerHitbox.HitBoxRectangle.Width = (int)CurrentPlayerSpeciality.Width;
@@ -159,10 +162,10 @@ namespace Pick_One.Character
             if (IsJumping)
             {
                 JumpTime++;
-                if(JumpTime < 50)
+                if (JumpTime < 50)
                 {
-                    if(JumpTime > InitJumpTime)
-                    MovementVector.Y -= (CurrentPlayerSpeciality.Movement.UpwardMovement / (JumpTime - InitJumpTime));
+                    if (JumpTime > InitJumpTime)
+                        MovementVector.Y -= (CurrentPlayerSpeciality.Movement.UpwardMovement / (JumpTime - InitJumpTime));
                 }
                 else
                 {

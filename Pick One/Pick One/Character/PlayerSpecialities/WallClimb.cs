@@ -9,15 +9,9 @@ namespace Pick_One.Character.PlayerSpecialities
 {
     public class WallClimb : AbstractPlayerSpeciality
     {
-        public WallClimb(PlayerSpriteContainer sprites)
+        public WallClimb(PlayerSpriteContainer sprites) : base(sprites)
         {
-            StandingSprite = sprites.StandingSprite;
-            MovingLeft = sprites.MovingLeftSprite;
-            MovingRight = sprites.MovingRightSprite;
-            Jump = sprites.StandingSprite;
-            WallClimbDown = sprites.WallClimbDownSprite;
-            WallClimbUp = sprites.WallClimbUpSprite;
-            Falling = sprites.FallingSprite;
+           
             Movement = new MovementContainer();
             Movement.UpwardMovement = 2.0f;
             Movement.DownwardMovement = 2.0f;

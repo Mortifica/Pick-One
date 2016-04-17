@@ -11,6 +11,21 @@ namespace Pick_One.Character.PlayerSpecialities
 {
     public abstract class AbstractPlayerSpeciality
     {
+        private PlayerSpriteContainer sprites;
+
+        public AbstractPlayerSpeciality(PlayerSpriteContainer sprites)
+        {
+            StandingSprite = sprites.StandingSprite;
+            MovingLeft = sprites.MovingLeftSprite;
+            MovingRight = sprites.MovingRightSprite;
+            Jump = sprites.JumpingSprite;
+            MidJump = sprites.MidJumpSprite;
+            Landing = sprites.LandingSprite;
+            Falling = sprites.FallingSprite;
+            WallClimbDown = sprites.WallClimbDownSprite;
+            WallClimbUp = sprites.WallClimbUpSprite;
+        }
+
         public MovementContainer Movement { get; set; }
         public bool IsStretchable { get; set; }
         public bool IsClimbable { get; set; }
