@@ -528,6 +528,9 @@ namespace Pick_One.Character
 
         private void ProccessMovement(KeyAction action)
         {
+            bool blockLeft = GameManager.Instance.GetBlocksAt(PlayerLocation.XLocation - 1, PlayerLocation.YLocation, CurrentPlayerSpeciality.Height, 1).Count() > 0;
+            bool blockRight = GameManager.Instance.GetBlocksAt(PlayerLocation.XLocation + CurrentPlayerSpeciality.Width + 1, PlayerLocation.YLocation, CurrentPlayerSpeciality.Height, 1).Count() > 0;
+
             switch (action.Key)
             {
                 //case Keys.W:
@@ -538,11 +541,17 @@ namespace Pick_One.Character
                 //    break;
                 case Keys.A:
                     MoveHorizontally(-CurrentPlayerSpeciality.Movement.LeftMovement);
-                    MoveVertically(-CurrentPlayerSpeciality.Movement.UpwardMovement);
+                    if (IsClimbable() && (blockLeft))
+                    {
+                        MoveVertically(-CurrentPlayerSpeciality.Movement.UpwardMovement);
+                    }
                     break;
                 case Keys.D:
                     MoveHorizontally(CurrentPlayerSpeciality.Movement.RightMovement);
-                    MoveVertically(-CurrentPlayerSpeciality.Movement.UpwardMovement);
+                    if (IsClimbable() && (blockRight))
+                    {
+                        MoveVertically(-CurrentPlayerSpeciality.Movement.UpwardMovement);
+                    }
                     break;
             }
         }
@@ -553,12 +562,7 @@ namespace Pick_One.Character
         }
         private void MoveVertically(float movement)
         {
-            bool blockLeft = GameManager.Instance.GetBlocksAt(PlayerLocation.XLocation - 1, PlayerLocation.YLocation, CurrentPlayerSpeciality.Height, 1).Count() > 0;
-            bool blockRight = GameManager.Instance.GetBlocksAt(PlayerLocation.XLocation + CurrentPlayerSpeciality.Width + 1, PlayerLocation.YLocation, CurrentPlayerSpeciality.Height, 1).Count() > 0;
-            if (IsClimbable() && (blockLeft || blockRight))
-            {
-                MovementVector.Y += movement - 2;
-            }
+            MovementVector.Y += movement - 2;
         }
         public void SetIsTouchingWall(bool isTouchingWall)
         {
