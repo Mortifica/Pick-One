@@ -25,7 +25,7 @@ namespace Pick_One.BasicClasses
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(font,"Test Text",game.Camera.Focus.Location - new Vector2(200,200), Color.White);
+            spriteBatch.DrawString(font,game.Player.PlayerLocation.XLocation +":"+ game.Player.PlayerLocation.YLocation,game.Camera.Focus.Location - new Vector2(200,200), Color.White);
         }
     }
 }

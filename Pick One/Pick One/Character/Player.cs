@@ -144,11 +144,15 @@ namespace Pick_One.Character
                 }
             }
             var widthDiff = speciality.Width - CurrentPlayerSpeciality.Width;
-            if (widthDiff > 0)
+            if (Math.Abs(widthDiff) > 0)
             {
-                if (LevelManager.Instance.GetBlocksAt(PlayerLocation.XLocation + CurrentPlayerSpeciality.Width + widthDiff, PlayerLocation.YLocation, 1, widthDiff).Count() > 0)
+                if (LevelManager.Instance.GetBlocksAt(PlayerLocation.XLocation + CurrentPlayerSpeciality.Width, PlayerLocation.YLocation, 1, widthDiff).Count() > 0)
                 {
                     PlayerLocation.XLocation -= widthDiff;
+                }
+                else
+                {
+                    PlayerLocation.XLocation -= (widthDiff / 2);
                 }
                 //else
                 //{
@@ -162,6 +166,7 @@ namespace Pick_One.Character
             PreviousPlayerSpeciality = CurrentPlayerSpeciality;
             CurrentPlayerSpeciality = speciality;
             CurrentPlayerSpeciality.CurrentState = CurrentState;
+            PlayerHitbox.Update(PlayerLocation.XLocation, PlayerLocation.YLocation);
             PlayerHitbox.HitBoxRectangle.Width = (int)CurrentPlayerSpeciality.Width;
             PlayerHitbox.HitBoxRectangle.Height = (int)CurrentPlayerSpeciality.Height;
 
