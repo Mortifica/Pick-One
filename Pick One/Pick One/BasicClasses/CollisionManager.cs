@@ -2,6 +2,7 @@
 using Pick_One.Levels;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Pick_One.BasicClasses
 {
@@ -36,6 +37,10 @@ namespace Pick_One.BasicClasses
         public void Remove(Tile rectangle)
         {
             collisionObjects.Remove(rectangle);
+        }
+        public IEnumerable<Tile> GetBlocksAt(float x, float y, float height)
+        {
+            return collisionObjects.Where(rect => rect.Rectangle.Intersects(new Rectangle((int)x, (int)y, 1, (int)height)));
         }
 
 

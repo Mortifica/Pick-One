@@ -82,6 +82,7 @@ namespace Pick_One.Character
                     break;
                 case Keys.Right:
                     speciality = CurrentPlayerSpeciality.NextTransform;
+
                     break;
                 case Keys.D1:
                     //  if (CurrentPlayerSpeciality.GetType() != typeof(Normal))
@@ -115,6 +116,7 @@ namespace Pick_One.Character
                     break;
             }
             CurrentPlayerSpeciality = speciality;
+            CurrentPlayerSpeciality.CurrentState = CurrentState;
             PlayerHitbox.HitBoxRectangle.Width = (int)CurrentPlayerSpeciality.Width;
             PlayerHitbox.HitBoxRectangle.Height = (int)CurrentPlayerSpeciality.Height;
         }
@@ -443,7 +445,12 @@ namespace Pick_One.Character
         }
         private void MoveVertically(float movement)
         {
-            MovementVector.Y += movement;
+            bool blockLeft = CollisionManager.GetBlocksAt(PlayerLocation.XLocation - 1, PlayerLocation.YLocation, CurrentPlayerSpeciality.Height).Count() > 0;
+            bool blockRight = CollisionManager.GetBlocksAt(PlayerLocation.XLocation + CurrentPlayerSpeciality.Width + 1, PlayerLocation.YLocation, CurrentPlayerSpeciality.Height).Count() > 0;
+            if (IsClimbable() && (blockLeft || blockRight))
+            {
+                MovementVector.Y += movement;
+            }
         }
         public void SetIsTouchingWall(bool isTouchingWall)
         {
