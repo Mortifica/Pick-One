@@ -13,6 +13,7 @@ namespace Pick_One.Character
     public abstract class AbstractCharacter
     {
         protected AbstractPlayerSpeciality CurrentPlayerSpeciality { get; set; }
+        protected AbstractPlayerSpeciality PreviousPlayerSpeciality { get; set; }
         protected Normal NormalSpeciality { get; set; }
         protected Speed SpeedSpeciality { get; set; }
         protected Stretch StretchSpeciality { get; set; }

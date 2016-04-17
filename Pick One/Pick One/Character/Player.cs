@@ -23,6 +23,8 @@ namespace Pick_One.Character
 
         private Vector2 gravity = Vector2.Zero;
 
+        private int tranformAnimation = 20;
+
         public Vector2 Location
         {
             get
@@ -96,31 +98,35 @@ namespace Pick_One.Character
                     //  if (CurrentPlayerSpeciality.GetType() != typeof(Normal))
                     // {
                     speciality = NormalSpeciality;
+                    tranformAnimation = 0;
                     // }
                     break;
                 case Keys.D2:
                     // if (CurrentPlayerSpeciality.GetType() != typeof(Speed))
                     // {
                     speciality = SpeedSpeciality;
+                    tranformAnimation = 0;
                     //}
                     break;
                 case Keys.D3:
                     //if (CurrentPlayerSpeciality.GetType() != typeof(Stretch))
                     // {
                     speciality = StretchSpeciality;
+                    tranformAnimation = 0;
                     // }
                     break;
                 case Keys.D4:
                     //  if (CurrentPlayerSpeciality.GetType() != typeof(Vertical))
                     // {
                     speciality = VerticalSpeciality;
-
+                    tranformAnimation = 0;
                     // }
                     break;
                 case Keys.D5:
                     //   if (CurrentPlayerSpeciality.GetType() != typeof(WallClimb))
                     // {
                     speciality = WallClimbSpeciality;
+                    tranformAnimation = 0;
                     //  }
                     break;
             }
@@ -153,12 +159,14 @@ namespace Pick_One.Character
 
                 //}
             }
+            PreviousPlayerSpeciality = CurrentPlayerSpeciality;
             CurrentPlayerSpeciality = speciality;
             CurrentPlayerSpeciality.CurrentState = CurrentState;
             PlayerHitbox.HitBoxRectangle.Width = (int)CurrentPlayerSpeciality.Width;
             PlayerHitbox.HitBoxRectangle.Height = (int)CurrentPlayerSpeciality.Height;
 
         }
+
         public Tuple<PlayerState, PlayerSpecialityEnum> GetCurrentState()
         {
             return new Tuple<PlayerState, PlayerSpecialityEnum>(CurrentState, CurrentPlayerSpeciality.SpecialityName);
@@ -190,6 +198,9 @@ namespace Pick_One.Character
         }
         public void Update(GameTime gameTime)
         {
+            if (tranformAnimation < 20)
+                PreviousPlayerSpeciality.Poof.Update();
+
             if (CurrentPlayerSpeciality != StretchSpeciality)
                 ApplyGravity(gameTime);
 
@@ -579,7 +590,13 @@ namespace Pick_One.Character
         public void Draw(SpriteBatch spriteBatch)
         {
             Console.WriteLine(CurrentState);
-            CurrentPlayerSpeciality.Draw(spriteBatch, new Vector2(PlayerLocation.XLocation, PlayerLocation.YLocation));
+            if (tranformAnimation < 20)
+            {
+                PreviousPlayerSpeciality.DrawTransform(spriteBatch, new Vector2(PlayerLocation.XLocation, PlayerLocation.YLocation));
+                tranformAnimation++;
+            }
+            else
+                CurrentPlayerSpeciality.Draw(spriteBatch, new Vector2(PlayerLocation.XLocation, PlayerLocation.YLocation));
         }
 
         public void NotifyOfChange(List<KeyAction> actions, GameTime gameTime)

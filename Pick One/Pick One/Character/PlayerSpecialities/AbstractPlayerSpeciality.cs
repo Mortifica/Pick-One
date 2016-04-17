@@ -24,6 +24,7 @@ namespace Pick_One.Character.PlayerSpecialities
             Falling = sprites.FallingSprite;
             WallClimbRight = sprites.WallClimbRight;
             WallClimbLeft = sprites.WallClimbLeft;
+            Poof = sprites.Poof;
         }
 
         public MovementContainer Movement { get; set; }
@@ -39,6 +40,7 @@ namespace Pick_One.Character.PlayerSpecialities
         public Sprite WallClimbLeft { get; set; }
         public Sprite WallClimbRight { get; set; }
         public Sprite Falling { get; set; }
+        public Sprite Poof { get; set; }
         public AbstractPlayerSpeciality NextTransform { get; set; }
         public AbstractPlayerSpeciality PrevTransform { get; set; }
         public PlayerState CurrentState { get; set; }
@@ -133,6 +135,11 @@ namespace Pick_One.Character.PlayerSpecialities
                     Falling.Draw(spriteBatch, location);
                     break;
             }
+        }
+
+        internal void DrawTransform(SpriteBatch spriteBatch, Vector2 location)
+        {
+            Poof.Draw(spriteBatch, location);
         }
 
         internal void SetState(PlayerState currentState)

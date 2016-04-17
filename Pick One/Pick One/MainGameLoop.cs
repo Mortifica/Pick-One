@@ -376,6 +376,8 @@ namespace Pick_One
                 var movingLeftClimb = game.Content.Load<Texture2D>(@"test_Square_Moving_Left_Animation");
                 var movingRightClimb = game.Content.Load<Texture2D>(@"test_Square_Moving_Right_Animation");
 
+                var poof = game.Content.Load<Texture2D>(@"test_Transition_Poof");
+
                 //MiscTesting
                 var climbingPlayer = game.Content.Load<Texture2D>(@"test_Circle_Moving_Animation");
                 PlayerSpriteContainers = new List<PlayerSpriteContainer>();
@@ -389,7 +391,8 @@ namespace Pick_One
                     MovingRightSprite = new Sprite(movingPlayerRight, 1, 4, 7),
                     JumpingSprite = new Sprite(standingPlayer, 1, 4, 7),
                     WallClimbLeft = new Sprite(standingPlayer, 1, 4, 7),
-                    WallClimbRight = new Sprite(standingPlayer, 1, 4, 7)
+                    WallClimbRight = new Sprite(standingPlayer, 1, 4, 7),
+                    Poof = new Sprite(poof, 1, 13, 2)
                 });
                 PlayerSpriteContainers.Add(new PlayerSpriteContainer() // Speed
                 {
@@ -401,7 +404,8 @@ namespace Pick_One
                     MovingRightSprite = new Sprite(standingPlayer, 1, 4, 7),
                     JumpingSprite = new Sprite(fallingPlayer, 1, 4, 7),
                     WallClimbLeft = new Sprite(fallingPlayer, 1, 4, 7),
-                    WallClimbRight = new Sprite(fallingPlayer, 1, 4, 7)
+                    WallClimbRight = new Sprite(fallingPlayer, 1, 4, 7),
+                    Poof = new Sprite(poof, 1, 13, 2)
                 });
                 PlayerSpriteContainers.Add(new PlayerSpriteContainer() // Stretch
                 {
@@ -413,7 +417,8 @@ namespace Pick_One
                     MovingRightSprite = new Sprite(hoverMovingRight, 1, 4, 7),
                     JumpingSprite = new Sprite(hoverStanding, 1, 4, 7),
                     WallClimbLeft = new Sprite(hoverStanding, 1, 4, 7),
-                    WallClimbRight = new Sprite(hoverStanding, 1, 4, 7)
+                    WallClimbRight = new Sprite(hoverStanding, 1, 4, 7),
+                    Poof = new Sprite(poof, 1, 13, 2)
                 });
                 PlayerSpriteContainers.Add(new PlayerSpriteContainer() // Vertical
                 {
@@ -425,7 +430,8 @@ namespace Pick_One
                     LandingSprite = new Sprite(landingVertical, 1, 6, 7),
                     FallingSprite = new Sprite(fallingVertical, 1, 6, 7),
                     WallClimbLeft = new Sprite(standingVertical, 1, 4, 7),
-                    WallClimbRight = new Sprite(standingVertical, 1, 4, 7)
+                    WallClimbRight = new Sprite(standingVertical, 1, 4, 7),
+                    Poof = new Sprite(poof, 1, 13, 2)
                 });
                 PlayerSpriteContainers.Add(new PlayerSpriteContainer() // Climbing
                 {
@@ -437,8 +443,11 @@ namespace Pick_One
                     LandingSprite = new Sprite(standingClimb, 1, 6, 7),
                     JumpingSprite = new Sprite(standingClimb, 1, 4, 7),
                     WallClimbLeft = new Sprite(movingLeftClimb, 1, 7, 7),
-                    WallClimbRight = new Sprite(movingRightClimb, 1, 7, 7)
+                    WallClimbRight = new Sprite(movingRightClimb, 1, 7, 7),
+                    Poof = new Sprite(poof, 1, 13, 2)
                 });
+
+
                 LevelManager.Instance.SetLevel(@"TestLevel");
                 //GameManager.Instance.SetLevel(@"TestLevel2");
                 

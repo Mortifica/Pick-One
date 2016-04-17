@@ -18,5 +18,6 @@ namespace Pick_One.Character
         public Sprite FallingSprite { get; set; }
         public Sprite LandingSprite { get; set; }
         public Sprite MidJumpSprite { get; set; }
+        public Sprite Poof { get; set; }
     }
 }
