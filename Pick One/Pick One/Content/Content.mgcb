@@ -409,3 +409,9 @@
 /processorParam:TextureFormat=Color
 /build:test_Transition_Poof.png
 
+#begin mainMenuFont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:mainMenuFont
+
