@@ -530,17 +530,19 @@ namespace Pick_One.Character
         {
             switch (action.Key)
             {
-                case Keys.W:
-                    MoveVertically(-CurrentPlayerSpeciality.Movement.UpwardMovement);
-                    break;
-                case Keys.S:
-                    MoveVertically(CurrentPlayerSpeciality.Movement.DownwardMovement);
-                    break;
+                //case Keys.W:
+                //    MoveVertically(-CurrentPlayerSpeciality.Movement.UpwardMovement);
+                //    break;
+                //case Keys.S:
+                //    MoveVertically(CurrentPlayerSpeciality.Movement.DownwardMovement);
+                //    break;
                 case Keys.A:
                     MoveHorizontally(-CurrentPlayerSpeciality.Movement.LeftMovement);
+                    MoveVertically(-CurrentPlayerSpeciality.Movement.UpwardMovement);
                     break;
                 case Keys.D:
                     MoveHorizontally(CurrentPlayerSpeciality.Movement.RightMovement);
+                    MoveVertically(-CurrentPlayerSpeciality.Movement.UpwardMovement);
                     break;
             }
         }
