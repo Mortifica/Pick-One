@@ -466,9 +466,9 @@ namespace Pick_One.Character
 
                             if (blockLeft)
                             {
-                                if (CurrentState != PlayerState.WallClimbLeft)
+                                if (CurrentState != PlayerState.WallClimbRight)
                                 {
-                                    CurrentState = PlayerState.WallClimbLeft;
+                                    CurrentState = PlayerState.WallClimbRight;
                                     return true;
                                 }
                             }
@@ -476,9 +476,9 @@ namespace Pick_One.Character
                             {
                                 if (blockRight)
                                 {
-                                    if (CurrentState != PlayerState.WallClimbRight)
+                                    if (CurrentState != PlayerState.WallClimbLeft)
                                     {
-                                        CurrentState = PlayerState.WallClimbRight;
+                                        CurrentState = PlayerState.WallClimbLeft;
                                         return true;
                                     }
                                 }
