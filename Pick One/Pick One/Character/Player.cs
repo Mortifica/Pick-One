@@ -157,8 +157,9 @@ namespace Pick_One.Character
         }
         public void Update(GameTime gameTime)
         {
-            if(CurrentPlayerSpeciality != StretchSpeciality)
-            MovementVector.Y += 1; // Gravity
+            if (CurrentPlayerSpeciality != StretchSpeciality)
+                ApplyGravity(gameTime);
+
 
             //move, Update Sprite Animation, Transform, Update Hitbox
             if (IsJumping)
@@ -185,6 +186,15 @@ namespace Pick_One.Character
             MovementVector.X = 0;
             MovementVector.Y = 0;
             IsTouchingWall = false;
+        }
+
+        private int gravityStrength = 0;
+        private void ApplyGravity(GameTime gameTime)
+        {
+            if ((gameTime.TotalGameTime.Ticks % 10) == 0)
+                if (gravityStrength < 3)
+                    gravityStrength++;
+            MovementVector.Y += gravityStrength; // Gravity
         }
 
         private void CheckMovement()
@@ -217,6 +227,7 @@ namespace Pick_One.Character
                 MovementVector.X = newRectangle.X - PlayerLocation.XLocation;
 
                 MovementVector.Y = 0;
+                gravityStrength = 0;
 
             }
             else if (!checkYResults.Item1)
@@ -516,7 +527,7 @@ namespace Pick_One.Character
             bool blockRight = GameManager.Instance.GetBlocksAt(PlayerLocation.XLocation + CurrentPlayerSpeciality.Width + 1, PlayerLocation.YLocation, CurrentPlayerSpeciality.Height).Count() > 0;
             if (IsClimbable() && (blockLeft || blockRight))
             {
-                MovementVector.Y += movement;
+                MovementVector.Y += movement - 2;
             }
         }
         public void SetIsTouchingWall(bool isTouchingWall)
