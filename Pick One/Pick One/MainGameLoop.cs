@@ -61,10 +61,10 @@ namespace Pick_One
             spriteBatch = new SpriteBatch(GraphicsDevice);
             CurrentState = new StartState(this);
             Camera = new Camera2D(CurrentState);
-            
-            
-            
-            
+
+
+
+
             // load sounds
             var deathSound = Content.Load<Song>("death");
             var countdownSound = Content.Load<Song>("countdown");
@@ -82,7 +82,6 @@ namespace Pick_One
             var levelTheme = Content.Load<Song>("LevelTheme");
 
             
-
             //MediaPlayer.IsRepeating = true;
            // MediaLibrary mediaLibrary = new MediaLibrary();
             
@@ -191,7 +190,7 @@ namespace Pick_One
             private void init()
             {
                 font = game.Content.Load<SpriteFont>("mainMenuFont");
-
+                
                 var tempSubscriber = new KeyboardSubscriber()
                 {
                     Subscriber = this,
@@ -203,7 +202,7 @@ namespace Pick_One
                         Keys.W,
                         Keys.Up,
                         Keys.Down
-                    }
+            }
                 };
 
                 Listener = new KeyboardListener();
@@ -342,7 +341,7 @@ namespace Pick_One
         {
             public KeyboardListener PlayStateKeyListener { get; set; }
             public List<PlayerSpriteContainer> PlayerSpriteContainers { get; set; }
-            
+
             public PlayState(MainGameLoop game)
                 : base(game)
             {
@@ -442,7 +441,7 @@ namespace Pick_One
                 });
                 LevelManager.Instance.SetLevel(@"TestLevel");
                 //GameManager.Instance.SetLevel(@"TestLevel2");
-
+                
                 PlayStateKeyListener = new KeyboardListener();
                 game.Player = new Player(LevelManager.Instance.GetPlayerStartingLocation(), PlayerSpriteContainers);
                 LevelManager.Player = game.Player;

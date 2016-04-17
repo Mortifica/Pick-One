@@ -11,7 +11,7 @@ namespace Pick_One.Character.PlayerSpecialities
     {
         public Stretch(PlayerSpriteContainer sprites) : base(sprites)
         {
-            
+            SpecialityName = PlayerSpecialityEnum.Stretch;
             Movement = new MovementContainer();
             Movement.UpwardMovement = 0.0f;
             Movement.DownwardMovement = 0.0f;

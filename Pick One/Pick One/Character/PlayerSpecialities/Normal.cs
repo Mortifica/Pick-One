@@ -12,8 +12,8 @@ namespace Pick_One.Character.PlayerSpecialities
     {
         public Normal(PlayerSpriteContainer sprites) : base(sprites)
         {
-           
-            Movement = new MovementContainer();
+            SpecialityName = PlayerSpecialityEnum.Normal;
+             Movement = new MovementContainer();
             Movement.UpwardMovement = 0.0f;
             Movement.DownwardMovement = 0.0f;
             Movement.LeftMovement = 2.0f;

@@ -37,10 +37,13 @@ namespace Pick_One.Character
             }
         }
 
+        public int MaxJump { get; private set; }
+
         private Vector2 MovementVector;
         private bool IsTouchingWall;
         public Player(Vector2 initialLocation, List<PlayerSpriteContainer> container)
         {
+            MaxJump = 117;
             InitJumpTime = 30;
             // CollisionManager = collisionManager;
             MovementVector = new Vector2();
@@ -54,7 +57,7 @@ namespace Pick_One.Character
             WallClimbSpeciality = new WallClimb(container[4]);
             NormalSpeciality.NextTransform = SpeedSpeciality;
             NormalSpeciality.PrevTransform = WallClimbSpeciality;
-            CurrentPlayerSpeciality = NormalSpeciality;
+            CurrentPlayerSpeciality = SpeedSpeciality;
             IsTouchingWall = false;
             PlayerHitbox = new HitBox(PlayerLocation.XLocation, PlayerLocation.YLocation, CurrentPlayerSpeciality.Height, CurrentPlayerSpeciality.Width);
             CurrentState = PlayerState.Standing;
@@ -156,6 +159,10 @@ namespace Pick_One.Character
             PlayerHitbox.HitBoxRectangle.Height = (int)CurrentPlayerSpeciality.Height;
 
         }
+        public Tuple<PlayerState, PlayerSpecialityEnum> GetCurrentState()
+        {
+            return new Tuple<PlayerState, PlayerSpecialityEnum>(CurrentState, CurrentPlayerSpeciality.SpecialityName);
+        }
         public MovementContainer GetMovement()
         {
             return CurrentPlayerSpeciality.Movement;
@@ -188,21 +195,30 @@ namespace Pick_One.Character
 
 
             //move, Update Sprite Animation, Transform, Update Hitbox
-            if (IsJumping)
+            if (IsJumping && CurrentPlayerSpeciality.IsJumpable)
             {
-                JumpTime++;
-                if (JumpTime < 50)
+                bool isJumpValid = checkJumpingValidity();
+                if (IsJumping && isJumpValid)
                 {
-                    if (JumpTime > InitJumpTime)
-                        MovementVector.Y -= (CurrentPlayerSpeciality.Movement.UpwardMovement / (JumpTime - InitJumpTime));
+                    applyJump();
                 }
                 else
                 {
-                    JumpTime = 0;
-                    IsJumping = false;
+                    if(IsJumping && !isJumpValid)
+                    {
+                        IsJumping = false;
+                        TransitionState();
+                    }
+                }
+                if (!isJumpValid || InitJumpTime > JumpTime)
+                {
+                    CheckMovement();
                 }
             }
-            CheckMovement();
+            else
+            {
+                CheckMovement();
+            }
             ApplyMovement();
 
             UpdateSprite();
@@ -212,6 +228,42 @@ namespace Pick_One.Character
             MovementVector.X = 0;
             MovementVector.Y = 0;
             IsTouchingWall = false;
+        }
+        //Uncomment to see max jump
+      //  float test = 0;
+        private void applyJump()
+        {
+
+            JumpTime++;
+            if (JumpTime < 50)
+            {
+                if (JumpTime > InitJumpTime)
+                    MovementVector.Y -= (CurrentPlayerSpeciality.Movement.UpwardMovement * 2 / (JumpTime - InitJumpTime));
+              //  test += MovementVector.Y;
+            }
+            else
+            {
+                JumpTime = 0;
+                IsJumping = false;
+            }
+        }
+
+        private bool checkJumpingValidity()
+        {
+            if (JumpTime == 0)
+            {
+                var test = LevelManager.Instance.CheckCollision(new Rectangle((int)PlayerLocation.XLocation, (int)PlayerLocation.YLocation - MaxJump,
+                    (int)CurrentPlayerSpeciality.Width, (int)CurrentPlayerSpeciality.Height));
+                if (!test.Item1)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         private int gravityStrength = 0;
@@ -443,7 +495,7 @@ namespace Pick_One.Character
                                     }
                                 }
                             }
-                            
+
                         }
                         else
                         {

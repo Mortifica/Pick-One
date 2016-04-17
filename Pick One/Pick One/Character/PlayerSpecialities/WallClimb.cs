@@ -11,7 +11,7 @@ namespace Pick_One.Character.PlayerSpecialities
     {
         public WallClimb(PlayerSpriteContainer sprites) : base(sprites)
         {
-           
+            SpecialityName = PlayerSpecialityEnum.WallClimb;
             Movement = new MovementContainer();
             Movement.UpwardMovement = 2.0f;
             Movement.DownwardMovement = 2.0f;

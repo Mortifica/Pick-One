@@ -12,7 +12,7 @@ namespace Pick_One.Character.PlayerSpecialities
 
         public Vertical(PlayerSpriteContainer sprites) : base(sprites)
         {
-            
+            SpecialityName = PlayerSpecialityEnum.Vertical;
             Movement = new MovementContainer();
             Movement.UpwardMovement = 20.0f;
             Movement.DownwardMovement = 0.0f;

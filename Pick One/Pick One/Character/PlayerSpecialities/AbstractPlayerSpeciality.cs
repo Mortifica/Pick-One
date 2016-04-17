@@ -42,6 +42,7 @@ namespace Pick_One.Character.PlayerSpecialities
         public AbstractPlayerSpeciality NextTransform { get; set; }
         public AbstractPlayerSpeciality PrevTransform { get; set; }
         public PlayerState CurrentState { get; set; }
+        public PlayerSpecialityEnum SpecialityName { get; set; }
 
         public float Width
         {
