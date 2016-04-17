@@ -55,6 +55,7 @@ namespace Pick_One.Camera
             if(Focus != null)
             {
                 cameraFocus = new Vector3(-Focus.Location.X, -Focus.Location.Y, cameraFocus.Z) + FocusOffest;
+                
             }
 
             TransformationMatrix = Matrix.CreateTranslation(cameraFocus) *

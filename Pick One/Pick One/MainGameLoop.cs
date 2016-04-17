@@ -354,7 +354,8 @@ namespace Pick_One
             private void init(MainGameLoop game)
             {
                 var font = game.Content.Load<SpriteFont>("mainMenuFont");
-                hud = new Hud(game, font);
+                var arrow = game.Content.Load<Texture2D>("directional_Arrow");
+                hud = new Hud(game, font, arrow);
                 //Normal
                 var standingPlayer = game.Content.Load<Texture2D>(@"test_Circle_Standing_Animation");
                 var fallingPlayer = game.Content.Load<Texture2D>(@"test_Circle_Falling_Animation");
