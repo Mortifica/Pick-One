@@ -80,8 +80,8 @@ namespace Pick_One
 
             //Normal
             var standingPlayer = Content.Load<Texture2D>(@"test_Circle_Standing_Animation");
-            var movingPlayer = Content.Load<Texture2D>(@"test_Circle_Moving_Animation");
-            var movingPlayerLeft = Content.Load<Texture2D>(@"test_Circle_Moving_Leftt_Animation");
+            var movingPlayer = Content.Load<Texture2D>(@"test_Circle_Standing_Animation");
+            var movingPlayerLeft = Content.Load<Texture2D>(@"test_Circle_Moving_Left_Animation");
             var movingPlayerRight = Content.Load<Texture2D>(@"test_Circle_Moving_Right_Animation");
 
 
