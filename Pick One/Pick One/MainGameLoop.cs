@@ -23,7 +23,8 @@ namespace Pick_One
         private SpriteBatch spriteBatch;
         public Player Player { get; set; }
         private GameState CurrentState { get; set; }
-        private Camera2D Camera;
+        public Camera2D Camera;
+        
 
 
         public MainGameLoop()
@@ -169,6 +170,7 @@ namespace Pick_One
         /// </summary>
         public class StartState : GameState, IInputSubscriber 
         {
+            
             private SpriteFont font;
             private Sprite background;
             private Options[] MenuOptions = new Options[3]
@@ -339,6 +341,7 @@ namespace Pick_One
         /// </summary>
         public class PlayState : GameState, IInputSubscriber
         {
+            private Hud hud;
             public KeyboardListener PlayStateKeyListener { get; set; }
             public List<PlayerSpriteContainer> PlayerSpriteContainers { get; set; }
 
@@ -350,6 +353,8 @@ namespace Pick_One
             }
             private void init(MainGameLoop game)
             {
+                var font = game.Content.Load<SpriteFont>("mainMenuFont");
+                hud = new Hud(game, font);
                 //Normal
                 var standingPlayer = game.Content.Load<Texture2D>(@"test_Circle_Standing_Animation");
                 var fallingPlayer = game.Content.Load<Texture2D>(@"test_Circle_Falling_Animation");
@@ -477,6 +482,7 @@ namespace Pick_One
 
                 LevelManager.Instance.DrawLevel(spriteBatch);
                 game.Player.Draw(spriteBatch);
+                hud.Draw(spriteBatch);
             }
             public void NotifyOfChange(List<KeyAction> actions, GameTime gameTime)
             {

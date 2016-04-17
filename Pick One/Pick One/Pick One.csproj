@@ -41,6 +41,7 @@
     <Compile Include="BasicClasses\CollisionManager.cs" />
     <Compile Include="BasicClasses\GameState.cs" />
     <Compile Include="BasicClasses\HitBox.cs" />
+    <Compile Include="BasicClasses\Hud.cs" />
     <Compile Include="BasicClasses\Location.cs" />
     <Compile Include="BasicClasses\Sprite.cs" />
     <Compile Include="Camera\Camera2D.cs" />
