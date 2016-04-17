@@ -13,8 +13,8 @@ namespace Pick_One.Character
         public Sprite JumpingSprite { get; set; }
         public Sprite MovingLeftSprite { get; set; }
         public Sprite MovingRightSprite { get; set; }
-        public Sprite WallClimbUpSprite { get; set; }
-        public Sprite WallClimbDownSprite { get; set; }
+        public Sprite WallClimbLeft { get; set; }
+        public Sprite WallClimbRight { get; set; }
         public Sprite FallingSprite { get; set; }
         public Sprite LandingSprite { get; set; }
         public Sprite MidJumpSprite { get; set; }
