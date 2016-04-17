@@ -422,8 +422,8 @@ namespace Pick_One.Character
                     {
                         if (CurrentPlayerSpeciality.IsClimbable) //ClimbingUp
                         {
-                            bool blockLeft = GameManager.Instance.GetBlocksAt(PlayerLocation.XLocation - 1, PlayerLocation.YLocation, CurrentPlayerSpeciality.Height, 1).Count() > 0;
-                            bool blockRight = GameManager.Instance.GetBlocksAt(PlayerLocation.XLocation + CurrentPlayerSpeciality.Width + 1, PlayerLocation.YLocation, CurrentPlayerSpeciality.Height, 1).Count() > 0;
+                            bool blockLeft = LevelManager.Instance.GetBlocksAt(PlayerLocation.XLocation - 1, PlayerLocation.YLocation, CurrentPlayerSpeciality.Height, 1).Count() > 0;
+                            bool blockRight = LevelManager.Instance.GetBlocksAt(PlayerLocation.XLocation + CurrentPlayerSpeciality.Width + 1, PlayerLocation.YLocation, CurrentPlayerSpeciality.Height, 1).Count() > 0;
                             if (blockLeft)
                             {
                                 if (CurrentState != PlayerState.WallClimbLeft)
@@ -461,8 +461,8 @@ namespace Pick_One.Character
                     {
                         if (CurrentPlayerSpeciality.IsClimbable) //ClimbingDown
                         {
-                            bool blockLeft = GameManager.Instance.GetBlocksAt(PlayerLocation.XLocation - 1, PlayerLocation.YLocation, CurrentPlayerSpeciality.Height, 1).Count() > 0;
-                            bool blockRight = GameManager.Instance.GetBlocksAt(PlayerLocation.XLocation + CurrentPlayerSpeciality.Width + 1, PlayerLocation.YLocation, CurrentPlayerSpeciality.Height, 1).Count() > 0;
+                            bool blockLeft = LevelManager.Instance.GetBlocksAt(PlayerLocation.XLocation - 1, PlayerLocation.YLocation, CurrentPlayerSpeciality.Height, 1).Count() > 0;
+                            bool blockRight = LevelManager.Instance.GetBlocksAt(PlayerLocation.XLocation + CurrentPlayerSpeciality.Width + 1, PlayerLocation.YLocation, CurrentPlayerSpeciality.Height, 1).Count() > 0;
 
                             if (blockLeft)
                             {
