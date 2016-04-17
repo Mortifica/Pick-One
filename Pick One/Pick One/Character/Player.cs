@@ -32,7 +32,8 @@ namespace Pick_One.Character
 
             set
             {
-                throw new NotImplementedException();
+                PlayerLocation.XLocation = value.X;
+                PlayerLocation.YLocation = value.Y;
             }
         }
 

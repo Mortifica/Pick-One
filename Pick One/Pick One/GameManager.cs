@@ -78,7 +78,7 @@ namespace Pick_One
         {
             if (NextLevel == "TestLevel")
             {
-                SetLevel("TestLevel", "TestLevel2");
+                SetLevel("TestLevel", "TestLevel");
             }
             else if (NextLevel == "TestLevel2")
             {
