@@ -202,6 +202,14 @@ namespace Pick_One.Character
                 {
                     applyJump();
                 }
+                else
+                {
+                    if(IsJumping && !isJumpValid)
+                    {
+                        IsJumping = false;
+                        TransitionState();
+                    }
+                }
                 if (!isJumpValid || InitJumpTime > JumpTime)
                 {
                     CheckMovement();
