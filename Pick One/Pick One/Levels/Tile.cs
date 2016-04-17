@@ -51,6 +51,8 @@ namespace Pick_One.Levels
             EndPosition,
             Floor,
             Bounds,
+            Unclimbable,
+            Slow
         }
 
         #endregion
