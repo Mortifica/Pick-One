@@ -25,14 +25,13 @@ namespace Pick_One
         private Camera2D Camera;
         public KeyboardListener PlayStateKeyListener { get; set; }
         public Player Player { get; set; }
-        private List<Tile> Level;
-        private CollisionManager Collision;
         public List<PlayerSpriteContainer> PlayerSpriteContainers { get; set; }
 
         public MainGameLoop()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            GameManager.Content = Content;
         }
 
         /// <summary>
@@ -46,10 +45,12 @@ namespace Pick_One
             // TODO: Add your initialization logic here
             base.Initialize();
 
+            // Set inital level
+            GameManager.Instance.SetLevel(@"TestLevel");
+
             PlayStateKeyListener = new KeyboardListener();
-            Vector2 startingPlace = Level.Single(tile => tile.Type == Tile.TileTypes.StartPosition).Location;//= Level.Single(tile => tile.).Location;
-            startingPlace.Y -= 32;
-            Player = new Player(startingPlace, PlayerSpriteContainers, Collision);
+            Player = new Player(GameManager.Instance.GetPlayerStartingLocation(), PlayerSpriteContainers);
+            GameManager.Player = Player;
             PlayStateKeyListener.AddSubscriber(new KeyboardSubscriber()
             {
                 Subscriber = Player,
@@ -72,11 +73,6 @@ namespace Pick_One
             spriteBatch = new SpriteBatch(GraphicsDevice);
             CurrentState = new StartState(this);
             Camera = new Camera2D(CurrentState);
-            
-
-            var testMap = Content.Load<Texture2D>(@"TestLevel");
-            Level = LevelFactory.GenerateLevel(Content, testMap);
-            Collision = new CollisionManager(Level);
 
             //Normal
             var standingPlayer = Content.Load<Texture2D>(@"test_Circle_Standing_Animation");
@@ -238,7 +234,7 @@ namespace Pick_One
 
             CurrentState.Draw(spriteBatch);
 
-            Level.ForEach(x => { x.Draw(spriteBatch); });
+            GameManager.Instance.DrawLevel(spriteBatch);
             Player.Draw(spriteBatch);
             spriteBatch.End();
             base.Draw(gameTime);

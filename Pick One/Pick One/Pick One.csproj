@@ -56,6 +56,7 @@
     <Compile Include="Character\PlayerSpecialities\WallClimb.cs" />
     <Compile Include="Character\PlayerState.cs" />
     <Compile Include="Character\SpriteContainer.cs" />
+    <Compile Include="GameManager.cs" />
     <Compile Include="Input\IInputSubscriber.cs" />
     <Compile Include="Input\KeyAction.cs" />
     <Compile Include="Input\KeyboardChangeState.cs" />
