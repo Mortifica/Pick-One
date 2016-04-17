@@ -124,7 +124,7 @@ namespace Pick_One.Character
             var heightDiff = speciality.Height - CurrentPlayerSpeciality.Height;
             if (heightDiff > 0)
             {
-                if (GameManager.Instance.GetBlocksAt(PlayerLocation.XLocation, PlayerLocation.YLocation - heightDiff, heightDiff, 1).Count() > 0)
+                if (LevelManager.Instance.GetBlocksAt(PlayerLocation.XLocation, PlayerLocation.YLocation - heightDiff, heightDiff, 1).Count() > 0)
                 {
                     PlayerLocation.YLocation += heightDiff;
                 }
@@ -137,7 +137,7 @@ namespace Pick_One.Character
             var widthDiff = speciality.Width - CurrentPlayerSpeciality.Width;
             if (widthDiff > 0)
             {
-                if (GameManager.Instance.GetBlocksAt(PlayerLocation.XLocation + CurrentPlayerSpeciality.Width + widthDiff, PlayerLocation.YLocation, 1, widthDiff).Count() > 0)
+                if (LevelManager.Instance.GetBlocksAt(PlayerLocation.XLocation + CurrentPlayerSpeciality.Width + widthDiff, PlayerLocation.YLocation, 1, widthDiff).Count() > 0)
                 {
                     PlayerLocation.XLocation -= widthDiff;
                 }
@@ -236,9 +236,9 @@ namespace Pick_One.Character
 
             newYRectangle.Y += (int)MovementVector.Y;
 
-            var checkResults = GameManager.Instance.CheckCollision(newRectangle);
-            var checkXResults = GameManager.Instance.CheckCollision(newXRectangle);
-            var checkYResults = GameManager.Instance.CheckCollision(newYRectangle);
+            var checkResults = LevelManager.Instance.CheckCollision(newRectangle);
+            var checkXResults = LevelManager.Instance.CheckCollision(newXRectangle);
+            var checkYResults = LevelManager.Instance.CheckCollision(newYRectangle);
 
             if (!checkResults.Item1)
             {
@@ -277,8 +277,8 @@ namespace Pick_One.Character
                 if (tile.Type == Levels.Tile.TileTypes.EndPosition)
                 {
                     // Move to the next level.
-                    GameManager.Instance.EndLevel();
-                    Location = GameManager.Instance.GetPlayerStartingLocation();
+                    LevelManager.Instance.EndLevel();
+                    Location = LevelManager.Instance.GetPlayerStartingLocation();
                 }
             }
 
@@ -559,8 +559,8 @@ namespace Pick_One.Character
 
         private void ProccessMovement(KeyAction action)
         {
-            bool blockLeft = GameManager.Instance.GetBlocksAt(PlayerLocation.XLocation - 1, PlayerLocation.YLocation, CurrentPlayerSpeciality.Height, 1).Count() > 0;
-            bool blockRight = GameManager.Instance.GetBlocksAt(PlayerLocation.XLocation + CurrentPlayerSpeciality.Width + 1, PlayerLocation.YLocation, CurrentPlayerSpeciality.Height, 1).Count() > 0;
+            bool blockLeft = LevelManager.Instance.GetBlocksAt(PlayerLocation.XLocation - 1, PlayerLocation.YLocation, CurrentPlayerSpeciality.Height, 1).Count() > 0;
+            bool blockRight = LevelManager.Instance.GetBlocksAt(PlayerLocation.XLocation + CurrentPlayerSpeciality.Width + 1, PlayerLocation.YLocation, CurrentPlayerSpeciality.Height, 1).Count() > 0;
 
             switch (action.Key)
             {

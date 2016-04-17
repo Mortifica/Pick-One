@@ -31,7 +31,7 @@ namespace Pick_One
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            GameManager.Content = Content;
+            LevelManager.Content = Content;
         }
 
         /// <summary>
@@ -46,12 +46,12 @@ namespace Pick_One
             base.Initialize();
 
             // Set inital level
-            GameManager.Instance.SetLevel(@"TestLevel");
+            LevelManager.Instance.SetLevel(@"TestLevel");
             //GameManager.Instance.SetLevel(@"TestLevel2");
 
             PlayStateKeyListener = new KeyboardListener();
-            Player = new Player(GameManager.Instance.GetPlayerStartingLocation(), PlayerSpriteContainers);
-            GameManager.Player = Player;
+            Player = new Player(LevelManager.Instance.GetPlayerStartingLocation(), PlayerSpriteContainers);
+            LevelManager.Player = Player;
             PlayStateKeyListener.AddSubscriber(new KeyboardSubscriber()
             {
                 Subscriber = Player,
@@ -263,7 +263,7 @@ namespace Pick_One
 
             CurrentState.Draw(spriteBatch);
 
-            GameManager.Instance.DrawLevel(spriteBatch);
+            LevelManager.Instance.DrawLevel(spriteBatch);
             Player.Draw(spriteBatch);
             spriteBatch.End();
             base.Draw(gameTime);
