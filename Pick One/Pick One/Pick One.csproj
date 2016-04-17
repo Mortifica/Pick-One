@@ -56,6 +56,7 @@
     <Compile Include="Character\PlayerSpecialities\WallClimb.cs" />
     <Compile Include="Character\PlayerState.cs" />
     <Compile Include="Character\SpriteContainer.cs" />
+    <Compile Include="GameManager.cs" />
     <Compile Include="Input\IInputSubscriber.cs" />
     <Compile Include="Input\KeyAction.cs" />
     <Compile Include="Input\KeyboardChangeState.cs" />
@@ -90,8 +91,12 @@
     <Content Include="Content\test_Hover_Moving_Right_Animation.png" />
     <Content Include="Content\test_Hover_Standing_Animation.png" />
     <Content Include="Content\test_Start_Texture.png" />
+    <Content Include="Content\test_Triangle_Falling_Animation.png" />
+    <Content Include="Content\test_Triangle_FLanding_Animation.png" />
+    <Content Include="Content\test_Triangle_JLanding_Animation.png" />
     <Content Include="Content\test_Triangle_Jumping_Animation.png" />
     <Content Include="Content\test_Triangle_Landing_Animation.png" />
+    <Content Include="Content\test_Triangle_MidFall_Animation.png" />
     <Content Include="Content\test_Triangle_MidJump_Animation.png" />
     <Content Include="Content\test_Triangle_Standing_Animation.png" />
     <Content Include="Icon.ico" />

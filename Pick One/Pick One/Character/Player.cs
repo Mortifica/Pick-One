@@ -20,6 +20,9 @@ namespace Pick_One.Character
         public bool IsJumping { get; set; }
         public float JumpTime { get; set; }
         public float InitJumpTime { get; set; }
+
+        private Vector2 gravity = Vector2.Zero;
+
         public Vector2 Location
         {
             get
@@ -35,10 +38,10 @@ namespace Pick_One.Character
 
         private Vector2 MovementVector;
         private bool IsTouchingWall;
-        public Player(Vector2 initialLocation, List<PlayerSpriteContainer> container, CollisionManager collisionManager)
+        public Player(Vector2 initialLocation, List<PlayerSpriteContainer> container)
         {
             InitJumpTime = 30;
-            CollisionManager = collisionManager;
+           // CollisionManager = collisionManager;
             MovementVector = new Vector2();
             PlayerLocation = new Location();
             PlayerLocation.XLocation = initialLocation.X;
@@ -150,6 +153,8 @@ namespace Pick_One.Character
         }
         public void Update()
         {
+            MovementVector.Y += 1;
+
             //move, Update Sprite Animation, Transform, Update Hitbox
             if (IsJumping)
             {
@@ -171,7 +176,6 @@ namespace Pick_One.Character
             UpdateSprite();
             PlayerHitbox.Update(PlayerLocation.XLocation, PlayerLocation.YLocation);
 
-
             //Clear Objects that need to for next update
             MovementVector.X = 0;
             MovementVector.Y = 0;
@@ -191,9 +195,9 @@ namespace Pick_One.Character
 
             newYRectangle.Y += (int)MovementVector.Y;
 
-            var checkResults = CollisionManager.CheckCollision(newRectangle);
-            var checkXResults = CollisionManager.CheckCollision(newXRectangle);
-            var checkYResults = CollisionManager.CheckCollision(newYRectangle);
+            var checkResults = GameManager.Instance.CheckCollision(newRectangle);
+            var checkXResults = GameManager.Instance.CheckCollision(newXRectangle);
+            var checkYResults = GameManager.Instance.CheckCollision(newYRectangle);
 
             if (!checkResults.Item1)
             {
@@ -226,6 +230,15 @@ namespace Pick_One.Character
                 MovementVector.Y = 0;
             }
 
+            foreach (var tile in checkResults.Item2)
+            {
+                if (tile.Type == Levels.Tile.TileTypes.EndPosition)
+                {
+                    // Move to the next level.
+                    GameManager.Instance.EndLevel();
+                    Location = GameManager.Instance.GetPlayerStartingLocation();
+                }
+            }
 
             //if (checkResults.Item1)//True if Hit something
             //{
@@ -494,8 +507,8 @@ namespace Pick_One.Character
         }
         private void MoveVertically(float movement)
         {
-            bool blockLeft = CollisionManager.GetBlocksAt(PlayerLocation.XLocation - 1, PlayerLocation.YLocation, CurrentPlayerSpeciality.Height).Count() > 0;
-            bool blockRight = CollisionManager.GetBlocksAt(PlayerLocation.XLocation + CurrentPlayerSpeciality.Width + 1, PlayerLocation.YLocation, CurrentPlayerSpeciality.Height).Count() > 0;
+            bool blockLeft = GameManager.Instance.GetBlocksAt(PlayerLocation.XLocation - 1, PlayerLocation.YLocation, CurrentPlayerSpeciality.Height).Count() > 0;
+            bool blockRight = GameManager.Instance.GetBlocksAt(PlayerLocation.XLocation + CurrentPlayerSpeciality.Width + 1, PlayerLocation.YLocation, CurrentPlayerSpeciality.Height).Count() > 0;
             if (IsClimbable() && (blockLeft || blockRight))
             {
                 MovementVector.Y += movement;

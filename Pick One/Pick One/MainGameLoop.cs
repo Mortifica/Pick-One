@@ -25,14 +25,13 @@ namespace Pick_One
         private Camera2D Camera;
         public KeyboardListener PlayStateKeyListener { get; set; }
         public Player Player { get; set; }
-        private List<Tile> Level;
-        private CollisionManager Collision;
         public List<PlayerSpriteContainer> PlayerSpriteContainers { get; set; }
 
         public MainGameLoop()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            GameManager.Content = Content;
         }
 
         /// <summary>
@@ -46,10 +45,12 @@ namespace Pick_One
             // TODO: Add your initialization logic here
             base.Initialize();
 
+            // Set inital level
+            GameManager.Instance.SetLevel(@"TestLevel");
+
             PlayStateKeyListener = new KeyboardListener();
-            Vector2 startingPlace = Level.Single(tile => tile.Type == Tile.TileTypes.StartPosition).Location;//= Level.Single(tile => tile.).Location;
-            startingPlace.Y -= 32;
-            Player = new Player(startingPlace, PlayerSpriteContainers, Collision);
+            Player = new Player(GameManager.Instance.GetPlayerStartingLocation(), PlayerSpriteContainers);
+            GameManager.Player = Player;
             PlayStateKeyListener.AddSubscriber(new KeyboardSubscriber()
             {
                 Subscriber = Player,
@@ -72,14 +73,10 @@ namespace Pick_One
             spriteBatch = new SpriteBatch(GraphicsDevice);
             CurrentState = new StartState(this);
             Camera = new Camera2D(CurrentState);
-            
-
-            var testMap = Content.Load<Texture2D>(@"TestLevel");
-            Level = LevelFactory.GenerateLevel(Content, testMap);
-            Collision = new CollisionManager(Level);
 
             //Normal
             var standingPlayer = Content.Load<Texture2D>(@"test_Circle_Standing_Animation");
+            var fallingPlayer = Content.Load<Texture2D>(@"test_Circle_Falling_Animation");
             var movingPlayer = Content.Load<Texture2D>(@"test_Circle_Standing_Animation");
             var movingPlayerLeft = Content.Load<Texture2D>(@"test_Circle_Moving_Left_Animation");
             var movingPlayerRight = Content.Load<Texture2D>(@"test_Circle_Moving_Right_Animation");
@@ -94,12 +91,12 @@ namespace Pick_One
             var standingVertical = Content.Load<Texture2D>(@"test_Triangle_Standing_Animation");
             var jumpingVertical = Content.Load<Texture2D>(@"test_Triangle_Jumping_Animation");
             var midJumpVertical = Content.Load<Texture2D>(@"test_Triangle_MidJump_Animation");
-            var landingVertical = Content.Load<Texture2D>(@"test_Triangle_Landing_Animation");
+            var landingVertical = Content.Load<Texture2D>(@"test_Triangle_JLanding_Animation");
+            var fallingVertical = Content.Load<Texture2D>(@"test_Triangle_Falling_Animation");
             //var standingVertical = Content.Load<Texture2D>(@"test_Circle_Moving_Right_Animation");
 
 
             //MiscTesting
-            var fallingPlayer = Content.Load<Texture2D>(@"test_Circle_Falling_Animation");
             var climbingPlayer = Content.Load<Texture2D>(@"test_Circle_Moving_Animation");
 
             PlayerSpriteContainers = new List<PlayerSpriteContainer>();
@@ -107,6 +104,7 @@ namespace Pick_One
             {
                 StandingSprite = new Sprite(standingPlayer,1,4,7),
                 MovingLeftSprite = new Sprite(movingPlayerLeft, 1, 4, 7),
+                FallingSprite = new Sprite(fallingPlayer, 1, 4, 7),                
                 MovingRightSprite = new Sprite(movingPlayerRight, 1, 4, 7)
                 //JumpingSprite = new Sprite(standingPlayer, 1, 4, 7),
                 //WallClimbUpSprite = new Sprite(standingPlayer, 1, 4, 7),
@@ -137,7 +135,8 @@ namespace Pick_One
                 //MovingRightSprite = new Sprite(standingVertical, 1, 4, 7),
                 JumpingSprite = new Sprite(jumpingVertical, 1, 6, 7),
                 MidJumpSprite = new Sprite(midJumpVertical, 1, 4, 7),
-                LandingSprite = new Sprite(landingVertical, 1, 6, 7)
+                LandingSprite = new Sprite(landingVertical, 1, 6, 7),
+                FallingSprite = new Sprite(fallingVertical, 1, 6, 7)
                 //WallClimbUpSprite = new Sprite(standingPlayer, 1, 4, 7),
                 //WallClimbDownSprite = new Sprite(standingPlayer, 1, 4, 7)
             });
@@ -248,7 +247,7 @@ namespace Pick_One
 
             CurrentState.Draw(spriteBatch);
 
-            Level.ForEach(x => { x.Draw(spriteBatch); });
+            GameManager.Instance.DrawLevel(spriteBatch);
             Player.Draw(spriteBatch);
             spriteBatch.End();
             base.Draw(gameTime);

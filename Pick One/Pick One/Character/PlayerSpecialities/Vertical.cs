@@ -18,6 +18,7 @@ namespace Pick_One.Character.PlayerSpecialities
             Jump = sprites.JumpingSprite;
             MidJump = sprites.MidJumpSprite;
             Landing = sprites.LandingSprite;
+            Falling = sprites.FallingSprite;
             WallClimbDown = sprites.WallClimbDownSprite;
             WallClimbUp = sprites.WallClimbUpSprite;
             Movement = new MovementContainer();
