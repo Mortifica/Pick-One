@@ -62,8 +62,6 @@ namespace Pick_One.Character
             KeysForMovement = new List<Keys>
             {
                 Keys.A,
-                Keys.S,
-                Keys.W,
                 Keys.D,
                 Keys.Space
             };
@@ -424,11 +422,28 @@ namespace Pick_One.Character
                     {
                         if (CurrentPlayerSpeciality.IsClimbable) //ClimbingUp
                         {
-                            if (CurrentState != PlayerState.WallClimbUp)
+                            bool blockLeft = GameManager.Instance.GetBlocksAt(PlayerLocation.XLocation - 1, PlayerLocation.YLocation, CurrentPlayerSpeciality.Height, 1).Count() > 0;
+                            bool blockRight = GameManager.Instance.GetBlocksAt(PlayerLocation.XLocation + CurrentPlayerSpeciality.Width + 1, PlayerLocation.YLocation, CurrentPlayerSpeciality.Height, 1).Count() > 0;
+                            if (blockLeft)
                             {
-                                CurrentState = PlayerState.WallClimbUp;
-                                return true;
+                                if (CurrentState != PlayerState.WallClimbLeft)
+                                {
+                                    CurrentState = PlayerState.WallClimbLeft;
+                                    return true;
+                                }
                             }
+                            else
+                            {
+                                if (blockRight)
+                                {
+                                    if (CurrentState != PlayerState.WallClimbRight)
+                                    {
+                                        CurrentState = PlayerState.WallClimbRight;
+                                        return true;
+                                    }
+                                }
+                            }
+                            
                         }
                         else
                         {
@@ -446,10 +461,27 @@ namespace Pick_One.Character
                     {
                         if (CurrentPlayerSpeciality.IsClimbable) //ClimbingDown
                         {
-                            if (CurrentState != PlayerState.WallClimbDown)
+                            bool blockLeft = GameManager.Instance.GetBlocksAt(PlayerLocation.XLocation - 1, PlayerLocation.YLocation, CurrentPlayerSpeciality.Height, 1).Count() > 0;
+                            bool blockRight = GameManager.Instance.GetBlocksAt(PlayerLocation.XLocation + CurrentPlayerSpeciality.Width + 1, PlayerLocation.YLocation, CurrentPlayerSpeciality.Height, 1).Count() > 0;
+
+                            if (blockLeft)
                             {
-                                CurrentState = PlayerState.WallClimbDown;
-                                return true;
+                                if (CurrentState != PlayerState.WallClimbLeft)
+                                {
+                                    CurrentState = PlayerState.WallClimbLeft;
+                                    return true;
+                                }
+                            }
+                            else
+                            {
+                                if (blockRight)
+                                {
+                                    if (CurrentState != PlayerState.WallClimbRight)
+                                    {
+                                        CurrentState = PlayerState.WallClimbRight;
+                                        return true;
+                                    }
+                                }
                             }
                         }
                         else
@@ -495,7 +527,6 @@ namespace Pick_One.Character
         public void Draw(SpriteBatch spriteBatch)
         {
             Console.WriteLine(CurrentState);
-            //spriteBatch.DrawString(new SpriteFont(), "State:" + CurrentState, new Vector2(1, 1), Color.Black);
             CurrentPlayerSpeciality.Draw(spriteBatch, new Vector2(PlayerLocation.XLocation, PlayerLocation.YLocation));
         }
 
@@ -533,12 +564,6 @@ namespace Pick_One.Character
 
             switch (action.Key)
             {
-                //case Keys.W:
-                //    MoveVertically(-CurrentPlayerSpeciality.Movement.UpwardMovement);
-                //    break;
-                //case Keys.S:
-                //    MoveVertically(CurrentPlayerSpeciality.Movement.DownwardMovement);
-                //    break;
                 case Keys.A:
                     MoveHorizontally(-CurrentPlayerSpeciality.Movement.LeftMovement);
                     if (IsClimbable() && (blockLeft))

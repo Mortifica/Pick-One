@@ -114,8 +114,8 @@ namespace Pick_One
                 FallingSprite = new Sprite(fallingPlayer, 1, 4, 7),                
                 MovingRightSprite = new Sprite(movingPlayerRight, 1, 4, 7),
                 JumpingSprite = new Sprite(standingPlayer, 1, 4, 7),
-                WallClimbUpSprite = new Sprite(standingPlayer, 1, 4, 7),
-                WallClimbDownSprite = new Sprite(standingPlayer, 1, 4, 7)
+                WallClimbLeft = new Sprite(standingPlayer, 1, 4, 7),
+                WallClimbRight = new Sprite(standingPlayer, 1, 4, 7)
             });
             PlayerSpriteContainers.Add(new PlayerSpriteContainer() // Speed
             {
@@ -126,8 +126,8 @@ namespace Pick_One
                 FallingSprite = new Sprite(fallingPlayer, 1, 4, 7),
                 MovingRightSprite = new Sprite(standingPlayer, 1, 4, 7),
                 JumpingSprite = new Sprite(fallingPlayer, 1, 4, 7),
-                WallClimbUpSprite = new Sprite(fallingPlayer, 1, 4, 7),
-                WallClimbDownSprite = new Sprite(fallingPlayer, 1, 4, 7)
+                WallClimbLeft = new Sprite(fallingPlayer, 1, 4, 7),
+                WallClimbRight = new Sprite(fallingPlayer, 1, 4, 7)
             });
             PlayerSpriteContainers.Add(new PlayerSpriteContainer() // Stretch
             {
@@ -138,8 +138,8 @@ namespace Pick_One
                 LandingSprite = new Sprite(hoverStanding, 1, 6, 7),
                 MovingRightSprite = new Sprite(hoverMovingRight, 1, 4, 7),
                 JumpingSprite = new Sprite(hoverStanding, 1, 4, 7),
-                WallClimbUpSprite = new Sprite(hoverStanding, 1, 4, 7),
-                WallClimbDownSprite = new Sprite(hoverStanding, 1, 4, 7)
+                WallClimbLeft = new Sprite(hoverStanding, 1, 4, 7),
+                WallClimbRight = new Sprite(hoverStanding, 1, 4, 7)
             });
             PlayerSpriteContainers.Add(new PlayerSpriteContainer() // Vertical
             {
@@ -150,8 +150,8 @@ namespace Pick_One
                 MidJumpSprite = new Sprite(midJumpVertical, 1, 4, 7),
                 LandingSprite = new Sprite(landingVertical, 1, 6, 7),
                 FallingSprite = new Sprite(fallingVertical, 1, 6, 7),
-                WallClimbUpSprite = new Sprite(standingVertical, 1, 4, 7),
-                WallClimbDownSprite = new Sprite(standingVertical, 1, 4, 7)
+                WallClimbLeft = new Sprite(standingVertical, 1, 4, 7),
+                WallClimbRight = new Sprite(standingVertical, 1, 4, 7)
             });
             PlayerSpriteContainers.Add(new PlayerSpriteContainer() // Climbing
             {
@@ -162,8 +162,8 @@ namespace Pick_One
                 MidJumpSprite = new Sprite(standingClimb, 1, 4, 7),
                 LandingSprite = new Sprite(standingClimb, 1, 6, 7),
                 JumpingSprite = new Sprite(standingClimb, 1, 4, 7),
-                WallClimbUpSprite = new Sprite(movingLeftClimb, 1, 7, 7),
-                WallClimbDownSprite = new Sprite(movingRightClimb, 1, 7, 7)
+                WallClimbLeft = new Sprite(movingLeftClimb, 1, 7, 7),
+                WallClimbRight = new Sprite(movingRightClimb, 1, 7, 7)
             });
 
             // load sounds

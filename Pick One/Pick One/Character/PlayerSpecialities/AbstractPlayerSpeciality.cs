@@ -22,8 +22,8 @@ namespace Pick_One.Character.PlayerSpecialities
             MidJump = sprites.MidJumpSprite;
             Landing = sprites.LandingSprite;
             Falling = sprites.FallingSprite;
-            WallClimbDown = sprites.WallClimbDownSprite;
-            WallClimbUp = sprites.WallClimbUpSprite;
+            WallClimbRight = sprites.WallClimbRight;
+            WallClimbLeft = sprites.WallClimbLeft;
         }
 
         public MovementContainer Movement { get; set; }
@@ -36,8 +36,8 @@ namespace Pick_One.Character.PlayerSpecialities
         public Sprite Jump { get; set; }
         public Sprite Landing { get; set; }
         public Sprite MidJump { get; set; }
-        public Sprite WallClimbUp { get; set; }
-        public Sprite WallClimbDown { get; set; }
+        public Sprite WallClimbLeft { get; set; }
+        public Sprite WallClimbRight { get; set; }
         public Sprite Falling { get; set; }
         public AbstractPlayerSpeciality NextTransform { get; set; }
         public AbstractPlayerSpeciality PrevTransform { get; set; }
@@ -73,15 +73,15 @@ namespace Pick_One.Character.PlayerSpecialities
                     Width = MovingRight.Texture.Width / MovingRight.Columns;
                     Height = MovingRight.Texture.Height;
                     break;
-                case PlayerState.WallClimbDown:
-                    WallClimbDown.Update();
-                    Width = WallClimbDown.Texture.Width / WallClimbDown.Columns;
-                    Height = WallClimbDown.Texture.Height;
+                case PlayerState.WallClimbRight:
+                    WallClimbRight.Update();
+                    Width = WallClimbRight.Texture.Width / WallClimbRight.Columns;
+                    Height = WallClimbRight.Texture.Height;
                     break;
-                case PlayerState.WallClimbUp:
-                    WallClimbUp.Update();
-                    Width = WallClimbUp.Texture.Width / WallClimbUp.Columns;
-                    Height = WallClimbUp.Texture.Height;
+                case PlayerState.WallClimbLeft:
+                    WallClimbLeft.Update();
+                    Width = WallClimbLeft.Texture.Width / WallClimbLeft.Columns;
+                    Height = WallClimbLeft.Texture.Height;
                     break;
                 case PlayerState.Landing:
                     Landing.Update();
@@ -116,11 +116,11 @@ namespace Pick_One.Character.PlayerSpecialities
                 case PlayerState.MovingRight:
                     MovingRight.Draw(spriteBatch, location);
                     break;
-                case PlayerState.WallClimbDown:
-                    WallClimbDown.Draw(spriteBatch, location);
+                case PlayerState.WallClimbRight:
+                    WallClimbRight.Draw(spriteBatch, location);
                     break;
-                case PlayerState.WallClimbUp:
-                    WallClimbUp.Draw(spriteBatch, location);
+                case PlayerState.WallClimbLeft:
+                    WallClimbLeft.Draw(spriteBatch, location);
                     break;
                 case PlayerState.Landing:
                     Landing.Draw(spriteBatch, location);
@@ -152,11 +152,11 @@ namespace Pick_One.Character.PlayerSpecialities
                 case PlayerState.MovingRight:
                     MovingRight.currentFrame = 0;
                     break;
-                case PlayerState.WallClimbDown:
-                    WallClimbDown.currentFrame = 0;
+                case PlayerState.WallClimbRight:
+                    WallClimbRight.currentFrame = 0;
                     break;
-                case PlayerState.WallClimbUp:
-                    WallClimbUp.currentFrame = 0;
+                case PlayerState.WallClimbLeft:
+                    WallClimbLeft.currentFrame = 0;
                     break;
                 case PlayerState.Landing:
                     Landing.currentFrame = 0;
