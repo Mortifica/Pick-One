@@ -634,8 +634,8 @@ namespace Pick_One.Character
         private void ProccessMovement(KeyAction action)
         {
 
-            var blocksLeft = LevelManager.Instance.CheckCollision(new Rectangle((int)PlayerLocation.XLocation - 1, (int)PlayerLocation.YLocation, (int)CurrentPlayerSpeciality.Height, 1));
-            var blocksRight = LevelManager.Instance.CheckCollision(new Rectangle((int)(PlayerLocation.XLocation + CurrentPlayerSpeciality.Width + 1), (int)PlayerLocation.YLocation, (int)CurrentPlayerSpeciality.Height, 1));
+            var blocksLeft = LevelManager.Instance.CheckCollision(new Rectangle((int)PlayerLocation.XLocation - 1, (int)PlayerLocation.YLocation, 1, (int)CurrentPlayerSpeciality.Height));
+            var blocksRight = LevelManager.Instance.CheckCollision(new Rectangle((int)(PlayerLocation.XLocation + CurrentPlayerSpeciality.Width), (int)PlayerLocation.YLocation, 1, (int)CurrentPlayerSpeciality.Height));
 
             switch (action.Key)
             {
