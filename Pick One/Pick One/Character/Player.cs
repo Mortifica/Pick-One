@@ -17,6 +17,8 @@ namespace Pick_One.Character
     {
         private List<Keys> KeysForMovement { get; set; }
         private List<Keys> KeysForTransform { get; set; }
+        public bool IsJumping { get; set; }
+        public float JumpTime { get; set; }
 
         public Vector2 Location
         {
@@ -148,7 +150,19 @@ namespace Pick_One.Character
         public void Update()
         {
             //move, Update Sprite Animation, Transform, Update Hitbox
-
+            if (IsJumping)
+            {
+                JumpTime++;
+                if(JumpTime < 50)
+                {
+                    MovementVector.Y -= (CurrentPlayerSpeciality.Movement.UpwardMovement / (JumpTime));
+                }
+                else
+                {
+                    JumpTime = 0;
+                    IsJumping = false;
+                }
+            }
             CheckMovement();
             ApplyMovement();
 
@@ -208,7 +222,7 @@ namespace Pick_One.Character
                 MovementVector.X = 0;
 
                 MovementVector.Y = 0;
-            }            
+            }
 
 
             //if (checkResults.Item1)//True if Hit something
@@ -316,7 +330,7 @@ namespace Pick_One.Character
                 }
                 else
                 {
-                    if (MovementVector.Y > 0.0f) // WallClimbUp OR Jumping
+                    if (MovementVector.Y < 0.0f) // WallClimbUp OR Jumping
                     {
                         if (CurrentPlayerSpeciality.IsClimbable) //ClimbingUp
                         {
@@ -458,10 +472,14 @@ namespace Pick_One.Character
         }
         private void PlayerJump()
         {
-            if (CurrentPlayerSpeciality.Movement.UpwardMovement > 0.0f)
+            if (CurrentPlayerSpeciality.IsJumpable)
             {
-                MovementVector.X += CurrentPlayerSpeciality.Movement.UpwardMovement;
+                IsJumping = true;
             }
+            //if (CurrentPlayerSpeciality.Movement.UpwardMovement > 0.0f)
+            //{
+            //    MovementVector.Y -= CurrentPlayerSpeciality.Movement.UpwardMovement;
+            //}
         }
 
         internal List<Keys> GetWatchedKeys()
