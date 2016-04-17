@@ -38,6 +38,7 @@ namespace Pick_One.BasicClasses
         {
             collisionObjects.Remove(rectangle);
         }
+
         public IEnumerable<Tile> GetBlocksAt(float x, float y, float height)
         {
             return collisionObjects.Where(rect => rect.Rectangle.Intersects(new Rectangle((int)x, (int)y, 1, (int)height)));

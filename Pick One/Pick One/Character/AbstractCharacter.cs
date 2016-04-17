@@ -19,9 +19,8 @@ namespace Pick_One.Character
         protected Vertical VerticalSpeciality { get; set; }
         protected WallClimb WallClimbSpeciality { get; set; }
         protected HitBox PlayerHitbox { get; set; }
-        protected Location PlayerLocation { get; set; }
+        public Location PlayerLocation { get; set; }
         public PlayerState CurrentState { get; set; }
-        public CollisionManager CollisionManager { get; set; }
         public void Draw(float x, float y, SpriteBatch spriteBatch, int size)
         {
             CurrentPlayerSpeciality.StandingSprite.Draw(spriteBatch, new Vector2(x, y), size);
