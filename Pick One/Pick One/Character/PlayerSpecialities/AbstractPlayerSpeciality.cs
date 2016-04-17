@@ -15,7 +15,7 @@ namespace Pick_One.Character.PlayerSpecialities
 
         public AbstractPlayerSpeciality(PlayerSpriteContainer sprites, HitBox hitBox)
         {
-            PlayerHitBox = hitBox;
+            PlayerHitbox = hitBox;
             StandingSprite = sprites.StandingSprite;
             MovingLeft = sprites.MovingLeftSprite;
             MovingRight = sprites.MovingRightSprite;
@@ -27,7 +27,7 @@ namespace Pick_One.Character.PlayerSpecialities
             WallClimbLeft = sprites.WallClimbLeft;
             Poof = sprites.Poof;
         }
-        public HitBox PlayerHitBox { get; set; }
+        public HitBox PlayerHitbox { get; set; }
         public MovementContainer Movement { get; set; }
         public bool IsStretchable { get; set; }
         public bool IsClimbable { get; set; }
@@ -46,7 +46,7 @@ namespace Pick_One.Character.PlayerSpecialities
         public AbstractPlayerSpeciality PrevTransform { get; set; }
         public PlayerState CurrentState { get; set; }
         public PlayerSpecialityEnum SpecialityName { get; set; }
-        private int hitboxDiff = 2;
+        private int hitboxDiff = 3;
         public float Width
         {
             get; set;

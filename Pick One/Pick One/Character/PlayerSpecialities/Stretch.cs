@@ -17,8 +17,6 @@ namespace Pick_One.Character.PlayerSpecialities
             Movement.DownwardMovement = 0.0f;
             Movement.LeftMovement = 1.0f;
             Movement.RightMovement = 1.0f;
-            Width = StandingSprite.Texture.Width / StandingSprite.Columns;
-            Height = StandingSprite.Texture.Height;
             IsStretchable = true;
             IsClimbable = false;
         }

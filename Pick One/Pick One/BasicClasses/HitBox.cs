@@ -14,7 +14,7 @@ namespace Pick_One.BasicClasses
         public bool IsPassthroughableFromBottom { get; set; }
         public HitBox(float x, float y, float height, float width)
         {
-            HitBoxRectangle = new Rectangle((int)x,(int)y,(int)width -2,(int)height -2);
+            HitBoxRectangle = new Rectangle((int)x,(int)y,(int)width,(int)height);
         }
         internal void Update(float xLocation, float yLocation)
         {

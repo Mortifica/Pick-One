@@ -19,7 +19,7 @@ namespace Pick_One.Character
         protected Stretch StretchSpeciality { get; set; }
         protected Vertical VerticalSpeciality { get; set; }
         protected WallClimb WallClimbSpeciality { get; set; }
-        protected HitBox PlayerHitbox { get; set; }
+        //protected HitBox PlayerHitbox { get; set; }
         public Location PlayerLocation { get; set; }
         public PlayerState CurrentState { get; set; }
         public void Draw(float x, float y, SpriteBatch spriteBatch, int size)

@@ -48,7 +48,7 @@ namespace Pick_One.Character
             PlayerLocation = new Location();
             PlayerLocation.XLocation = initialLocation.X;
             PlayerLocation.YLocation = initialLocation.Y;
-            PlayerHitbox = new HitBox(PlayerLocation.XLocation, PlayerLocation.YLocation, 32, 32);
+            var PlayerHitbox = new HitBox(PlayerLocation.XLocation, PlayerLocation.YLocation, 32, 32);
             MaxJump = 117;
             InitJumpTime = 30;
             // CollisionManager = collisionManager;
@@ -168,9 +168,9 @@ namespace Pick_One.Character
             PreviousPlayerSpeciality = CurrentPlayerSpeciality;
             CurrentPlayerSpeciality = speciality;
             CurrentPlayerSpeciality.CurrentState = CurrentState;
-            PlayerHitbox.Update(PlayerLocation.XLocation, PlayerLocation.YLocation);
-            PlayerHitbox.HitBoxRectangle.Width = (int)CurrentPlayerSpeciality.Width;
-            PlayerHitbox.HitBoxRectangle.Height = (int)CurrentPlayerSpeciality.Height;
+            CurrentPlayerSpeciality.PlayerHitbox.Update(PlayerLocation.XLocation, PlayerLocation.YLocation);
+            CurrentPlayerSpeciality.PlayerHitbox.HitBoxRectangle.Width = (int)CurrentPlayerSpeciality.Width;
+            CurrentPlayerSpeciality.PlayerHitbox.HitBoxRectangle.Height = (int)CurrentPlayerSpeciality.Height;
 
         }
 
@@ -192,7 +192,7 @@ namespace Pick_One.Character
         }
         public HitBox GetHitbox()
         {
-            return PlayerHitbox;
+            return CurrentPlayerSpeciality.PlayerHitbox;
         }
         public bool CheckHitbox()
         {
@@ -240,7 +240,7 @@ namespace Pick_One.Character
             ApplyMovement();
 
             UpdateSprite();
-            PlayerHitbox.Update(PlayerLocation.XLocation, PlayerLocation.YLocation);
+            CurrentPlayerSpeciality.PlayerHitbox.Update(PlayerLocation.XLocation, PlayerLocation.YLocation);
 
             //Clear Objects that need to for next update
             MovementVector.X = 0;
@@ -295,9 +295,9 @@ namespace Pick_One.Character
 
         private void CheckMovement()
         {
-            var newRectangle = new Rectangle(PlayerHitbox.HitBoxRectangle.X, PlayerHitbox.HitBoxRectangle.Y, PlayerHitbox.HitBoxRectangle.Width, PlayerHitbox.HitBoxRectangle.Height);
-            var newXRectangle = new Rectangle(PlayerHitbox.HitBoxRectangle.X, PlayerHitbox.HitBoxRectangle.Y, PlayerHitbox.HitBoxRectangle.Width, PlayerHitbox.HitBoxRectangle.Height);
-            var newYRectangle = new Rectangle(PlayerHitbox.HitBoxRectangle.X, PlayerHitbox.HitBoxRectangle.Y, PlayerHitbox.HitBoxRectangle.Width, PlayerHitbox.HitBoxRectangle.Height);
+            var newRectangle = new Rectangle(CurrentPlayerSpeciality.PlayerHitbox.HitBoxRectangle.X, CurrentPlayerSpeciality.PlayerHitbox.HitBoxRectangle.Y, CurrentPlayerSpeciality.PlayerHitbox.HitBoxRectangle.Width, CurrentPlayerSpeciality.PlayerHitbox.HitBoxRectangle.Height);
+            var newXRectangle = new Rectangle(CurrentPlayerSpeciality.PlayerHitbox.HitBoxRectangle.X, CurrentPlayerSpeciality.PlayerHitbox.HitBoxRectangle.Y, CurrentPlayerSpeciality.PlayerHitbox.HitBoxRectangle.Width, CurrentPlayerSpeciality.PlayerHitbox.HitBoxRectangle.Height);
+            var newYRectangle = new Rectangle(CurrentPlayerSpeciality.PlayerHitbox.HitBoxRectangle.X, CurrentPlayerSpeciality.PlayerHitbox.HitBoxRectangle.Y, CurrentPlayerSpeciality.PlayerHitbox.HitBoxRectangle.Width, CurrentPlayerSpeciality.PlayerHitbox.HitBoxRectangle.Height);
 
             newRectangle.X += (int)MovementVector.X;
             newRectangle.Y += (int)MovementVector.Y;
@@ -312,14 +312,14 @@ namespace Pick_One.Character
 
             if (!checkResults.Item1)
             {
-                PlayerHitbox.HitBoxRectangle = newRectangle;
+                CurrentPlayerSpeciality.PlayerHitbox.HitBoxRectangle = newRectangle;
                 MovementVector.X = newRectangle.X - PlayerLocation.XLocation;
 
                 MovementVector.Y = newRectangle.Y - PlayerLocation.YLocation;
             }
             else if (!checkXResults.Item1)
             {
-                PlayerHitbox.HitBoxRectangle = newXRectangle;
+                CurrentPlayerSpeciality.PlayerHitbox.HitBoxRectangle = newXRectangle;
                 MovementVector.X = newRectangle.X - PlayerLocation.XLocation;
 
                 MovementVector.Y = 0;
@@ -328,7 +328,7 @@ namespace Pick_One.Character
             }
             else if (!checkYResults.Item1)
             {
-                PlayerHitbox.HitBoxRectangle = newYRectangle;
+                CurrentPlayerSpeciality.PlayerHitbox.HitBoxRectangle = newYRectangle;
 
                 MovementVector.X = 0;
 
