@@ -78,7 +78,7 @@ namespace Pick_One
         {
             if (NextLevel == "TestLevel")
             {
-                SetLevel("TestLevel", "TestLevel");
+                SetLevel("TestLevel", "TestLevel2");
             }
             else if (NextLevel == "TestLevel2")
             {
@@ -110,9 +110,9 @@ namespace Pick_One
             return Collision.CheckCollision(rectangle);
         }
 
-        public IEnumerable<Tile> GetBlocksAt(float x, float y, float height)
+        public IEnumerable<Tile> GetBlocksAt(float x, float y, float height, float width)
         {
-            return Collision.GetBlocksAt(x, y, height);
+            return Collision.GetBlocksAt(x, y, height, width);
         }
     }
 }

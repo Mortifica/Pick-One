@@ -123,12 +123,40 @@ namespace Pick_One.Character
                     //  }
                     break;
             }
-            PlayerLocation.YLocation -= speciality.Height - CurrentPlayerSpeciality.Height;
+            var heightDiff = speciality.Height - CurrentPlayerSpeciality.Height;
+            if (heightDiff > 0)
+            {
+                if (GameManager.Instance.GetBlocksAt(PlayerLocation.XLocation, PlayerLocation.YLocation - heightDiff, heightDiff, 1).Count() > 0)
+                {
+                    PlayerLocation.YLocation += heightDiff;
+                }
+                else
+                {
+                    PlayerLocation.YLocation -= heightDiff;
 
+                }
+            }
+            var widthDiff = speciality.Width - CurrentPlayerSpeciality.Width;
+            if (widthDiff > 0)
+            {
+                if (GameManager.Instance.GetBlocksAt(PlayerLocation.XLocation + CurrentPlayerSpeciality.Width + widthDiff, PlayerLocation.YLocation, 1, widthDiff).Count() > 0)
+                {
+                    PlayerLocation.XLocation -= widthDiff;
+                }
+                //else
+                //{
+                //    if (GameManager.Instance.GetBlocksAt(PlayerLocation.XLocation - widthDiff, PlayerLocation.YLocation, 1, widthDiff).Count() > 0)
+                //    {
+                //        PlayerLocation.XLocation += widthDiff;
+                //    }
+
+                //}
+            }
             CurrentPlayerSpeciality = speciality;
             CurrentPlayerSpeciality.CurrentState = CurrentState;
             PlayerHitbox.HitBoxRectangle.Width = (int)CurrentPlayerSpeciality.Width;
             PlayerHitbox.HitBoxRectangle.Height = (int)CurrentPlayerSpeciality.Height;
+
         }
         public MovementContainer GetMovement()
         {
@@ -523,8 +551,8 @@ namespace Pick_One.Character
         }
         private void MoveVertically(float movement)
         {
-            bool blockLeft = GameManager.Instance.GetBlocksAt(PlayerLocation.XLocation - 1, PlayerLocation.YLocation, CurrentPlayerSpeciality.Height).Count() > 0;
-            bool blockRight = GameManager.Instance.GetBlocksAt(PlayerLocation.XLocation + CurrentPlayerSpeciality.Width + 1, PlayerLocation.YLocation, CurrentPlayerSpeciality.Height).Count() > 0;
+            bool blockLeft = GameManager.Instance.GetBlocksAt(PlayerLocation.XLocation - 1, PlayerLocation.YLocation, CurrentPlayerSpeciality.Height, 1).Count() > 0;
+            bool blockRight = GameManager.Instance.GetBlocksAt(PlayerLocation.XLocation + CurrentPlayerSpeciality.Width + 1, PlayerLocation.YLocation, CurrentPlayerSpeciality.Height, 1).Count() > 0;
             if (IsClimbable() && (blockLeft || blockRight))
             {
                 MovementVector.Y += movement - 2;

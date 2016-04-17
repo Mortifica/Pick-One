@@ -46,7 +46,8 @@ namespace Pick_One
             base.Initialize();
 
             // Set inital level
-            GameManager.Instance.SetLevel(@"TestLevel");
+            //GameManager.Instance.SetLevel(@"TestLevel");
+            GameManager.Instance.SetLevel(@"TestLevel2");
 
             PlayStateKeyListener = new KeyboardListener();
             Player = new Player(GameManager.Instance.GetPlayerStartingLocation(), PlayerSpriteContainers);

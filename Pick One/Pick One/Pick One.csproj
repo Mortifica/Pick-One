@@ -78,6 +78,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\TestLevel2.png" />
     <Content Include="Content\TestLevel.png" />
     <Content Include="Content\test_Circle_Falling_Animation.png" />
     <Content Include="Content\test_Circle_Moving_Animation.png" />
