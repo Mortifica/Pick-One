@@ -45,6 +45,17 @@ namespace Pick_One.Levels
                     }
                 }
             }
+
+            // Need to add a boundary around the entire thing.
+            for (int y = -1; y < texture.Height+2; y++)
+            {
+                for (int x = -1; x < texture.Width+2; x++)
+                {
+                    if ((x < 0 || x > texture.Width) || (y < 0 || y > texture.Height))
+                        listPosition.Add(new Tile(content, Tile.TileTypes.Bounds, x, y));
+                }
+            }
+
             return listPosition;
         }
 

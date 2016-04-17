@@ -49,7 +49,8 @@ namespace Pick_One.Levels
             Empty,
             StartPosition,
             EndPosition,
-            Floor
+            Floor,
+            Bounds,
         }
 
         #endregion
@@ -81,6 +82,12 @@ namespace Pick_One.Levels
                 rectangle = new Rectangle(x * texture.Width, y * texture.Height, texture.Width, texture.Height);
             }
             else if (Type == TileTypes.EndPosition)
+            {
+                texture = content.Load<Texture2D>(@"test_Finish_Texture");
+                location = new Vector2(x * texture.Width, y * texture.Height);
+                rectangle = new Rectangle(x * texture.Width, y * texture.Height, texture.Width, texture.Height);
+            }
+            else if (Type == TileTypes.Bounds)
             {
                 texture = content.Load<Texture2D>(@"test_Finish_Texture");
                 location = new Vector2(x * texture.Width, y * texture.Height);

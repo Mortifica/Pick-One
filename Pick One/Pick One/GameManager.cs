@@ -41,8 +41,8 @@ namespace Pick_One
         public void SetLevel(string levelname, string nextLevel)
         {
             NextLevel = nextLevel;
-            var testMap = Content.Load<Texture2D>(levelname);
-            Level = LevelFactory.GenerateLevel(Content, testMap);
+            var texture = Content.Load<Texture2D>(levelname);
+            Level = LevelFactory.GenerateLevel(Content, texture);
             Collision = new CollisionManager(Level);
         }
 

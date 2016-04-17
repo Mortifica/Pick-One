@@ -8,17 +8,17 @@ namespace Pick_One.BasicClasses
 {
     public class CollisionManager
     {
-        private List<Tile> collisionObjects;
+        private List<Tile> CollisionObjects;
 
         public CollisionManager(List<Tile> tiles)
         {
-            collisionObjects = tiles;
+            CollisionObjects = tiles;
         }
 
         public Tuple<bool, List<Tile>> CheckCollision(Rectangle obj)
         {
             List<Tile> collisionRetangles = new List<Tile>();
-            foreach (var rec in collisionObjects)
+            foreach (var rec in CollisionObjects)
             {
                 if (rec.Rectangle.Intersects(obj))
                 {
@@ -31,17 +31,17 @@ namespace Pick_One.BasicClasses
 
         public void Add(Tile rectangle)
         {
-            collisionObjects.Add(rectangle);
+            CollisionObjects.Add(rectangle);
         }
         
         public void Remove(Tile rectangle)
         {
-            collisionObjects.Remove(rectangle);
+            CollisionObjects.Remove(rectangle);
         }
 
         public IEnumerable<Tile> GetBlocksAt(float x, float y, float height)
         {
-            return collisionObjects.Where(rect => rect.Rectangle.Intersects(new Rectangle((int)x, (int)y, 1, (int)height)));
+            return CollisionObjects.Where(rect => rect.Rectangle.Intersects(new Rectangle((int)x, (int)y, 1, (int)height)));
         }
 
 
