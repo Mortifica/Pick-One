@@ -19,6 +19,8 @@ namespace Pick_One.Character.PlayerSpecialities
         public Sprite MovingLeft { get; set; }
         public Sprite MovingRight { get; set; }
         public Sprite Jump { get; set; }
+        public Sprite Landing { get; set; }
+        public Sprite MidJump { get; set; }
         public Sprite WallClimbUp { get; set; }
         public Sprite WallClimbDown { get; set; }
         public Sprite Falling { get; set; }
@@ -66,6 +68,16 @@ namespace Pick_One.Character.PlayerSpecialities
                     Width = WallClimbUp.Texture.Width / StandingSprite.Columns;
                     Height = WallClimbUp.Texture.Height;
                     break;
+                case PlayerState.Landing:
+                    Landing.Update();
+                    Width = Landing.Texture.Width / StandingSprite.Columns;
+                    Height = Landing.Texture.Height;
+                    break;
+                case PlayerState.MidJump:
+                    MidJump.Update();
+                    Width = MidJump.Texture.Width / StandingSprite.Columns;
+                    Height = MidJump.Texture.Height;
+                    break;
             }
         }
         internal void Draw(SpriteBatch spriteBatch, Vector2 location)
@@ -90,12 +102,46 @@ namespace Pick_One.Character.PlayerSpecialities
                 case PlayerState.WallClimbUp:
                     WallClimbUp.Draw(spriteBatch, location);
                     break;
+                case PlayerState.Landing:
+                    Landing.Draw(spriteBatch, location);
+                    break;
+                case PlayerState.MidJump:
+                    MidJump.Draw(spriteBatch, location);
+                    break;
             }
         }
 
         internal void SetState(PlayerState currentState)
         {
+            
             CurrentState = currentState;
+            switch (CurrentState)
+            {
+                case PlayerState.Standing:
+                    StandingSprite.currentFrame = 0;
+                    break;
+                case PlayerState.Jump:
+                    Jump.currentFrame = 0;
+                    break;
+                case PlayerState.MovingLeft:
+                    MovingLeft.currentFrame = 0;
+                    break;
+                case PlayerState.MovingRight:
+                    MovingRight.currentFrame = 0;
+                    break;
+                case PlayerState.WallClimbDown:
+                    WallClimbDown.currentFrame = 0;
+                    break;
+                case PlayerState.WallClimbUp:
+                    WallClimbUp.currentFrame = 0;
+                    break;
+                case PlayerState.Landing:
+                    Landing.currentFrame = 0;
+                    break;
+                case PlayerState.MidJump:
+                    MidJump.currentFrame = 0;
+                    break;
+            }
         }
     }
 }

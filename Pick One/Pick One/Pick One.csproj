@@ -90,6 +90,10 @@
     <Content Include="Content\test_Hover_Moving_Right_Animation.png" />
     <Content Include="Content\test_Hover_Standing_Animation.png" />
     <Content Include="Content\test_Start_Texture.png" />
+    <Content Include="Content\test_Triangle_Jumping_Animation.png" />
+    <Content Include="Content\test_Triangle_Landing_Animation.png" />
+    <Content Include="Content\test_Triangle_MidJump_Animation.png" />
+    <Content Include="Content\test_Triangle_Standing_Animation.png" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>

@@ -19,7 +19,7 @@ namespace Pick_One.Character
         private List<Keys> KeysForTransform { get; set; }
         public bool IsJumping { get; set; }
         public float JumpTime { get; set; }
-
+        public float InitJumpTime { get; set; }
         public Vector2 Location
         {
             get
@@ -37,6 +37,7 @@ namespace Pick_One.Character
         private bool IsTouchingWall;
         public Player(Vector2 initialLocation, List<PlayerSpriteContainer> container, CollisionManager collisionManager)
         {
+            InitJumpTime = 30;
             CollisionManager = collisionManager;
             MovementVector = new Vector2();
             PlayerLocation = new Location();
@@ -155,7 +156,8 @@ namespace Pick_One.Character
                 JumpTime++;
                 if(JumpTime < 50)
                 {
-                    MovementVector.Y -= (CurrentPlayerSpeciality.Movement.UpwardMovement / (JumpTime));
+                    if(JumpTime > InitJumpTime)
+                    MovementVector.Y -= (CurrentPlayerSpeciality.Movement.UpwardMovement / (JumpTime - InitJumpTime));
                 }
                 else
                 {
@@ -318,6 +320,37 @@ namespace Pick_One.Character
 
         private bool TransitionState()
         {
+            if (IsJumping)
+            {
+                if (CurrentPlayerSpeciality.IsJumpable) //Jumping
+                {
+                    if (JumpTime < InitJumpTime) // InitJump
+                    {
+                        if (CurrentState != PlayerState.Jump)
+                        {
+                            CurrentState = PlayerState.Jump;
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        if (CurrentState != PlayerState.MidJump)
+                        {
+                            CurrentState = PlayerState.MidJump;
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+
+            }
             if (MovementVector.X == 0.0f)
             {
                 if (MovementVector.Y == 0.0f) //Standing
@@ -342,14 +375,14 @@ namespace Pick_One.Character
                         }
                         else
                         {
-                            if (CurrentPlayerSpeciality.IsJumpable) //Jumping
-                            {
-                                if (CurrentState != PlayerState.Jump)
-                                {
-                                    CurrentState = PlayerState.Jump;
-                                    return true;
-                                }
-                            }
+                            //if (CurrentPlayerSpeciality.IsJumpable) //Jumping
+                            //{
+                            //    if (CurrentState != PlayerState.Jump)
+                            //    {
+                            //        CurrentState = PlayerState.Jump;
+                            //        return true;
+                            //    }
+                            //}
                         }
                     }
                     else //Moving Down
@@ -404,6 +437,8 @@ namespace Pick_One.Character
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            Console.WriteLine(CurrentState);
+            //spriteBatch.DrawString(new SpriteFont(), "State:" + CurrentState, new Vector2(1, 1), Color.Black);
             CurrentPlayerSpeciality.Draw(spriteBatch, new Vector2(PlayerLocation.XLocation, PlayerLocation.YLocation));
         }
 

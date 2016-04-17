@@ -90,53 +90,63 @@ namespace Pick_One
             var hoverMovingLeft = Content.Load<Texture2D>(@"test_Hover_Moving_Left_Animation");
             var hoverMovingRight = Content.Load<Texture2D>(@"test_Hover_Moving_Right_Animation");
 
-            //
+            //Vertical
+            var standingVertical = Content.Load<Texture2D>(@"test_Triangle_Standing_Animation");
+            var jumpingVertical = Content.Load<Texture2D>(@"test_Triangle_Jumping_Animation");
+            var midJumpVertical = Content.Load<Texture2D>(@"test_Triangle_MidJump_Animation");
+            var landingVertical = Content.Load<Texture2D>(@"test_Triangle_Landing_Animation");
+            //var standingVertical = Content.Load<Texture2D>(@"test_Circle_Moving_Right_Animation");
+
+
+            //MiscTesting
             var fallingPlayer = Content.Load<Texture2D>(@"test_Circle_Falling_Animation");
-            var climbingPlayer = Content.Load<Texture2D>(@"test_Circle_WallClimb_Animation");
+            var climbingPlayer = Content.Load<Texture2D>(@"test_Circle_Moving_Animation");
 
             PlayerSpriteContainers = new List<PlayerSpriteContainer>();
             PlayerSpriteContainers.Add(new PlayerSpriteContainer() // Normal
             {
                 StandingSprite = new Sprite(standingPlayer,1,4,7),
                 MovingLeftSprite = new Sprite(movingPlayerLeft, 1, 4, 7),
-                MovingRightSprite = new Sprite(movingPlayerRight, 1, 4, 7),
-                JumpingSprite = new Sprite(standingPlayer, 1, 4, 7),
-                WallClimbUpSprite = new Sprite(standingPlayer, 1, 4, 7),
-                WallClimbDownSprite = new Sprite(standingPlayer, 1, 4, 7)
+                MovingRightSprite = new Sprite(movingPlayerRight, 1, 4, 7)
+                //JumpingSprite = new Sprite(standingPlayer, 1, 4, 7),
+                //WallClimbUpSprite = new Sprite(standingPlayer, 1, 4, 7),
+                //WallClimbDownSprite = new Sprite(standingPlayer, 1, 4, 7)
             });
             PlayerSpriteContainers.Add(new PlayerSpriteContainer() // Speed
             {
                 StandingSprite = new Sprite(fallingPlayer, 1, 4, 7),
                 MovingLeftSprite = new Sprite(climbingPlayer, 1,4, 7),
-                MovingRightSprite = new Sprite(standingPlayer, 1, 4, 7),
-                JumpingSprite = new Sprite(standingPlayer, 1, 4, 7),
-                WallClimbUpSprite = new Sprite(standingPlayer, 1, 4, 7),
-                WallClimbDownSprite = new Sprite(standingPlayer, 1, 4, 7)
+                MovingRightSprite = new Sprite(standingPlayer, 1, 4, 7)
+                //JumpingSprite = new Sprite(standingPlayer, 1, 4, 7),
+                //WallClimbUpSprite = new Sprite(standingPlayer, 1, 4, 7),
+                //WallClimbDownSprite = new Sprite(standingPlayer, 1, 4, 7)
             });
             PlayerSpriteContainers.Add(new PlayerSpriteContainer() // Stretch
             {
                 StandingSprite = new Sprite(hoverStanding, 1, 4, 7),
                 MovingLeftSprite = new Sprite(hoverMovingLeft, 1, 4, 7),
-                MovingRightSprite = new Sprite(hoverMovingRight, 1, 4, 7),
-                JumpingSprite = new Sprite(standingPlayer, 1, 4, 7),
-                WallClimbUpSprite = new Sprite(standingPlayer, 1, 4, 7),
-                WallClimbDownSprite = new Sprite(standingPlayer, 1, 4, 7)
+                MovingRightSprite = new Sprite(hoverMovingRight, 1, 4, 7)
+                //JumpingSprite = new Sprite(standingPlayer, 1, 4, 7),
+                //WallClimbUpSprite = new Sprite(standingPlayer, 1, 4, 7),
+                //WallClimbDownSprite = new Sprite(standingPlayer, 1, 4, 7)
             });
             PlayerSpriteContainers.Add(new PlayerSpriteContainer() // Vertical
             {
-                StandingSprite = new Sprite(standingPlayer, 1, 4, 7),
-                MovingLeftSprite = new Sprite(standingPlayer, 1, 4, 7),
-                MovingRightSprite = new Sprite(standingPlayer, 1, 4, 7),
-                JumpingSprite = new Sprite(fallingPlayer, 1, 4, 7),
-                WallClimbUpSprite = new Sprite(standingPlayer, 1, 4, 7),
-                WallClimbDownSprite = new Sprite(standingPlayer, 1, 4, 7)
+                StandingSprite = new Sprite(standingVertical, 1, 4, 7),
+                //MovingLeftSprite = new Sprite(standingVertical, 1, 4, 7),
+                //MovingRightSprite = new Sprite(standingVertical, 1, 4, 7),
+                JumpingSprite = new Sprite(jumpingVertical, 1, 6, 7),
+                MidJumpSprite = new Sprite(midJumpVertical, 1, 4, 7),
+                LandingSprite = new Sprite(landingVertical, 1, 6, 7)
+                //WallClimbUpSprite = new Sprite(standingPlayer, 1, 4, 7),
+                //WallClimbDownSprite = new Sprite(standingPlayer, 1, 4, 7)
             });
             PlayerSpriteContainers.Add(new PlayerSpriteContainer() // Climbing
             {
                 StandingSprite = new Sprite(standingPlayer, 1, 4, 7),
-                MovingLeftSprite = new Sprite(standingPlayer, 1, 4, 7),
-                MovingRightSprite = new Sprite(standingPlayer, 1, 4, 7),
-                JumpingSprite = new Sprite(standingPlayer, 1, 4, 7),
+                MovingLeftSprite = new Sprite(movingPlayerLeft, 1, 4, 7),
+                MovingRightSprite = new Sprite(movingPlayerRight, 1, 4, 7),
+                //JumpingSprite = new Sprite(standingPlayer, 1, 4, 7),
                 WallClimbUpSprite = new Sprite(standingPlayer, 1, 4, 7),
                 WallClimbDownSprite = new Sprite(standingPlayer, 1, 4, 7)
             });

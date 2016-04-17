@@ -8,6 +8,8 @@
         Jump,
         WallClimbUp,
         WallClimbDown,
-        Falling
+        Falling,
+        Landing,
+        MidJump
     }
 }
