@@ -162,8 +162,8 @@ namespace Pick_One
                 MidJumpSprite = new Sprite(standingClimb, 1, 4, 7),
                 LandingSprite = new Sprite(standingClimb, 1, 6, 7),
                 JumpingSprite = new Sprite(standingClimb, 1, 4, 7),
-                WallClimbUpSprite = new Sprite(standingClimb, 1, 4, 7),
-                WallClimbDownSprite = new Sprite(standingClimb, 1, 4, 7)
+                WallClimbUpSprite = new Sprite(movingLeftClimb, 1, 7, 7),
+                WallClimbDownSprite = new Sprite(movingRightClimb, 1, 7, 7)
             });
 
             // load sounds
