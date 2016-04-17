@@ -9,7 +9,7 @@ namespace Pick_One.Character.PlayerSpecialities
 {
     public class Stretch : AbstractPlayerSpeciality
     {
-        public Stretch(PlayerSpriteContainer sprites) : base(sprites)
+        public Stretch(PlayerSpriteContainer sprites, HitBox hitBox) : base(sprites, hitBox)
         {
             SpecialityName = PlayerSpecialityEnum.Stretch;
             Movement = new MovementContainer();

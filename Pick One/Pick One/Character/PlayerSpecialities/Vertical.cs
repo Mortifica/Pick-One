@@ -10,7 +10,7 @@ namespace Pick_One.Character.PlayerSpecialities
     public class Vertical : AbstractPlayerSpeciality
     {
 
-        public Vertical(PlayerSpriteContainer sprites) : base(sprites)
+        public Vertical(PlayerSpriteContainer sprites, HitBox hitBox) : base(sprites, hitBox)
         {
             SpecialityName = PlayerSpecialityEnum.Vertical;
             Movement = new MovementContainer();

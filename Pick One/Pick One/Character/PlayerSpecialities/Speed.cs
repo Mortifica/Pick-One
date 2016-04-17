@@ -9,7 +9,7 @@ namespace Pick_One.Character.PlayerSpecialities
 {
     public class Speed : AbstractPlayerSpeciality
     {
-        public Speed(PlayerSpriteContainer sprites) : base(sprites)
+        public Speed(PlayerSpriteContainer sprites, HitBox hitBox) : base(sprites, hitBox)
         {
             SpecialityName = PlayerSpecialityEnum.Speed;
             Movement = new MovementContainer();

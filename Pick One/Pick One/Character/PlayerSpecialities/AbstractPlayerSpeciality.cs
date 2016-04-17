@@ -13,8 +13,9 @@ namespace Pick_One.Character.PlayerSpecialities
     {
         private PlayerSpriteContainer sprites;
 
-        public AbstractPlayerSpeciality(PlayerSpriteContainer sprites)
+        public AbstractPlayerSpeciality(PlayerSpriteContainer sprites, HitBox hitBox)
         {
+            PlayerHitBox = hitBox;
             StandingSprite = sprites.StandingSprite;
             MovingLeft = sprites.MovingLeftSprite;
             MovingRight = sprites.MovingRightSprite;
@@ -26,7 +27,7 @@ namespace Pick_One.Character.PlayerSpecialities
             WallClimbLeft = sprites.WallClimbLeft;
             Poof = sprites.Poof;
         }
-
+        public HitBox PlayerHitBox { get; set; }
         public MovementContainer Movement { get; set; }
         public bool IsStretchable { get; set; }
         public bool IsClimbable { get; set; }
@@ -45,7 +46,7 @@ namespace Pick_One.Character.PlayerSpecialities
         public AbstractPlayerSpeciality PrevTransform { get; set; }
         public PlayerState CurrentState { get; set; }
         public PlayerSpecialityEnum SpecialityName { get; set; }
-
+        private int hitboxDiff = 2;
         public float Width
         {
             get; set;
@@ -59,47 +60,47 @@ namespace Pick_One.Character.PlayerSpecialities
                 case PlayerState.Standing:
                     StandingSprite.Update();
                     Width = StandingSprite.Texture.Width / StandingSprite.Columns;
-                    Height = StandingSprite.Texture.Height;
+                    Height = StandingSprite.Texture.Height -hitboxDiff;
                     break;
                 case PlayerState.Jump:
                     Jump.Update();
                     Width = Jump.Texture.Width / Jump.Columns;
-                    Height = Jump.Texture.Height;
+                    Height = Jump.Texture.Height - hitboxDiff;
                     break;
                 case PlayerState.MovingLeft:
                     MovingLeft.Update();
                     Width = MovingLeft.Texture.Width / MovingLeft.Columns;
-                    Height = MovingLeft.Texture.Height;
+                    Height = MovingLeft.Texture.Height - hitboxDiff;
                     break;
                 case PlayerState.MovingRight:
                     MovingRight.Update();
                     Width = MovingRight.Texture.Width / MovingRight.Columns;
-                    Height = MovingRight.Texture.Height;
+                    Height = MovingRight.Texture.Height - hitboxDiff;
                     break;
                 case PlayerState.WallClimbRight:
                     WallClimbRight.Update();
                     Width = WallClimbRight.Texture.Width / WallClimbRight.Columns;
-                    Height = WallClimbRight.Texture.Height;
+                    Height = WallClimbRight.Texture.Height - hitboxDiff;
                     break;
                 case PlayerState.WallClimbLeft:
                     WallClimbLeft.Update();
                     Width = WallClimbLeft.Texture.Width / WallClimbLeft.Columns;
-                    Height = WallClimbLeft.Texture.Height;
+                    Height = WallClimbLeft.Texture.Height - hitboxDiff;
                     break;
                 case PlayerState.Landing:
                     Landing.Update();
                     Width = Landing.Texture.Width / Landing.Columns;
-                    Height = Landing.Texture.Height;
+                    Height = Landing.Texture.Height - hitboxDiff;
                     break;
                 case PlayerState.MidJump:
                     MidJump.Update();
                     Width = MidJump.Texture.Width / MidJump.Columns;
-                    Height = MidJump.Texture.Height;
+                    Height = MidJump.Texture.Height - hitboxDiff;
                     break;
                 case PlayerState.Falling:
                     Falling.Update();
                     Width = Falling.Texture.Width / Falling.Columns;
-                    Height = Falling.Texture.Height;
+                    Height = Falling.Texture.Height - hitboxDiff;
                     break;
             }
         }

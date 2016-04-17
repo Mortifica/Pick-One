@@ -45,23 +45,25 @@ namespace Pick_One.Character
         private bool IsTouchingWall;
         public Player(Vector2 initialLocation, List<PlayerSpriteContainer> container)
         {
+            PlayerLocation = new Location();
+            PlayerLocation.XLocation = initialLocation.X;
+            PlayerLocation.YLocation = initialLocation.Y;
+            PlayerHitbox = new HitBox(PlayerLocation.XLocation, PlayerLocation.YLocation, 32, 32);
             MaxJump = 117;
             InitJumpTime = 30;
             // CollisionManager = collisionManager;
             MovementVector = new Vector2();
-            PlayerLocation = new Location();
-            PlayerLocation.XLocation = initialLocation.X;
-            PlayerLocation.YLocation = initialLocation.Y;
-            NormalSpeciality = new Normal(container[0]);
-            SpeedSpeciality = new Speed(container[1]);
-            StretchSpeciality = new Stretch(container[2]);
-            VerticalSpeciality = new Vertical(container[3]);
-            WallClimbSpeciality = new WallClimb(container[4]);
+
+            NormalSpeciality = new Normal(container[0], PlayerHitbox);
+            SpeedSpeciality = new Speed(container[1], PlayerHitbox);
+            StretchSpeciality = new Stretch(container[2], PlayerHitbox);
+            VerticalSpeciality = new Vertical(container[3], PlayerHitbox);
+            WallClimbSpeciality = new WallClimb(container[4], PlayerHitbox);
             NormalSpeciality.NextTransform = SpeedSpeciality;
             NormalSpeciality.PrevTransform = WallClimbSpeciality;
             CurrentPlayerSpeciality = SpeedSpeciality;
             IsTouchingWall = false;
-            PlayerHitbox = new HitBox(PlayerLocation.XLocation, PlayerLocation.YLocation, CurrentPlayerSpeciality.Height, CurrentPlayerSpeciality.Width);
+            
             CurrentState = PlayerState.Standing;
 
             KeysForMovement = new List<Keys>

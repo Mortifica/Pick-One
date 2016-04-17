@@ -10,7 +10,7 @@ namespace Pick_One.Character.PlayerSpecialities
 {
     public class Normal : AbstractPlayerSpeciality
     {
-        public Normal(PlayerSpriteContainer sprites) : base(sprites)
+        public Normal(PlayerSpriteContainer sprites, HitBox hitBox) : base(sprites, hitBox)
         {
             SpecialityName = PlayerSpecialityEnum.Normal;
              Movement = new MovementContainer();

@@ -9,7 +9,7 @@ namespace Pick_One.Character.PlayerSpecialities
 {
     public class WallClimb : AbstractPlayerSpeciality
     {
-        public WallClimb(PlayerSpriteContainer sprites) : base(sprites)
+        public WallClimb(PlayerSpriteContainer sprites, HitBox hitBox) : base(sprites, hitBox)
         {
             SpecialityName = PlayerSpecialityEnum.WallClimb;
             Movement = new MovementContainer();
