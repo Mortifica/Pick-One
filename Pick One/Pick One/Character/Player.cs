@@ -157,7 +157,8 @@ namespace Pick_One.Character
         }
         public void Update(GameTime gameTime)
         {
-            MovementVector.Y += 1;
+            if(CurrentPlayerSpeciality != StretchSpeciality)
+            MovementVector.Y += 1; // Gravity
 
             //move, Update Sprite Animation, Transform, Update Hitbox
             if (IsJumping)
