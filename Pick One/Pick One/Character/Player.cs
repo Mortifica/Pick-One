@@ -20,6 +20,8 @@ namespace Pick_One.Character
         public bool IsJumping { get; set; }
         public float JumpTime { get; set; }
 
+        private Vector2 gravity = Vector2.Zero;
+
         public Vector2 Location
         {
             get
@@ -148,6 +150,8 @@ namespace Pick_One.Character
         }
         public void Update()
         {
+            MovementVector.Y += 1;
+
             //move, Update Sprite Animation, Transform, Update Hitbox
             if (IsJumping)
             {
@@ -167,7 +171,6 @@ namespace Pick_One.Character
 
             UpdateSprite();
             PlayerHitbox.Update(PlayerLocation.XLocation, PlayerLocation.YLocation);
-
 
             //Clear Objects that need to for next update
             MovementVector.X = 0;
