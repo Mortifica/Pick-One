@@ -123,7 +123,7 @@ namespace Pick_One
                 StandingSprite = new Sprite(standingPlayer, 1, 4, 7),
                 MovingLeftSprite = new Sprite(standingPlayer, 1, 4, 7),
                 MovingRightSprite = new Sprite(standingPlayer, 1, 4, 7),
-                JumpingSprite = new Sprite(standingPlayer, 1, 4, 7),
+                JumpingSprite = new Sprite(fallingPlayer, 1, 4, 7),
                 WallClimbUpSprite = new Sprite(standingPlayer, 1, 4, 7),
                 WallClimbDownSprite = new Sprite(standingPlayer, 1, 4, 7)
             });
