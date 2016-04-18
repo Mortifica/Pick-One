@@ -21,7 +21,11 @@ namespace Pick_One.Levels
         private static readonly Lazy<LevelManager> lazy = new Lazy<LevelManager>(() => new LevelManager());
 
         private List<Tile> Level;
-        private string NextLevel;
+
+
+        public static string CurrentLevel { get; set; }
+
+        public static string NextLevel { get; set; }
 
         private CollisionManager Collision;
 
@@ -44,12 +48,13 @@ namespace Pick_One.Levels
 
         public void SetLevel(string levelname)
         {
-            NextLevel = levelname;
+            CurrentLevel = levelname;
             GetLevelInfo();
         }
 
         public void SetLevel(string levelname, string nextLevel)
         {
+            CurrentLevel = levelname;
             NextLevel = nextLevel;
             var texture = Content.Load<Texture2D>(levelname);
             Level = LevelFactory.GenerateLevel(Content, texture);
@@ -65,6 +70,7 @@ namespace Pick_One.Levels
             }
             else
             {
+                CurrentLevel = NextLevel;
                 GetLevelInfo();
             }
         }
@@ -94,7 +100,7 @@ namespace Pick_One.Levels
         {
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Volume = (float)0.25;
-            if (NextLevel == "Level1")
+            if (CurrentLevel == "Level1")
             {
                 SetLevel(FOLDER_PATH + "Level1", "Level2");
                 MediaPlayer.Stop();
@@ -102,7 +108,7 @@ namespace Pick_One.Levels
                 MediaPlayer.Play(SoundContainer.Instance.Tutorial);
                 Timer(30);
             }
-            else if (NextLevel == "Level2")
+            else if (CurrentLevel == "Level2")
             {
                 // Next level
                 SetLevel(FOLDER_PATH + "Level2","Level3");
@@ -110,7 +116,7 @@ namespace Pick_One.Levels
                 MediaPlayer.Play(SoundContainer.Instance.LevelTheme);
                 Timer(30);
             }
-            else if (NextLevel == "Level3")
+            else if (CurrentLevel == "Level3")
             {
                 // Next level
                 SetLevel(FOLDER_PATH + "Level3", "Level4");
@@ -118,7 +124,7 @@ namespace Pick_One.Levels
                 MediaPlayer.Play(SoundContainer.Instance.LevelTheme);
                 Timer(30);
             }
-            else if (NextLevel == "Level4")
+            else if (CurrentLevel == "Level4")
             {
                 // Next level
                 SetLevel(FOLDER_PATH + "Level4", "Level1");
