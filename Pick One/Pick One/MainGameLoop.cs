@@ -586,6 +586,7 @@ namespace Pick_One
         {
 
             private SpriteFont font;
+            private SpriteFont textFont;
             private Options[] MenuOptions = new Options[1]
             {
                 Options.MainMenu
@@ -605,6 +606,7 @@ namespace Pick_One
             private void init()
             {
                 font = game.Content.Load<SpriteFont>(FONT_FOLDER + "mainMenuFont");
+                textFont = game.Content.Load<SpriteFont>(FONT_FOLDER + "menu_Options_Font");
 
                 var tempSubscriber = new KeyboardSubscriber()
                 {
@@ -666,10 +668,15 @@ namespace Pick_One
 
 
                 Vector2 menu = MenuLocation;
-                spriteBatch.DrawString(font, "Thanks For Playing", new Vector2(50, 40), topColor);
-                spriteBatch.DrawString(font, "Please leave some comments", new Vector2(50, font.LineSpacing + 40), topColor);
+                spriteBatch.DrawString(font, "Credits", new Vector2(200, 0), Color.Orange);
+                spriteBatch.DrawString(textFont, "Thanks For Playing", new Vector2(200, 150), topColor);
+                spriteBatch.DrawString(textFont, "Please leave some comments", new Vector2(200, textFont.LineSpacing + 150), topColor);
+                spriteBatch.DrawString(textFont, "And Sorry for the Seizures", new Vector2(200, textFont.LineSpacing * 2 + 150), topColor);
+                spriteBatch.DrawString(textFont, "Hankenstien: Art", new Vector2(200, textFont.LineSpacing * 5 + 150), Color.Orange);
+                spriteBatch.DrawString(textFont, "ViperD: Coding", new Vector2(200, textFont.LineSpacing * 6 + 150), Color.Orange);
+                spriteBatch.DrawString(textFont, "Tombz26: Coding", new Vector2(200, textFont.LineSpacing * 7 + 150), Color.Orange);
+                spriteBatch.DrawString(textFont, "KoukiiMonster: Music", new Vector2(200, textFont.LineSpacing * 8 + 150), Color.Orange);
 
-                spriteBatch.DrawString(font, "Hankenstien: Art\nViperD: Coding\nTombz26:Coding\nKoukiiMonster:Music", new Vector2(50, font.LineSpacing*2 + 40), topColor);
 
                 for (int i = 0; i < MenuOptions.Length; i++)
                 {
@@ -681,7 +688,7 @@ namespace Pick_One
                     {
                         color = Color.Black;
                     }
-                    spriteBatch.DrawString(font, MenuOptions[i].ToString(), menu += new Vector2(0, font.LineSpacing*2 + 40), color);
+                    spriteBatch.DrawString(textFont,"Press \"A\" for the " + MenuOptions[i].ToString(), new Vector2(200, textFont.LineSpacing * 12 + 150), color);
                 }
             }
             public override void NextState()
