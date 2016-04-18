@@ -14,5 +14,6 @@ namespace Pick_One.Levels
         public readonly static Color EndPosition = new Color(255, 0, 0, 255);
         public readonly static Color UnclimbableWall = new Color(0, 0, 255, 255);
         public readonly static Color SlowFloor = new Color(255, 255, 0, 255);
+        public readonly static Color Earth = new Color(50, 50, 50, 255);
     }
 }

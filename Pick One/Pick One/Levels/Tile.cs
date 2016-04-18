@@ -48,6 +48,7 @@ namespace Pick_One.Levels
         {
             Empty,
             StartPosition,
+            Earth,
             EndPosition,
             Floor,
             Bounds,
@@ -73,19 +74,19 @@ namespace Pick_One.Levels
         {
             if (Type == TileTypes.Floor)
             {
-                texture = content.Load<Texture2D>(@"test_Ground_Texture");
+                texture = content.Load<Texture2D>(@"ground_Texture");
                 location = new Vector2(x * texture.Width, y * texture.Height);
                 rectangle = new Rectangle(x * texture.Width, y * texture.Height, texture.Width, texture.Height);
             }
             else if (Type == TileTypes.StartPosition)
             {
-                texture = content.Load<Texture2D>(@"test_Ground_Texture");
+                texture = content.Load<Texture2D>(@"start_Texture");
                 location = new Vector2(x * texture.Width, y * texture.Height);
                 rectangle = new Rectangle(x * texture.Width, y * texture.Height, texture.Width, texture.Height);
             }
             else if (Type == TileTypes.EndPosition)
             {
-                texture = content.Load<Texture2D>(@"test_Finish_Texture");
+                texture = content.Load<Texture2D>(@"finish_Texture");
                 location = new Vector2(x * texture.Width, y * texture.Height);
                 rectangle = new Rectangle(x * texture.Width, y * texture.Height, texture.Width, texture.Height);
             }
@@ -95,15 +96,21 @@ namespace Pick_One.Levels
                 location = new Vector2(x * texture.Width, y * texture.Height);
                 rectangle = new Rectangle(x * texture.Width, y * texture.Height, texture.Width, texture.Height);
             }
+            else if(Type == TileTypes.Earth)
+            {
+                texture = content.Load<Texture2D>(@"earth_Texture");
+                location = new Vector2(x * texture.Width, y * texture.Height);
+                rectangle = new Rectangle(x * texture.Width, y * texture.Height, texture.Width, texture.Height);
+            }
             if (Type == TileTypes.Unclimbable)
             {
-                texture = content.Load<Texture2D>(@"test_UnClimbable_Texture");
+                texture = content.Load<Texture2D>(@"unClimbable_Texture");
                 location = new Vector2(x * texture.Width, y * texture.Height);
                 rectangle = new Rectangle(x * texture.Width, y * texture.Height, texture.Width, texture.Height);
             }
             if (Type == TileTypes.Slow)
             {
-                texture = content.Load<Texture2D>(@"test_Slow_Texture");
+                texture = content.Load<Texture2D>(@"slow_Texture");
                 location = new Vector2(x * texture.Width, y * texture.Height);
                 rectangle = new Rectangle(x * texture.Width, y * texture.Height, texture.Width, texture.Height);
             }

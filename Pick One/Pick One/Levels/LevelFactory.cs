@@ -45,6 +45,9 @@ namespace Pick_One.Levels
                     else if (color == LevelColorMap.SlowFloor)
                     {
                         listPosition.Add(new Tile(content, Tile.TileTypes.Slow, x, y));
+                    }else if (color == LevelColorMap.Earth)
+                    {
+                        listPosition.Add(new Tile(content, Tile.TileTypes.Earth, x, y));
                     }
                 }
             }
