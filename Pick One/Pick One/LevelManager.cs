@@ -15,6 +15,8 @@ namespace Pick_One
 {
     public sealed class LevelManager
     {
+        private const string FOLDER_PATH = @"Levels\";
+
         private static readonly Lazy<LevelManager> lazy = new Lazy<LevelManager>(() => new LevelManager());
 
         private static List<Tile> Level;
@@ -85,17 +87,31 @@ namespace Pick_One
         {
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Volume = (float)0.25;
-            if (NextLevel == "TestLevel")
+            if (NextLevel == "Level1")
             {
-                SetLevel("TestLevel", "LargeTestLevel1");
+                SetLevel(FOLDER_PATH + "Level1", "Level2");
                 MediaPlayer.Stop();
                 MediaPlayer.IsRepeating = true;
                 MediaPlayer.Play(SoundContainer.Instance.Tutorial);
             }
-            else if (NextLevel == "LargeTestLevel1")
+            else if (NextLevel == "Level2")
             {
                 // Next level
-                SetLevel("LargeTestLevel1", "TestLevel");
+                SetLevel(FOLDER_PATH + "Level2","Level3");
+                MediaPlayer.Stop();
+                MediaPlayer.Play(SoundContainer.Instance.LevelTheme);
+            }
+            else if (NextLevel == "Level3")
+            {
+                // Next level
+                SetLevel(FOLDER_PATH + "Level3", "Level4");
+                MediaPlayer.Stop();
+                MediaPlayer.Play(SoundContainer.Instance.LevelTheme);
+            }
+            else if (NextLevel == "Level4")
+            {
+                // Next level
+                SetLevel(FOLDER_PATH + "Level4", "Level1");
                 MediaPlayer.Stop();
                 MediaPlayer.Play(SoundContainer.Instance.LevelTheme);
             }

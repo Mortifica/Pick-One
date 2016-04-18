@@ -81,8 +81,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\TestLevel2.png" />
-    <Content Include="Content\TestLevel.png" />
     <Content Include="Content\test_Circle_Falling_Animation.png" />
     <Content Include="Content\test_Circle_Moving_Animation.png" />
     <Content Include="Content\test_Circle_Moving_Left_Animation.png" />
@@ -104,7 +102,6 @@
     <Content Include="Content\test_Triangle_FLanding_Animation.png" />
     <Content Include="Content\test_Triangle_JLanding_Animation.png" />
     <Content Include="Content\test_Triangle_Jumping_Animation.png" />
-    <Content Include="Content\test_Triangle_Landing_Animation.png" />
     <Content Include="Content\test_Triangle_MidFall_Animation.png" />
     <Content Include="Content\test_Triangle_MidJump_Animation.png" />
     <Content Include="Content\test_Triangle_Standing_Animation.png" />
@@ -118,11 +115,6 @@
     <Folder Include="Character\Visuals\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Content\death.ogg" />
-    <None Include="Content\finish.ogg" />
-    <None Include="Content\jump.ogg" />
-    <None Include="Content\rotate.ogg" />
-    <None Include="Content\squish.ogg" />
     <None Include="Content\tutorial.ogg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

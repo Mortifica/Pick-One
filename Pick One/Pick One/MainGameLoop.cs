@@ -482,8 +482,7 @@ namespace Pick_One
                 });
 
 
-                LevelManager.Instance.SetLevel(@"TestLevel");
-                //GameManager.Instance.SetLevel(@"TestLevel2");
+                LevelManager.Instance.SetLevel(@"Level1");
                 
                 PlayStateKeyListener = new KeyboardListener();
                 game.Player = new Player(LevelManager.Instance.GetPlayerStartingLocation(), PlayerSpriteContainers);
