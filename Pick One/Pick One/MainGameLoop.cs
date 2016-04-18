@@ -480,9 +480,9 @@ namespace Pick_One
             }
             public override void Draw(SpriteBatch spriteBatch)
             {
-
-                LevelManager.Instance.DrawLevel(spriteBatch);
                 game.Player.Draw(spriteBatch);
+                LevelManager.Instance.DrawLevel(spriteBatch);
+                
                 hud.Draw(spriteBatch);
             }
             public void NotifyOfChange(List<KeyAction> actions, GameTime gameTime)
