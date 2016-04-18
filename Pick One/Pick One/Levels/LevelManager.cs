@@ -22,7 +22,6 @@ namespace Pick_One.Levels
 
         private List<Tile> Level;
 
-
         public static string CurrentLevel { get; set; }
 
         public static string NextLevel { get; set; }
@@ -98,38 +97,31 @@ namespace Pick_One.Levels
 
         private void GetLevelInfo()
         {
-            MediaPlayer.IsRepeating = true;
-            MediaPlayer.Volume = (float)0.25;
             if (CurrentLevel == "Level1")
             {
                 SetLevel(FOLDER_PATH + "Level1", "Level2");
-                MediaPlayer.Stop();
-                MediaPlayer.IsRepeating = true;
-                MediaPlayer.Play(SoundContainer.Instance.Tutorial);
+                LevelMusic(SoundContainer.Instance.LevelTheme);
                 Timer(30);
             }
             else if (CurrentLevel == "Level2")
             {
                 // Next level
                 SetLevel(FOLDER_PATH + "Level2","Level3");
-                MediaPlayer.Stop();
-                MediaPlayer.Play(SoundContainer.Instance.LevelTheme);
+                LevelMusic(SoundContainer.Instance.LevelTheme);
                 Timer(30);
             }
             else if (CurrentLevel == "Level3")
             {
                 // Next level
                 SetLevel(FOLDER_PATH + "Level3", "Level4");
-                MediaPlayer.Stop();
-                MediaPlayer.Play(SoundContainer.Instance.LevelTheme);
+                LevelMusic(SoundContainer.Instance.LevelTheme);
                 Timer(30);
             }
             else if (CurrentLevel == "Level4")
             {
                 // Next level
                 SetLevel(FOLDER_PATH + "Level4", "Level1");
-                MediaPlayer.Stop();
-                MediaPlayer.Play(SoundContainer.Instance.LevelTheme);
+                LevelMusic(SoundContainer.Instance.LevelTheme);
                 Timer(30);
             }
         }
@@ -154,6 +146,12 @@ namespace Pick_One.Levels
             levelTimeLimit = timeLimit;
             LevelTimer.Reset();
             LevelTimer.Start();
+        }
+
+        private void LevelMusic(Song songName)
+        {
+            MediaPlayer.Stop();
+            MediaPlayer.Play(songName);
         }
     }
 }

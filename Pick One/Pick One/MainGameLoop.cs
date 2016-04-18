@@ -68,7 +68,8 @@ namespace Pick_One
             base.Initialize();
 
             // Set inital level
-
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Volume = (float)0.25;
 
         }
 
@@ -128,6 +129,7 @@ namespace Pick_One
             SoundContainer.Instance.Tutorial = Content.Load<Song>("tutorial");
             SoundContainer.Instance.LevelTheme = Content.Load<Song>("LevelTheme");
 
+            MediaPlayer.Play(SoundContainer.Instance.Tutorial);
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
             CurrentState = new StartState(this);
