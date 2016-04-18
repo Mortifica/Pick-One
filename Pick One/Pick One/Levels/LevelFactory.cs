@@ -40,11 +40,36 @@ namespace Pick_One.Levels
                     }
                     else
                     {
-                        // Empty won't be added to the list
-                        //listPosition.Add(new Tile(content, Tile.Type.Empty, 0, 0));
+                        if (color == LevelColorMap.UnclimbableWall)
+                        {
+                            listPosition.Add(new Tile(content, Tile.TileTypes.Unclimbable, x, y));
+                        }
+                        else
+                        {
+                            if (color == LevelColorMap.SlowFloor)
+                            {
+                                listPosition.Add(new Tile(content, Tile.TileTypes.Slow, x, y));
+                            }
+                            else
+                            {
+                                // Empty won't be added to the list
+                                //listPosition.Add(new Tile(content, Tile.Type.Empty, 0, 0));
+                            }
+                        }
                     }
                 }
             }
+
+            // Need to add a boundary around the entire thing.
+            for (int y = -1; y < texture.Height+2; y++)
+            {
+                for (int x = -1; x < texture.Width+2; x++)
+                {
+                    if ((x < 0 || x > texture.Width) || (y < 0 || y > texture.Height))
+                        listPosition.Add(new Tile(content, Tile.TileTypes.Bounds, x, y));
+                }
+            }
+
             return listPosition;
         }
 

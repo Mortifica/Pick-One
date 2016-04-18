@@ -9,14 +9,9 @@ namespace Pick_One.Character.PlayerSpecialities
 {
     public class Speed : AbstractPlayerSpeciality
     {
-        public Speed(PlayerSpriteContainer sprites)
+        public Speed(PlayerSpriteContainer sprites, HitBox hitBox) : base(sprites, hitBox)
         {
-            StandingSprite = sprites.StandingSprite;
-            MovingLeft = sprites.MovingLeftSprite;
-            MovingRight = sprites.MovingRightSprite;
-            Jump = sprites.StandingSprite;
-            WallClimbDown = sprites.WallClimbDownSprite;
-            WallClimbUp = sprites.WallClimbUpSprite;
+            SpecialityName = PlayerSpecialityEnum.Speed;
             Movement = new MovementContainer();
             Movement.UpwardMovement = 0.0f;
             Movement.DownwardMovement = 0.0f;

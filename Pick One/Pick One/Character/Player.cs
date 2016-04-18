@@ -17,6 +17,13 @@ namespace Pick_One.Character
     {
         private List<Keys> KeysForMovement { get; set; }
         private List<Keys> KeysForTransform { get; set; }
+        public bool IsJumping { get; set; }
+        public float JumpTime { get; set; }
+        public float InitJumpTime { get; set; }
+
+        private Vector2 gravity = Vector2.Zero;
+
+        private int tranformAnimation = 20;
 
         public Vector2 Location
         {
@@ -27,36 +34,48 @@ namespace Pick_One.Character
 
             set
             {
-                throw new NotImplementedException();
+                PlayerLocation.XLocation = value.X;
+                PlayerLocation.YLocation = value.Y;
             }
         }
 
+        public int MaxJump { get; private set; }
+
         private Vector2 MovementVector;
         private bool IsTouchingWall;
-        public Player(Vector2 initialLocation, List<PlayerSpriteContainer> container, CollisionManager collisionManager)
+        public Player(Vector2 initialLocation, List<PlayerSpriteContainer> container)
         {
-            CollisionManager = collisionManager;
-            MovementVector = new Vector2();
             PlayerLocation = new Location();
             PlayerLocation.XLocation = initialLocation.X;
             PlayerLocation.YLocation = initialLocation.Y;
-            NormalSpeciality = new Normal(container[0]);
-            SpeedSpeciality = new Speed(container[1]);
-            StretchSpeciality = new Stretch(container[2]);
-            VerticalSpeciality = new Vertical(container[3]);
-            WallClimbSpeciality = new WallClimb(container[4]);
+            var PlayerHitbox = new HitBox(PlayerLocation.XLocation, PlayerLocation.YLocation, 32, 32);
+            MaxJump = 117;
+            InitJumpTime = 30;
+            // CollisionManager = collisionManager;
+            MovementVector = new Vector2();
+
+            NormalSpeciality = new Normal(container[0], PlayerHitbox);            
+            SpeedSpeciality = new Speed(container[1], PlayerHitbox);
+            StretchSpeciality = new Stretch(container[2], PlayerHitbox);
+            VerticalSpeciality = new Vertical(container[3], PlayerHitbox);
+            WallClimbSpeciality = new WallClimb(container[4], PlayerHitbox);
+
+            //Updateee all hitboxes to have dimensions
+            NormalSpeciality.UpdateHitBox(PlayerLocation.XLocation, PlayerLocation.YLocation);
+            SpeedSpeciality.UpdateHitBox(PlayerLocation.XLocation, PlayerLocation.YLocation);
+            StretchSpeciality.UpdateHitBox(PlayerLocation.XLocation, PlayerLocation.YLocation);
+            VerticalSpeciality.UpdateHitBox(PlayerLocation.XLocation, PlayerLocation.YLocation);
+            WallClimbSpeciality.UpdateHitBox(PlayerLocation.XLocation, PlayerLocation.YLocation);
             NormalSpeciality.NextTransform = SpeedSpeciality;
             NormalSpeciality.PrevTransform = WallClimbSpeciality;
-            CurrentPlayerSpeciality = NormalSpeciality;
+            CurrentPlayerSpeciality = SpeedSpeciality;
             IsTouchingWall = false;
-            PlayerHitbox = new HitBox(PlayerLocation.XLocation, PlayerLocation.YLocation, 32, 32);
+            
             CurrentState = PlayerState.Standing;
 
             KeysForMovement = new List<Keys>
             {
                 Keys.A,
-                Keys.S,
-                Keys.W,
                 Keys.D,
                 Keys.Space
             };
@@ -82,39 +101,105 @@ namespace Pick_One.Character
                     break;
                 case Keys.Right:
                     speciality = CurrentPlayerSpeciality.NextTransform;
+
                     break;
                 case Keys.D1:
                     //  if (CurrentPlayerSpeciality.GetType() != typeof(Normal))
                     // {
                     speciality = NormalSpeciality;
+                    tranformAnimation = 0;
                     // }
                     break;
                 case Keys.D2:
                     // if (CurrentPlayerSpeciality.GetType() != typeof(Speed))
                     // {
                     speciality = SpeedSpeciality;
+                    tranformAnimation = 0;
                     //}
                     break;
                 case Keys.D3:
                     //if (CurrentPlayerSpeciality.GetType() != typeof(Stretch))
                     // {
                     speciality = StretchSpeciality;
+                    tranformAnimation = 0;
                     // }
                     break;
                 case Keys.D4:
                     //  if (CurrentPlayerSpeciality.GetType() != typeof(Vertical))
                     // {
                     speciality = VerticalSpeciality;
+                    tranformAnimation = 0;
                     // }
                     break;
                 case Keys.D5:
                     //   if (CurrentPlayerSpeciality.GetType() != typeof(WallClimb))
                     // {
                     speciality = WallClimbSpeciality;
+                    tranformAnimation = 0;
                     //  }
                     break;
             }
+            correctPlayerLocationForTransform(speciality);
+            PreviousPlayerSpeciality = CurrentPlayerSpeciality;
             CurrentPlayerSpeciality = speciality;
+            CurrentPlayerSpeciality.CurrentState = CurrentState;
+            CurrentPlayerSpeciality.UpdateHitBox(PlayerLocation.XLocation, PlayerLocation.YLocation);
+            if(CurrentPlayerSpeciality != VerticalSpeciality)
+            {
+                IsJumping = false;
+                this.JumpTime = 0;
+                
+            }
+
+        }
+
+        private void correctPlayerLocationForTransform(AbstractPlayerSpeciality speciality)
+        {
+            var heightDiff = speciality.Height - CurrentPlayerSpeciality.Height;
+            if (Math.Abs(heightDiff) > 0)
+            {
+                if (LevelManager.Instance.GetBlocksAt(PlayerLocation.XLocation, PlayerLocation.YLocation - heightDiff, heightDiff, 1).Count() > 0)
+                {
+                    PlayerLocation.YLocation -= heightDiff;
+                }
+                else
+                {
+                    PlayerLocation.YLocation -= heightDiff;
+
+                }
+            }
+            var widthDiff = speciality.Width - CurrentPlayerSpeciality.Width;
+            if (Math.Abs(widthDiff) > 0)
+            {
+                if (LevelManager.Instance.GetBlocksAt(PlayerLocation.XLocation + CurrentPlayerSpeciality.Width, PlayerLocation.YLocation, 1, widthDiff).Count() > 0)
+                {
+                    PlayerLocation.XLocation -= widthDiff;
+                }
+                else
+                {
+                    if (LevelManager.Instance.GetBlocksAt(PlayerLocation.XLocation - widthDiff, PlayerLocation.YLocation, 1, widthDiff).Count() > 0)
+                    {
+                        //Spawn at same location
+
+                    }
+                    else {
+                        PlayerLocation.XLocation -= (widthDiff / 2);
+                    }
+                }
+                //else
+                //{
+                //    if (GameManager.Instance.GetBlocksAt(PlayerLocation.XLocation - widthDiff, PlayerLocation.YLocation, 1, widthDiff).Count() > 0)
+                //    {
+                //        PlayerLocation.XLocation += widthDiff;
+                //    }
+
+                //}
+            }
+        }
+
+        public Tuple<PlayerState, PlayerSpecialityEnum> GetCurrentState()
+        {
+            return new Tuple<PlayerState, PlayerSpecialityEnum>(CurrentState, CurrentPlayerSpeciality.SpecialityName);
         }
         public MovementContainer GetMovement()
         {
@@ -130,7 +215,7 @@ namespace Pick_One.Character
         }
         public HitBox GetHitbox()
         {
-            return PlayerHitbox;
+            return CurrentPlayerSpeciality.PlayerHitbox;
         }
         public bool CheckHitbox()
         {
@@ -141,160 +226,232 @@ namespace Pick_One.Character
         {
             return PlayerLocation;
         }
-        public void Update()
+        public void Update(GameTime gameTime)
         {
-            //move, Update Sprite Animation, Transform, Update Hitbox
+            if (tranformAnimation < 20)
+                PreviousPlayerSpeciality.Poof.Update();
 
-            CheckMovement();
+            if (CurrentPlayerSpeciality != StretchSpeciality)
+                ApplyGravity(gameTime);
+
+
+            //move, Update Sprite Animation, Transform, Update Hitbox
+            if (IsJumping && CurrentPlayerSpeciality.IsJumpable)
+            {
+                bool isJumpValid = checkJumpingValidity();
+                if (IsJumping && isJumpValid)
+                {
+                    applyJump();
+                }
+                else
+                {
+                    if (IsJumping && !isJumpValid)
+                    {
+                        IsJumping = false;
+                        TransitionState();
+                    }
+                }
+                if (!isJumpValid || InitJumpTime > JumpTime)
+                {
+                    CheckMovement();
+                }
+            }
+            else
+            {
+                CheckMovement();
+            }
             ApplyMovement();
 
             UpdateSprite();
-            PlayerHitbox.Update(PlayerLocation.XLocation, PlayerLocation.YLocation);
-
+            CurrentPlayerSpeciality.UpdateHitBox(PlayerLocation.XLocation, PlayerLocation.YLocation);
 
             //Clear Objects that need to for next update
             MovementVector.X = 0;
             MovementVector.Y = 0;
             IsTouchingWall = false;
         }
+        //Uncomment to see max jump
+        //  float test = 0;
+        private void applyJump()
+        {
+
+            JumpTime++;
+            if (JumpTime < 50)
+            {
+                if (JumpTime > InitJumpTime)
+                    MovementVector.Y -= (CurrentPlayerSpeciality.Movement.UpwardMovement * 2 / (JumpTime - InitJumpTime));
+                //  test += MovementVector.Y;
+            }
+            else
+            {
+                JumpTime = 0;
+                IsJumping = false;
+            }
+        }
+
+        private bool checkJumpingValidity()
+        {
+            if (JumpTime == 0)
+            {
+                var test = LevelManager.Instance.CheckCollision(new Rectangle((int)PlayerLocation.XLocation, (int)PlayerLocation.YLocation - MaxJump,
+                    (int)CurrentPlayerSpeciality.Width, (int)CurrentPlayerSpeciality.Height));
+                if (!test.Item1)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private int gravityStrength = 0;
+        private void ApplyGravity(GameTime gameTime)
+        {
+            if ((gameTime.TotalGameTime.Ticks % 10) == 0)
+                if (gravityStrength < 3)
+                    gravityStrength++;
+            MovementVector.Y += gravityStrength; // Gravity
+        }
 
         private void CheckMovement()
         {
-            var newRectangle = new Rectangle(PlayerHitbox.HitBoxRectangle.X, PlayerHitbox.HitBoxRectangle.Y, PlayerHitbox.HitBoxRectangle.Width, PlayerHitbox.HitBoxRectangle.Height);
-            var newRectangleX = new Rectangle(PlayerHitbox.HitBoxRectangle.X, PlayerHitbox.HitBoxRectangle.Y, PlayerHitbox.HitBoxRectangle.Width, PlayerHitbox.HitBoxRectangle.Height);
-            var newRectangleY = new Rectangle(PlayerHitbox.HitBoxRectangle.X, PlayerHitbox.HitBoxRectangle.Y, PlayerHitbox.HitBoxRectangle.Width, PlayerHitbox.HitBoxRectangle.Height);
+            var newRectangle = new Rectangle(CurrentPlayerSpeciality.PlayerHitbox.HitBoxRectangle.X, CurrentPlayerSpeciality.PlayerHitbox.HitBoxRectangle.Y, CurrentPlayerSpeciality.PlayerHitbox.HitBoxRectangle.Width, CurrentPlayerSpeciality.PlayerHitbox.HitBoxRectangle.Height);
+            var newXRectangle = new Rectangle(CurrentPlayerSpeciality.PlayerHitbox.HitBoxRectangle.X, CurrentPlayerSpeciality.PlayerHitbox.HitBoxRectangle.Y, CurrentPlayerSpeciality.PlayerHitbox.HitBoxRectangle.Width, CurrentPlayerSpeciality.PlayerHitbox.HitBoxRectangle.Height);
+            var newYRectangle = new Rectangle(CurrentPlayerSpeciality.PlayerHitbox.HitBoxRectangle.X, CurrentPlayerSpeciality.PlayerHitbox.HitBoxRectangle.Y, CurrentPlayerSpeciality.PlayerHitbox.HitBoxRectangle.Width, CurrentPlayerSpeciality.PlayerHitbox.HitBoxRectangle.Height);
 
             newRectangle.X += (int)MovementVector.X;
             newRectangle.Y += (int)MovementVector.Y;
 
-            newRectangleX.X += (int)MovementVector.X;
-            newRectangleY.Y += (int)MovementVector.Y;
-            var checkResults = CollisionManager.CheckCollision(newRectangle);
-            if (checkResults.Item1)//True if Hit something
+            newXRectangle.X += (int)MovementVector.X;
+
+            newYRectangle.Y += (int)MovementVector.Y;
+
+            var checkResults = LevelManager.Instance.CheckCollision(newRectangle);
+            var checkXResults = LevelManager.Instance.CheckCollision(newXRectangle);
+            var checkYResults = LevelManager.Instance.CheckCollision(newYRectangle);
+
+            if (!checkResults.Item1)
             {
+                CurrentPlayerSpeciality.PlayerHitbox.HitBoxRectangle = newRectangle;
+                MovementVector.X = newRectangle.X - PlayerLocation.XLocation;
 
-                foreach (var item in checkResults.Item2)
+                MovementVector.Y = newRectangle.Y - PlayerLocation.YLocation;
+            }
+            else if (!checkXResults.Item1)
+            {
+                CurrentPlayerSpeciality.PlayerHitbox.HitBoxRectangle = newXRectangle;
+                MovementVector.X = newRectangle.X - PlayerLocation.XLocation;
+
+                MovementVector.Y = 0;
+                gravityStrength = 0;
+
+            }
+            else if (!checkYResults.Item1)
+            {
+                CurrentPlayerSpeciality.PlayerHitbox.HitBoxRectangle = newYRectangle;
+
+                MovementVector.X = 0;
+
+                MovementVector.Y = newRectangle.Y - PlayerLocation.YLocation;
+
+            }
+            else
+            {
+                MovementVector.X = 0;
+
+                MovementVector.Y = 0;
+            }
+
+            foreach (var tile in checkResults.Item2)
+            {
+                if (tile.Type == Levels.Tile.TileTypes.EndPosition)
                 {
-                    if (MovementVector.X != 0 && newRectangle.Intersects(item.Rectangle))
-                    {
-                        var newRectangleRight = new Rectangle(newRectangleX.X, newRectangleY.Y, newRectangle.Width, newRectangle.Height);
-                        var newRectangleLeft = new Rectangle(newRectangleX.X, newRectangleY.Y, newRectangle.Width, newRectangle.Height);
-                        newRectangleRight.X = (int)(newRectangleRight.X + (MovementVector.X * -1));
-                        newRectangleLeft.X = (int)(newRectangleLeft.X + (MovementVector.X * -1));
-
-                        if (!newRectangleRight.Intersects(item.Rectangle))
-                        {
-                            // If false, this helped?
-                            newRectangle = newRectangleRight;
-                            newRectangleX = newRectangleRight;
-                        }
-                        else if (!newRectangleLeft.Intersects(item.Rectangle))
-                        {
-                            // If false, this helped?
-                            newRectangle = newRectangleLeft;
-                            newRectangleX = newRectangleLeft;
-                        }
-                    }
-                    if (MovementVector.Y != 0 && newRectangle.Intersects(item.Rectangle))
-                    {
-                        var newRectangleUp = new Rectangle(newRectangleX.X, newRectangleY.Y, newRectangle.Width, newRectangle.Height);
-                        var newRectangleDown = new Rectangle(newRectangleX.X, newRectangleY.Y, newRectangle.Width, newRectangle.Height);
-                        newRectangleUp.Y = (int)(newRectangleUp.Y + (MovementVector.Y * -1));
-                        newRectangleDown.Y = (int)(newRectangleDown.Y + (MovementVector.Y * -1));
-
-                        if (!newRectangleUp.Intersects(item.Rectangle))
-                        {
-                            // If false, this helped?
-                            newRectangle = newRectangleUp;
-                            newRectangleY = newRectangleUp;
-                        }
-                        else if (!newRectangleDown.Intersects(item.Rectangle))
-                        {
-                            // If false, this helped?
-                            newRectangle = newRectangleDown;
-                            newRectangleY = newRectangleDown;
-                        }
-
-
-                    }
-
-
-
-                    //    if (MovementVector.X > 0 && newRectangle.Intersects(item.Rectangle))
-                    //    {
-                    //        if (newRectangle.X + CurrentPlayerSpeciality.Width > item.Rectangle.X) // This means it's over the X, but might not be over the Y
-                    //        {
-                    //            IsTouchingWall = true;
-                    //            var newRectangle2 = new Rectangle(newRectangle.X, newRectangle.Y, newRectangle.Width, newRectangle.Height);
-                    //            newRectangle2.X = (int)PlayerLocation.XLocation + (item.Rectangle.X - ((int)PlayerLocation.XLocation + (int)CurrentPlayerSpeciality.Width));
-
-                    //            if (!newRectangle2.Intersects(item.Rectangle))
-                    //            {
-                    //                // If false, this helped?
-                    //                newRectangle = newRectangle2;
-                    //            }
-                    //        }
-                    //        //if (newRectangle.X + 32 > item.Rectangle.X)
-                    //        //{
-                    //        //    IsTouchingWall = true;
-
-                    //        //    newRectangle.X = item.Rectangle.X - 32;
-                    //        //}
-                    //    }
-                    //    if (MovementVector.X < 0 && newRectangle.Intersects(item.Rectangle))
-                    //    {
-                    //        if (newRectangle.X < item.Rectangle.X + item.Rectangle.Width)
-                    //        {
-                    //            IsTouchingWall = true;
-                    //            var newRectangle2 = new Rectangle(newRectangle.X, newRectangle.Y, newRectangle.Width, newRectangle.Height);
-                    //            newRectangle2.X = ((int)item.Rectangle.X + (int)item.Rectangle.Width);
-
-                    //            if (!newRectangle2.Intersects(item.Rectangle))
-                    //            {
-                    //                // If false, this helped?
-                    //                newRectangle = newRectangle2;
-                    //            }
-                    //        }
-                    //    }
-                    //    if (MovementVector.Y > 0 && newRectangle.Intersects(item.Rectangle))
-                    //    {
-                    //        if (newRectangle.Y + CurrentPlayerSpeciality.Height > item.Rectangle.Y )
-                    //        {
-                    //            var newRectangle2 = new Rectangle(newRectangle.X, newRectangle.Y, newRectangle.Width, newRectangle.Height);
-                    //            newRectangle2.Y = (int)PlayerLocation.YLocation + (item.Rectangle.Y - ((int)PlayerLocation.YLocation + (int)CurrentPlayerSpeciality.Height));
-
-                    //            if (!newRectangle2.Intersects(item.Rectangle))
-                    //            {
-                    //                // If false, this helped?
-                    //                newRectangle = newRectangle2;
-                    //            }
-                    //        }
-                    //    }
-                    //    if (MovementVector.Y < 0 && newRectangle.Intersects(item.Rectangle))
-                    //    {
-                    //        if (newRectangle.Y < item.Rectangle.Y + item.Rectangle.Height)
-                    //        {
-                    //            var newRectangle2 = new Rectangle(newRectangle.X, newRectangle.Y, newRectangle.Width, newRectangle.Height);
-                    //            newRectangle2.Y = ((int)item.Rectangle.Y - (int)item.Rectangle.Height);
-
-                    //            if (!newRectangle2.Intersects(item.Rectangle))
-                    //            {
-                    //                // If false, this helped?
-                    //                newRectangle = newRectangle2;
-                    //            }
-                    //        }
-                    //    }
-                    //}
-                    MovementVector.X = newRectangle.X - PlayerLocation.XLocation;
-                    // if (IsTouchingWall && CurrentPlayerSpeciality.IsClimbable)
-                    // {
-                    MovementVector.Y = newRectangle.Y - PlayerLocation.YLocation;
-                    //   }
-                    PlayerHitbox.HitBoxRectangle = newRectangle;
-
+                    // Move to the next level.
+                    LevelManager.Instance.EndLevel();
+                    Location = LevelManager.Instance.GetPlayerStartingLocation();
                 }
             }
+
+            //if (checkResults.Item1)//True if Hit something
+            //{
+
+            //    foreach(var item in checkResults.Item2)
+            //    {
+
+
+
+
+
+            //        if (MovementVector.X > 0)
+            //        {
+            //            if (newRectangle.X + CurrentPlayerSpeciality.Width > item.Rectangle.X)
+            //            {
+            //                IsTouchingWall = true;
+            //                newRectangle.X = (int)PlayerLocation.XLocation + (item.Rectangle.X - ((int)PlayerLocation.XLocation + (int)CurrentPlayerSpeciality.Width));
+            //                if (!newRectangle.Intersects(item.Rectangle))
+            //                {
+            //                    updated = true;
+            //                }
+            //            }
+            //            //if (newRectangle.X + 32 > item.Rectangle.X)
+            //            //{
+            //            //    IsTouchingWall = true;
+
+            //            //    newRectangle.X = item.Rectangle.X - 32;
+            //            //}
+            //        }
+            //        if (!updated && MovementVector.X < 0 )
+            //        {
+            //            if (newRectangle.X < item.Rectangle.X + item.Rectangle.Width)
+            //            {
+            //                IsTouchingWall = true;
+            //                newRectangle.X = ((int)item.Rectangle.X + (int)item.Rectangle.Width);
+            //            }
+            //            if (!newRectangle.Intersects(item.Rectangle))
+            //            {
+            //                updated = true;
+            //            }
+            //        }
+            //        if (!updated && MovementVector.Y > 0)
+            //        {
+            //            if (newRectangle.Y + CurrentPlayerSpeciality.Height > item.Rectangle.Y )
+            //            {
+            //                newRectangle.Y = (int)PlayerLocation.YLocation + (item.Rectangle.Y - ((int)PlayerLocation.YLocation + (int)CurrentPlayerSpeciality.Height));
+            //            }
+            //            if (!newRectangle.Intersects(item.Rectangle))
+            //            {
+            //                updated = true;
+            //            }
+            //        }
+            //        if (!updated && MovementVector.Y < 0)
+            //        {
+            //            if (newRectangle.Y < item.Rectangle.Y + item.Rectangle.Height)
+            //            {
+            //                newRectangle.Y = ((int)item.Rectangle.Y + (int)item.Rectangle.Height);
+            //            }
+            //            if (!newRectangle.Intersects(item.Rectangle))
+            //            {
+            //                updated = true;
+            //            }
+            //        }
+            //        checkResults = CollisionManager.CheckCollision(newRectangle);
+            //        if(checkResults.Item1)
+            //        {
+            //            break;
+            //        }
+            //        updated = false;
+            //    }
+
+
+            // //   }
+            //    PlayerHitbox.HitBoxRectangle = newRectangle;
+
+            //}
         }
+
 
         private void UpdateSprite()
         {
@@ -311,6 +468,37 @@ namespace Pick_One.Character
 
         private bool TransitionState()
         {
+            if (IsJumping)
+            {
+                if (CurrentPlayerSpeciality.IsJumpable) //Jumping
+                {
+                    if (JumpTime < InitJumpTime) // InitJump
+                    {
+                        if (CurrentState != PlayerState.Jump)
+                        {
+                            CurrentState = PlayerState.Jump;
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        if (CurrentState != PlayerState.MidJump)
+                        {
+                            CurrentState = PlayerState.MidJump;
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                }
+
+            }
             if (MovementVector.X == 0.0f)
             {
                 if (MovementVector.Y == 0.0f) //Standing
@@ -323,36 +511,70 @@ namespace Pick_One.Character
                 }
                 else
                 {
-                    if (MovementVector.Y > 0.0f) // WallClimbUp OR Jumping
+                    if (MovementVector.Y < 0.0f) // WallClimbUp OR Jumping
                     {
                         if (CurrentPlayerSpeciality.IsClimbable) //ClimbingUp
                         {
-                            if (CurrentState != PlayerState.WallClimbUp)
+                            bool blockLeft = LevelManager.Instance.GetBlocksAt(PlayerLocation.XLocation - 1, PlayerLocation.YLocation, CurrentPlayerSpeciality.Height, 1).Count() > 0;
+                            bool blockRight = LevelManager.Instance.GetBlocksAt(PlayerLocation.XLocation + CurrentPlayerSpeciality.Width + 1, PlayerLocation.YLocation, CurrentPlayerSpeciality.Height, 1).Count() > 0;
+                            if (blockLeft)
                             {
-                                CurrentState = PlayerState.WallClimbUp;
-                                return true;
-                            }
-                        }
-                        else
-                        {
-                            if (CurrentPlayerSpeciality.IsJumpable) //Jumping
-                            {
-                                if (CurrentState != PlayerState.Jump)
+                                if (CurrentState != PlayerState.WallClimbLeft)
                                 {
-                                    CurrentState = PlayerState.Jump;
+                                    CurrentState = PlayerState.WallClimbLeft;
                                     return true;
                                 }
                             }
+                            else
+                            {
+                                if (blockRight)
+                                {
+                                    if (CurrentState != PlayerState.WallClimbRight)
+                                    {
+                                        CurrentState = PlayerState.WallClimbRight;
+                                        return true;
+                                    }
+                                }
+                            }
+
+                        }
+                        else
+                        {
+                            //if (CurrentPlayerSpeciality.IsJumpable) //Jumping
+                            //{
+                            //    if (CurrentState != PlayerState.Jump)
+                            //    {
+                            //        CurrentState = PlayerState.Jump;
+                            //        return true;
+                            //    }
+                            //}
                         }
                     }
                     else //Moving Down
                     {
                         if (CurrentPlayerSpeciality.IsClimbable) //ClimbingDown
                         {
-                            if (CurrentState != PlayerState.WallClimbDown)
+                            bool blockLeft = LevelManager.Instance.GetBlocksAt(PlayerLocation.XLocation - 1, PlayerLocation.YLocation, CurrentPlayerSpeciality.Height, 1).Count() > 0;
+                            bool blockRight = LevelManager.Instance.GetBlocksAt(PlayerLocation.XLocation + CurrentPlayerSpeciality.Width + 1, PlayerLocation.YLocation, CurrentPlayerSpeciality.Height, 1).Count() > 0;
+
+                            if (blockLeft)
                             {
-                                CurrentState = PlayerState.WallClimbDown;
-                                return true;
+                                if (CurrentState != PlayerState.WallClimbRight)
+                                {
+                                    CurrentState = PlayerState.WallClimbRight;
+                                    return true;
+                                }
+                            }
+                            else
+                            {
+                                if (blockRight)
+                                {
+                                    if (CurrentState != PlayerState.WallClimbLeft)
+                                    {
+                                        CurrentState = PlayerState.WallClimbLeft;
+                                        return true;
+                                    }
+                                }
                             }
                         }
                         else
@@ -397,7 +619,14 @@ namespace Pick_One.Character
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            CurrentPlayerSpeciality.Draw(spriteBatch, new Vector2(PlayerLocation.XLocation, PlayerLocation.YLocation));
+            Console.WriteLine(CurrentState);
+            if (tranformAnimation < 20)
+            {
+                PreviousPlayerSpeciality.DrawTransform(spriteBatch, new Vector2(PlayerLocation.XLocation, PlayerLocation.YLocation));
+                tranformAnimation++;
+            }
+            else
+                CurrentPlayerSpeciality.Draw(spriteBatch, new Vector2(PlayerLocation.XLocation, PlayerLocation.YLocation));
         }
 
         public void NotifyOfChange(List<KeyAction> actions, GameTime gameTime)
@@ -429,30 +658,63 @@ namespace Pick_One.Character
 
         private void ProccessMovement(KeyAction action)
         {
+
+            var blocksLeft = LevelManager.Instance.CheckCollision(new Rectangle((int)PlayerLocation.XLocation - 1, (int)PlayerLocation.YLocation, 1, (int)CurrentPlayerSpeciality.Height));
+            var blocksRight = LevelManager.Instance.CheckCollision(new Rectangle((int)(PlayerLocation.XLocation + CurrentPlayerSpeciality.Width), (int)PlayerLocation.YLocation, 1, (int)CurrentPlayerSpeciality.Height));
+
             switch (action.Key)
             {
-                case Keys.W:
-                    MoveVertically(-CurrentPlayerSpeciality.Movement.UpwardMovement);
-                    break;
-                case Keys.S:
-                    MoveVertically(CurrentPlayerSpeciality.Movement.DownwardMovement);
-                    break;
                 case Keys.A:
+
                     MoveHorizontally(-CurrentPlayerSpeciality.Movement.LeftMovement);
+                    if (IsClimbable())
+                    {
+                        bool processMovement = false;
+                        if (blocksLeft.Item1)
+                        {
+                            if (blocksLeft.Item2.Where(tile => tile.Type == Levels.Tile.TileTypes.Unclimbable).Count() != blocksLeft.Item2.Count)
+                            {
+                                processMovement = true;
+                            }
+                        }
+                        if (processMovement)
+                        {
+                            MoveVertically(-CurrentPlayerSpeciality.Movement.UpwardMovement);
+                        }
+                    }
                     break;
                 case Keys.D:
                     MoveHorizontally(CurrentPlayerSpeciality.Movement.RightMovement);
+                    if (IsClimbable())
+                    {
+                        bool processMovement = false;
+                        if (blocksRight.Item1)
+                        {
+                            if (blocksRight.Item2.Where(tile => tile.Type == Levels.Tile.TileTypes.Unclimbable).Count() != blocksRight.Item2.Count)
+                            {
+                                processMovement = true;
+                            }
+                        }
+                        if (processMovement)
+                        {
+                            MoveVertically(-CurrentPlayerSpeciality.Movement.UpwardMovement);
+                        }
+                    }
                     break;
             }
         }
 
         private void MoveHorizontally(float movement)
         {
+            if(LevelManager.Instance.CheckCollision(new Rectangle((int)PlayerLocation.XLocation, (int)(PlayerLocation.YLocation + CurrentPlayerSpeciality.Height + 1), (int)CurrentPlayerSpeciality.Width, 1)).Item2.Where(level => level.Type == Levels.Tile.TileTypes.Slow).Count() > 0)
+            {
+                movement = movement / 2;
+            }
             MovementVector.X += movement;
         }
         private void MoveVertically(float movement)
         {
-            MovementVector.Y += movement;
+            MovementVector.Y += movement - 2;
         }
         public void SetIsTouchingWall(bool isTouchingWall)
         {
@@ -460,10 +722,14 @@ namespace Pick_One.Character
         }
         private void PlayerJump()
         {
-            if (CurrentPlayerSpeciality.Movement.UpwardMovement > 0.0f)
+            if (CurrentPlayerSpeciality.IsJumpable)
             {
-                MovementVector.X += CurrentPlayerSpeciality.Movement.UpwardMovement;
+                IsJumping = true;
             }
+            //if (CurrentPlayerSpeciality.Movement.UpwardMovement > 0.0f)
+            //{
+            //    MovementVector.Y -= CurrentPlayerSpeciality.Movement.UpwardMovement;
+            //}
         }
 
         internal List<Keys> GetWatchedKeys()

@@ -21,18 +21,19 @@ namespace Pick_One
     {
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
-        private GameState CurrentState { get; set; }
-        private Camera2D Camera;
-        public KeyboardListener PlayStateKeyListener { get; set; }
         public Player Player { get; set; }
-        private List<Tile> Level;
-        private CollisionManager Collision;
-        public List<PlayerSpriteContainer> PlayerSpriteContainers { get; set; }
+        private GameState CurrentState { get; set; }
+        public Camera2D Camera;
+        
+
 
         public MainGameLoop()
         {
             graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferWidth = 1440;
+            graphics.PreferredBackBufferHeight = 900;
             Content.RootDirectory = "Content";
+            LevelManager.Content = Content;
         }
 
         /// <summary>
@@ -46,19 +47,8 @@ namespace Pick_One
             // TODO: Add your initialization logic here
             base.Initialize();
 
-            PlayStateKeyListener = new KeyboardListener();
-            Vector2 startingPlace = Level.Single(tile => tile.Type == Tile.TileTypes.StartPosition).Location;//= Level.Single(tile => tile.).Location;
-            startingPlace.Y -= 32;
-            Player = new Player(startingPlace, PlayerSpriteContainers, Collision);
-            PlayStateKeyListener.AddSubscriber(new KeyboardSubscriber()
-            {
-                Subscriber = Player,
-                WatchedKeys = Player.GetWatchedKeys(),
-                IsPaused = false
-            });
-            Camera.Focus = Player;
-            Camera.Zoom = 2;
-            Camera.FocusOffest = new Vector3(graphics.PreferredBackBufferWidth / 4, graphics.PreferredBackBufferHeight / 4, 0);
+            // Set inital level
+
 
         }
 
@@ -72,65 +62,9 @@ namespace Pick_One
             spriteBatch = new SpriteBatch(GraphicsDevice);
             CurrentState = new StartState(this);
             Camera = new Camera2D(CurrentState);
-            
 
-            var testMap = Content.Load<Texture2D>(@"TestLevel");
-            Level = LevelFactory.GenerateLevel(Content, testMap);
-            Collision = new CollisionManager(Level);
 
-            var standingPlayer = Content.Load<Texture2D>(@"test_Circle_Standing_Animation");
-            var movingPlayer = Content.Load<Texture2D>(@"test_Circle_Moving_Animation");
-            var movingPlayerLeft = Content.Load<Texture2D>(@"test_Circle_Moving_Leftt_Animation");
-            var movingPlayerRight = Content.Load<Texture2D>(@"test_Circle_Moving_Right_Animation");
-            var fallingPlayer = Content.Load<Texture2D>(@"test_Circle_Falling_Animation");
-            var climbingPlayer = Content.Load<Texture2D>(@"test_Circle_WallClimb_Animation");
 
-            PlayerSpriteContainers = new List<PlayerSpriteContainer>();
-            PlayerSpriteContainers.Add(new PlayerSpriteContainer() // Normal
-            {
-                StandingSprite = new Sprite(standingPlayer,1,4,7),
-                MovingLeftSprite = new Sprite(movingPlayerLeft, 1, 4, 7),
-                MovingRightSprite = new Sprite(movingPlayerRight, 1, 4, 7),
-                JumpingSprite = new Sprite(standingPlayer, 1, 4, 7),
-                WallClimbUpSprite = new Sprite(standingPlayer, 1, 4, 7),
-                WallClimbDownSprite = new Sprite(standingPlayer, 1, 4, 7)
-            });
-            PlayerSpriteContainers.Add(new PlayerSpriteContainer() // Speed
-            {
-                StandingSprite = new Sprite(fallingPlayer, 1, 4, 7),
-                MovingLeftSprite = new Sprite(climbingPlayer, 1,4, 7),
-                MovingRightSprite = new Sprite(standingPlayer, 1, 4, 7),
-                JumpingSprite = new Sprite(standingPlayer, 1, 4, 7),
-                WallClimbUpSprite = new Sprite(standingPlayer, 1, 4, 7),
-                WallClimbDownSprite = new Sprite(standingPlayer, 1, 4, 7)
-            });
-            PlayerSpriteContainers.Add(new PlayerSpriteContainer() // Stretch
-            {
-                StandingSprite = new Sprite(standingPlayer, 1, 4, 7),
-                MovingLeftSprite = new Sprite(standingPlayer, 1, 4, 7),
-                MovingRightSprite = new Sprite(standingPlayer, 1, 4, 7),
-                JumpingSprite = new Sprite(standingPlayer, 1, 4, 7),
-                WallClimbUpSprite = new Sprite(standingPlayer, 1, 4, 7),
-                WallClimbDownSprite = new Sprite(standingPlayer, 1, 4, 7)
-            });
-            PlayerSpriteContainers.Add(new PlayerSpriteContainer() // Vertical
-            {
-                StandingSprite = new Sprite(standingPlayer, 1, 4, 7),
-                MovingLeftSprite = new Sprite(standingPlayer, 1, 4, 7),
-                MovingRightSprite = new Sprite(standingPlayer, 1, 4, 7),
-                JumpingSprite = new Sprite(standingPlayer, 1, 4, 7),
-                WallClimbUpSprite = new Sprite(standingPlayer, 1, 4, 7),
-                WallClimbDownSprite = new Sprite(standingPlayer, 1, 4, 7)
-            });
-            PlayerSpriteContainers.Add(new PlayerSpriteContainer() // Climbing
-            {
-                StandingSprite = new Sprite(standingPlayer, 1, 4, 7),
-                MovingLeftSprite = new Sprite(standingPlayer, 1, 4, 7),
-                MovingRightSprite = new Sprite(standingPlayer, 1, 4, 7),
-                JumpingSprite = new Sprite(standingPlayer, 1, 4, 7),
-                WallClimbUpSprite = new Sprite(standingPlayer, 1, 4, 7),
-                WallClimbDownSprite = new Sprite(standingPlayer, 1, 4, 7)
-            });
 
             // load sounds
             var deathSound = Content.Load<Song>("death");
@@ -149,7 +83,6 @@ namespace Pick_One
             var levelTheme = Content.Load<Song>("LevelTheme");
 
             
-
             //MediaPlayer.IsRepeating = true;
            // MediaLibrary mediaLibrary = new MediaLibrary();
             
@@ -187,10 +120,10 @@ namespace Pick_One
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            PlayStateKeyListener.Update(Keyboard.GetState(), gameTime);
+
             // TODO: Add your update logic here
             CurrentState.Update(gameTime);
-            Player.Update();
+            
             base.Update(gameTime);
 
 
@@ -215,10 +148,10 @@ namespace Pick_One
         {
             frameCounter++;
 
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
             // TODO: Add your drawing code here
             spriteBatch.Begin(
-                                SpriteSortMode.BackToFront,
+                                SpriteSortMode.Immediate,
                                 BlendState.AlphaBlend,
                                 SamplerState.PointClamp,
                                 null,
@@ -229,8 +162,6 @@ namespace Pick_One
 
             CurrentState.Draw(spriteBatch);
 
-            Level.ForEach(x => { x.Draw(spriteBatch); });
-            Player.Draw(spriteBatch);
             spriteBatch.End();
             base.Draw(gameTime);
         }
@@ -239,7 +170,20 @@ namespace Pick_One
         /// </summary>
         public class StartState : GameState, IInputSubscriber 
         {
-
+            
+            private SpriteFont font;
+            private Sprite background;
+            private Options[] MenuOptions = new Options[3]
+            {
+                Options.StartGame,
+                Options.Help,
+                Options.Credits
+            };
+            private Vector2 MenuLocation = new Vector2(100, 100);
+            private int currentOption = 1;
+            private TimeSpan elapseTime = TimeSpan.Zero;
+            private int menuSpeed = 100;
+            private int currentColor = 0;
             public StartState(MainGameLoop game)
                 : base(game)
             {
@@ -247,26 +191,84 @@ namespace Pick_One
             }
             private void init()
             {
+                font = game.Content.Load<SpriteFont>("mainMenuFont");
                 
+                var tempSubscriber = new KeyboardSubscriber()
+                {
+                    Subscriber = this,
+                    IsPaused = false,
+                    WatchedKeys = new List<Keys>()
+                    {
+                        Keys.A,
+                        Keys.S,
+                        Keys.W,
+                        Keys.Up,
+                        Keys.Down
+            }
+                };
+
+                Listener = new KeyboardListener();
+                Listener.AddSubscriber(tempSubscriber);
             }
 
             public override void Update(GameTime gameTime)
             {
-                //Listener.Update(Keyboard.GetState(), gameTime);
+                Listener.Update(Keyboard.GetState(), gameTime);
 
             }
 
             public override void Draw(SpriteBatch spriteBatch)
             {
+                Color color = Color.Black;
+                Color topColor = Color.Black;
+                currentColor += 1;
+                if (currentColor % 1 == 0)
+                {
+                    topColor = Color.Black;
+                }
+                if (currentColor % 2 == 0)
+                {
+                    topColor = Color.Pink;
+                }
+                if (currentColor % 3 == 0)
+                {
+                    topColor = Color.Blue;
+                }
+                if (currentColor >= 1000)
+                {
+                    currentColor = 0;
+                }
 
+
+                Vector2 menu = MenuLocation;
+                spriteBatch.DrawString(font, "Press \"A\" to select an option.", new Vector2(50, 40), topColor);
+                spriteBatch.DrawString(font, "Navigate Menu with W,S,UP,Down.", new Vector2(50, 60), topColor);
+
+                for (int i = 0; i < MenuOptions.Length; i++)
+                {
+                    if (currentOption == i + 1)
+                    {
+                        color = Color.Red;
+                    }
+                    else
+                    {
+                        color = Color.Black;
+                    }
+                    spriteBatch.DrawString(font, MenuOptions[i].ToString(), menu += new Vector2(0, font.LineSpacing), color);
+                }
             }
-            public void NextState()
+            public override void NextState()
             {
                 game.CurrentState = new PlayState(game);
             }
 
             public void NotifyOfChange(List<KeyAction> actions, GameTime gameTime)
             {
+                if (elapseTime > TimeSpan.FromMilliseconds(menuSpeed))
+                {
+                    elapseTime = TimeSpan.Zero;
+                }
+                elapseTime += gameTime.ElapsedGameTime;
                 foreach (var action in actions)
                 {
 
@@ -277,20 +279,60 @@ namespace Pick_One
 
                     if (action.WasPressed)
                     {
+                        if (action.Key == Keys.A && MenuOptions[currentOption - 1].Equals(Options.StartGame))
+                        {
+                            NextState();
+                            continue;
+                        }
+                        if ((action.Key == Keys.W || action.Key == Keys.Up) && elapseTime >= TimeSpan.FromMilliseconds(menuSpeed))
+                        {
+                            currentOption = currentOption - 1;
+                            if (currentOption < 1) currentOption = 1;
+                            continue;
+                        }
+                        if ((action.Key == Keys.S || action.Key == Keys.Down) && elapseTime >= TimeSpan.FromMilliseconds(menuSpeed))
+                        {
+                            currentOption = currentOption + 1;
+                            if (currentOption > 3) currentOption = 3;
+                            continue;
+                        }
 
                     }
 
                     if (action.WasReleased)
                     {
-
+                        //no action
                     }
 
                     if (action.IsBeingHeld)
                     {
+                        if (action.Key == Keys.A && MenuOptions[currentOption - 1].Equals(Options.StartGame))
+                        {
+                            NextState();
+                            continue;
+                        }
+                        if ((action.Key == Keys.W || action.Key == Keys.Up) && elapseTime >= TimeSpan.FromMilliseconds(menuSpeed))
+                        {
+                            currentOption = currentOption - 1;
+                            if (currentOption < 1) currentOption = 1;
+                            continue;
+                        }
+                        if ((action.Key == Keys.S || action.Key == Keys.Down) && elapseTime >= TimeSpan.FromMilliseconds(menuSpeed))
+                        {
+                            currentOption = currentOption + 1;
+                            if (currentOption > 3) currentOption = 3;
+                            continue;
+                        }
 
                     }
                 }
 
+            }
+            private enum Options
+            {
+                StartGame,
+                Help,
+                Credits
             }
         }
 
@@ -299,7 +341,9 @@ namespace Pick_One
         /// </summary>
         public class PlayState : GameState, IInputSubscriber
         {
-            
+            private Hud hud;
+            public KeyboardListener PlayStateKeyListener { get; set; }
+            public List<PlayerSpriteContainer> PlayerSpriteContainers { get; set; }
 
             public PlayState(MainGameLoop game)
                 : base(game)
@@ -309,18 +353,142 @@ namespace Pick_One
             }
             private void init(MainGameLoop game)
             {
+                var font = game.Content.Load<SpriteFont>("mainMenuFont");
+                var arrow = game.Content.Load<Texture2D>("directional_Arrow");
+                hud = new Hud(game, this, font, arrow);
+                //Normal
+                var standingPlayer = game.Content.Load<Texture2D>(@"test_Circle_Standing_Animation");
+                var fallingPlayer = game.Content.Load<Texture2D>(@"test_Circle_Falling_Animation");
+                var movingPlayer = game.Content.Load<Texture2D>(@"test_Circle_Standing_Animation");
+                var movingPlayerLeft = game.Content.Load<Texture2D>(@"test_Circle_Moving_Left_Animation");
+                var movingPlayerRight = game.Content.Load<Texture2D>(@"test_Circle_Moving_Right_Animation");
+
+
+                //Hover
+                var hoverStanding = game.Content.Load<Texture2D>(@"test_Hover_Standing_Animation");
+                var hoverMovingLeft = game.Content.Load<Texture2D>(@"test_Hover_Moving_Left_Animation");
+                var hoverMovingRight = game.Content.Load<Texture2D>(@"test_Hover_Moving_Right_Animation");
+
+                //Vertical
+                var standingVertical = game.Content.Load<Texture2D>(@"test_Triangle_Standing_Animation");
+                var jumpingVertical = game.Content.Load<Texture2D>(@"test_Triangle_Jumping_Animation");
+                var midJumpVertical = game.Content.Load<Texture2D>(@"test_Triangle_MidJump_Animation");
+                var landingVertical = game.Content.Load<Texture2D>(@"test_Triangle_JLanding_Animation");
+                var fallingVertical = game.Content.Load<Texture2D>(@"test_Triangle_Falling_Animation");
+                //var standingVertical = Content.Load<Texture2D>(@"test_Circle_Moving_Right_Animation");
+
+                //WallClimb
+                var standingClimb = game.Content.Load<Texture2D>(@"test_Square_Standing_Animation");
+                var movingLeftClimb = game.Content.Load<Texture2D>(@"test_Square_Moving_Left_Animation");
+                var movingRightClimb = game.Content.Load<Texture2D>(@"test_Square_Moving_Right_Animation");
+
+                var poof = game.Content.Load<Texture2D>(@"test_Transition_Poof");
+
+                //MiscTesting
+                var climbingPlayer = game.Content.Load<Texture2D>(@"test_Circle_Moving_Animation");
+                PlayerSpriteContainers = new List<PlayerSpriteContainer>();
+                PlayerSpriteContainers.Add(new PlayerSpriteContainer() // Normal
+                {
+                    StandingSprite = new Sprite(standingPlayer, 1, 4, 7),
+                    MovingLeftSprite = new Sprite(movingPlayerLeft, 1, 4, 7),
+                    MidJumpSprite = new Sprite(standingPlayer, 1, 4, 7),
+                    LandingSprite = new Sprite(standingPlayer, 1, 6, 7),
+                    FallingSprite = new Sprite(standingPlayer, 1, 4, 7),
+                    MovingRightSprite = new Sprite(movingPlayerRight, 1, 4, 7),
+                    JumpingSprite = new Sprite(standingPlayer, 1, 4, 7),
+                    WallClimbLeft = new Sprite(standingPlayer, 1, 4, 7),
+                    WallClimbRight = new Sprite(standingPlayer, 1, 4, 7),
+                    Poof = new Sprite(poof, 1, 13, 2)
+                });
+                PlayerSpriteContainers.Add(new PlayerSpriteContainer() // Speed
+                {
+                    StandingSprite = new Sprite(standingPlayer, 1, 4, 7),
+                    MovingLeftSprite = new Sprite(movingPlayerLeft, 1, 4, 7),
+                    MidJumpSprite = new Sprite(standingPlayer, 1, 4, 7),
+                    LandingSprite = new Sprite(standingPlayer, 1, 6, 7),
+                    FallingSprite = new Sprite(standingPlayer, 1, 4, 7),
+                    MovingRightSprite = new Sprite(movingPlayerRight, 1, 4, 7),
+                    JumpingSprite = new Sprite(standingPlayer, 1, 4, 7),
+                    WallClimbLeft = new Sprite(standingPlayer, 1, 4, 7),
+                    WallClimbRight = new Sprite(standingPlayer, 1, 4, 7),
+                    Poof = new Sprite(poof, 1, 13, 2)
+                });
+                PlayerSpriteContainers.Add(new PlayerSpriteContainer() // Stretch
+                {
+                    StandingSprite = new Sprite(hoverStanding, 1, 4, 7),
+                    MovingLeftSprite = new Sprite(hoverMovingLeft, 1, 4, 7),
+                    FallingSprite = new Sprite(hoverStanding, 1, 4, 7),
+                    MidJumpSprite = new Sprite(hoverStanding, 1, 4, 7),
+                    LandingSprite = new Sprite(hoverStanding, 1, 6, 7),
+                    MovingRightSprite = new Sprite(hoverMovingRight, 1, 4, 7),
+                    JumpingSprite = new Sprite(hoverStanding, 1, 4, 7),
+                    WallClimbLeft = new Sprite(hoverStanding, 1, 4, 7),
+                    WallClimbRight = new Sprite(hoverStanding, 1, 4, 7),
+                    Poof = new Sprite(poof, 1, 13, 2)
+                });
+                PlayerSpriteContainers.Add(new PlayerSpriteContainer() // Vertical
+                {
+                    StandingSprite = new Sprite(standingVertical, 1, 4, 7),
+                    MovingLeftSprite = new Sprite(standingVertical, 1, 4, 7),
+                    MovingRightSprite = new Sprite(standingVertical, 1, 4, 7),
+                    JumpingSprite = new Sprite(jumpingVertical, 1, 6, 7),
+                    MidJumpSprite = new Sprite(midJumpVertical, 1, 4, 7),
+                    LandingSprite = new Sprite(landingVertical, 1, 6, 7),
+                    FallingSprite = new Sprite(fallingVertical, 1, 6, 7),
+                    WallClimbLeft = new Sprite(standingVertical, 1, 4, 7),
+                    WallClimbRight = new Sprite(standingVertical, 1, 4, 7),
+                    Poof = new Sprite(poof, 1, 13, 2)
+                });
+                PlayerSpriteContainers.Add(new PlayerSpriteContainer() // Climbing
+                {
+                    StandingSprite = new Sprite(standingClimb, 1, 4, 7),
+                    MovingLeftSprite = new Sprite(movingLeftClimb, 1, 7, 7),
+                    FallingSprite = new Sprite(standingClimb, 1, 4, 7),
+                    MovingRightSprite = new Sprite(movingRightClimb, 1, 7, 7),
+                    MidJumpSprite = new Sprite(standingClimb, 1, 4, 7),
+                    LandingSprite = new Sprite(standingClimb, 1, 6, 7),
+                    JumpingSprite = new Sprite(standingClimb, 1, 4, 7),
+                    WallClimbLeft = new Sprite(movingLeftClimb, 1, 7, 7),
+                    WallClimbRight = new Sprite(movingRightClimb, 1, 7, 7),
+                    Poof = new Sprite(poof, 1, 13, 2)
+                });
+
+
+                LevelManager.Instance.SetLevel(@"TestLevel");
+                //GameManager.Instance.SetLevel(@"TestLevel2");
                 
+                PlayStateKeyListener = new KeyboardListener();
+                game.Player = new Player(LevelManager.Instance.GetPlayerStartingLocation(), PlayerSpriteContainers);
+                LevelManager.Player = game.Player;
+                PlayStateKeyListener.AddSubscriber(new KeyboardSubscriber()
+                {
+                    Subscriber = game.Player,
+                    WatchedKeys = game.Player.GetWatchedKeys(),
+                    IsPaused = false
+                });
+                game.Camera.Focus = game.Player;
+                game.Camera.Zoom = 2;
+                game.Camera.FocusOffest = new Vector3(game.graphics.PreferredBackBufferWidth / 4, game.graphics.PreferredBackBufferHeight / 4, 0);
 
             }
 
             public override void Update(GameTime gameTime)
             {
                 //Listener.Update(Keyboard.GetState(), gameTime);
-
+                PlayStateKeyListener.Update(Keyboard.GetState(), gameTime);
+                game.Player.Update(gameTime);
+                hud.Update(gameTime);
             }
             public override void Draw(SpriteBatch spriteBatch)
             {
-
+                game.Player.Draw(spriteBatch);
+                LevelManager.Instance.DrawLevel(spriteBatch);
+                
+                hud.Draw(spriteBatch);
+            }
+            public override void NextState()
+            {
+                game.CurrentState = new DeadState(game);
             }
             public void NotifyOfChange(List<KeyAction> actions, GameTime gameTime)
             {
@@ -349,6 +517,173 @@ namespace Pick_One
                 }
             }
         }
+        /// <summary>
+        /// Start State
+        /// </summary>
+        public class DeadState : GameState, IInputSubscriber
+        {
 
-    }
+            private SpriteFont font;
+            private Sprite background;
+            private Options[] MenuOptions = new Options[1]
+            {
+                Options.TryAgain
+            };
+            private Vector2 MenuLocation = new Vector2(100, 100);
+            private int currentOption = 1;
+            private TimeSpan elapseTime = TimeSpan.Zero;
+            private int menuSpeed = 100;
+            private int currentColor = 0;
+            public DeadState(MainGameLoop game)
+                : base(game)
+            {
+                init();
+            }
+            private void init()
+            {
+                font = game.Content.Load<SpriteFont>("mainMenuFont");
+
+                var tempSubscriber = new KeyboardSubscriber()
+                {
+                    Subscriber = this,
+                    IsPaused = false,
+                    WatchedKeys = new List<Keys>()
+                    {
+                        Keys.A,
+                        Keys.S,
+                        Keys.W,
+                        Keys.Up,
+                        Keys.Down
+            }
+                };
+
+                Listener = new KeyboardListener();
+                Listener.AddSubscriber(tempSubscriber);
+            }
+
+            public override void Update(GameTime gameTime)
+            {
+                Listener.Update(Keyboard.GetState(), gameTime);
+
+            }
+
+            public override void Draw(SpriteBatch spriteBatch)
+            {
+                Color color = Color.Black;
+                Color topColor = Color.Black;
+                currentColor += 1;
+                if (currentColor % 1 == 0)
+                {
+                    topColor = Color.Black;
+                }
+                if (currentColor % 2 == 0)
+                {
+                    topColor = Color.Pink;
+                }
+                if (currentColor % 3 == 0)
+                {
+                    topColor = Color.Blue;
+                }
+                if (currentColor >= 1000)
+                {
+                    currentColor = 0;
+                }
+
+
+                Vector2 menu = MenuLocation;
+                spriteBatch.DrawString(font, "Press \"A\" to select an option.", new Vector2(50, 40), topColor);
+                spriteBatch.DrawString(font, "Navigate Menu with W,S,UP,Down.", new Vector2(50, 60), topColor);
+
+                for (int i = 0; i < MenuOptions.Length; i++)
+                {
+                    if (currentOption == i + 1)
+                    {
+                        color = Color.Red;
+                    }
+                    else
+                    {
+                        color = Color.Black;
+                    }
+                    spriteBatch.DrawString(font, MenuOptions[i].ToString(), menu += new Vector2(0, font.LineSpacing), color);
+                }
+            }
+            public override void NextState()
+            {
+                game.CurrentState = new PlayState(game);
+            }
+
+            public void NotifyOfChange(List<KeyAction> actions, GameTime gameTime)
+            {
+                if (elapseTime > TimeSpan.FromMilliseconds(menuSpeed))
+                {
+                    elapseTime = TimeSpan.Zero;
+                }
+                elapseTime += gameTime.ElapsedGameTime;
+                foreach (var action in actions)
+                {
+
+                    if (action.HasNoAction)
+                    {
+                        continue;
+                    }
+
+                    if (action.WasPressed)
+                    {
+                        if (action.Key == Keys.A && MenuOptions[currentOption - 1].Equals(Options.TryAgain))
+                        {
+                            NextState();
+                            continue;
+                        }
+                        if ((action.Key == Keys.W || action.Key == Keys.Up) && elapseTime >= TimeSpan.FromMilliseconds(menuSpeed))
+                        {
+                            currentOption = currentOption - 1;
+                            if (currentOption < 1) currentOption = 1;
+                            continue;
+                        }
+                        if ((action.Key == Keys.S || action.Key == Keys.Down) && elapseTime >= TimeSpan.FromMilliseconds(menuSpeed))
+                        {
+                            currentOption = currentOption + 1;
+                            if (currentOption > 3) currentOption = 3;
+                            continue;
+                        }
+
+                    }
+
+                    if (action.WasReleased)
+                    {
+                        //no action
+                    }
+
+                    if (action.IsBeingHeld)
+                    {
+                        if (action.Key == Keys.A && MenuOptions[currentOption - 1].Equals(Options.TryAgain))
+                        {
+                            NextState();
+                            continue;
+                        }
+                        if ((action.Key == Keys.W || action.Key == Keys.Up) && elapseTime >= TimeSpan.FromMilliseconds(menuSpeed))
+                        {
+                            currentOption = currentOption - 1;
+                            if (currentOption < 1) currentOption = 1;
+                            continue;
+                        }
+                        if ((action.Key == Keys.S || action.Key == Keys.Down) && elapseTime >= TimeSpan.FromMilliseconds(menuSpeed))
+                        {
+                            currentOption = currentOption + 1;
+                            if (currentOption > 3) currentOption = 3;
+                            continue;
+                        }
+
+                    }
+                }
+
+            }
+
+            private enum Options
+            {
+                TryAgain
+            }
+        }
+
+        }
 }

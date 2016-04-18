@@ -9,14 +9,9 @@ namespace Pick_One.Character.PlayerSpecialities
 {
     public class Stretch : AbstractPlayerSpeciality
     {
-        public Stretch(PlayerSpriteContainer sprites)
+        public Stretch(PlayerSpriteContainer sprites, HitBox hitBox) : base(sprites, hitBox)
         {
-            StandingSprite = sprites.StandingSprite;
-            MovingLeft = sprites.MovingLeftSprite;
-            MovingRight = sprites.MovingRightSprite;
-            Jump = sprites.StandingSprite;
-            WallClimbDown = sprites.WallClimbDownSprite;
-            WallClimbUp = sprites.WallClimbUpSprite;
+            SpecialityName = PlayerSpecialityEnum.Stretch;
             Movement = new MovementContainer();
             Movement.UpwardMovement = 0.0f;
             Movement.DownwardMovement = 0.0f;

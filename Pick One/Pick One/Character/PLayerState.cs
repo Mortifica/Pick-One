@@ -6,8 +6,10 @@
         MovingLeft,
         MovingRight,
         Jump,
-        WallClimbUp,
-        WallClimbDown,
-        Falling
+        WallClimbLeft,
+        WallClimbRight,
+        Falling,
+        Landing,
+        MidJump
     }
 }
