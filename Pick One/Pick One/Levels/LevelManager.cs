@@ -55,7 +55,7 @@ namespace Pick_One.Levels
         {
             CurrentLevel = levelname;
             NextLevel = nextLevel;
-            var texture = Content.Load<Texture2D>(levelname);
+            var texture = Content.Load<Texture2D>(FOLDER_PATH + levelname);
             Level = LevelFactory.GenerateLevel(Content, texture);
             Collision = new CollisionManager(Level);
         }
@@ -99,28 +99,28 @@ namespace Pick_One.Levels
         {
             if (CurrentLevel == "Level1")
             {
-                SetLevel(FOLDER_PATH + "Level1", "Level2");
+                SetLevel("Level1", "Level2");
                 LevelMusic(SoundContainer.Instance.LevelTheme);
                 Timer(30);
             }
             else if (CurrentLevel == "Level2")
             {
                 // Next level
-                SetLevel(FOLDER_PATH + "Level2","Level3");
+                SetLevel("Level2","Level3");
                 LevelMusic(SoundContainer.Instance.LevelTheme);
                 Timer(30);
             }
             else if (CurrentLevel == "Level3")
             {
                 // Next level
-                SetLevel(FOLDER_PATH + "Level3", "Level4");
+                SetLevel("Level3", "Level4");
                 LevelMusic(SoundContainer.Instance.LevelTheme);
                 Timer(30);
             }
             else if (CurrentLevel == "Level4")
             {
                 // Next level
-                SetLevel(FOLDER_PATH + "Level4", "Level1");
+                SetLevel("Level4", "Level1");
                 LevelMusic(SoundContainer.Instance.LevelTheme);
                 Timer(30);
             }
