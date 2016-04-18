@@ -160,7 +160,17 @@ namespace Pick_One.Character
 
         private void correctPlayerLocationForTransform(AbstractPlayerSpeciality speciality)
         {
-            var heightDiff = speciality.Height - CurrentPlayerSpeciality.Height;
+            float heightDiff;
+            if (speciality.SpecialityName == PlayerSpecialityEnum.Stretch)
+            {
+                heightDiff = 0;
+            }
+            else
+            {
+                heightDiff = speciality.Height - CurrentPlayerSpeciality.Height;
+            }
+                
+
             if (Math.Abs(heightDiff) > 0)
             {
                 if (LevelManager.Instance.GetBlocksAt(PlayerLocation.XLocation, PlayerLocation.YLocation - heightDiff, heightDiff, 1).Count() > 0)
@@ -233,6 +243,10 @@ namespace Pick_One.Character
         }
         public void Update(GameTime gameTime)
         {
+            if(tranformAnimation == 5)
+            {
+                SoundContainer.Instance.Poof.Play();
+            }
             if (tranformAnimation < 20)
                 PreviousPlayerSpeciality.Poof.Update();
 

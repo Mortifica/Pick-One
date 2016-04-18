@@ -74,6 +74,7 @@ namespace Pick_One.Levels
             }
             else
             {
+                SoundContainer.Instance.Finish.Play();
                 CurrentLevel = NextLevel;
                 GetLevelInfo();
             }

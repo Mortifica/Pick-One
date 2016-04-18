@@ -58,39 +58,39 @@ namespace Pick_One.Character.PlayerSpecialities
             switch (CurrentState)
             {
                 case PlayerState.Standing:
-                    Width = StandingSprite.Texture.Width / StandingSprite.Columns;
+                    Width = StandingSprite.Texture.Width / StandingSprite.Columns -1;
                     Height = StandingSprite.Texture.Height - hitboxDiff;
                     break;
                 case PlayerState.Jump:
-                    Width = Jump.Texture.Width / Jump.Columns;
+                    Width = Jump.Texture.Width / Jump.Columns-1;
                     Height = Jump.Texture.Height - hitboxDiff;
                     break;
                 case PlayerState.MovingLeft:
-                    Width = MovingLeft.Texture.Width / MovingLeft.Columns;
+                    Width = MovingLeft.Texture.Width / MovingLeft.Columns - 1;
                     Height = MovingLeft.Texture.Height - hitboxDiff;
                     break;
                 case PlayerState.MovingRight:
-                    Width = MovingRight.Texture.Width / MovingRight.Columns;
+                    Width = MovingRight.Texture.Width / MovingRight.Columns - 1;
                     Height = MovingRight.Texture.Height - hitboxDiff;
                     break;
                 case PlayerState.WallClimbRight:
-                    Width = WallClimbRight.Texture.Width / WallClimbRight.Columns;
+                    Width = WallClimbRight.Texture.Width / WallClimbRight.Columns - 1;
                     Height = WallClimbRight.Texture.Height - hitboxDiff;
                     break;
                 case PlayerState.WallClimbLeft:
-                    Width = WallClimbLeft.Texture.Width / WallClimbLeft.Columns;
+                    Width = WallClimbLeft.Texture.Width / WallClimbLeft.Columns - 1;
                     Height = WallClimbLeft.Texture.Height - hitboxDiff;
                     break;
                 case PlayerState.Landing:
-                    Width = Landing.Texture.Width / Landing.Columns;
+                    Width = Landing.Texture.Width / Landing.Columns - 1;
                     Height = Landing.Texture.Height - hitboxDiff;
                     break;
                 case PlayerState.MidJump:
-                    Width = MidJump.Texture.Width / MidJump.Columns;
+                    Width = MidJump.Texture.Width / MidJump.Columns - 1;
                     Height = MidJump.Texture.Height - hitboxDiff;
                     break;
                 case PlayerState.Falling:
-                    Width = Falling.Texture.Width / Falling.Columns;
+                    Width = Falling.Texture.Width / Falling.Columns - 1;
                     Height = Falling.Texture.Height - hitboxDiff;
                     break;
             }
@@ -103,47 +103,47 @@ namespace Pick_One.Character.PlayerSpecialities
             {
                 case PlayerState.Standing:
                     StandingSprite.Update();
-                    Width = StandingSprite.Texture.Width / StandingSprite.Columns;
+                    Width = StandingSprite.Texture.Width / StandingSprite.Columns - 1;
                     Height = StandingSprite.Texture.Height - hitboxDiff;
                     break;
                 case PlayerState.Jump:
                     Jump.Update();
-                    Width = Jump.Texture.Width / Jump.Columns;
+                    Width = Jump.Texture.Width / Jump.Columns - 1;
                     Height = Jump.Texture.Height - hitboxDiff;
                     break;
                 case PlayerState.MovingLeft:
                     MovingLeft.Update();
-                    Width = MovingLeft.Texture.Width / MovingLeft.Columns;
+                    Width = MovingLeft.Texture.Width / MovingLeft.Columns - 1;
                     Height = MovingLeft.Texture.Height - hitboxDiff;
                     break;
                 case PlayerState.MovingRight:
                     MovingRight.Update();
-                    Width = MovingRight.Texture.Width / MovingRight.Columns;
+                    Width = MovingRight.Texture.Width / MovingRight.Columns - 1;
                     Height = MovingRight.Texture.Height - hitboxDiff;
                     break;
                 case PlayerState.WallClimbRight:
                     WallClimbRight.Update();
-                    Width = WallClimbRight.Texture.Width / WallClimbRight.Columns;
+                    Width = WallClimbRight.Texture.Width / WallClimbRight.Columns - 1;
                     Height = WallClimbRight.Texture.Height - hitboxDiff;
                     break;
                 case PlayerState.WallClimbLeft:
                     WallClimbLeft.Update();
-                    Width = WallClimbLeft.Texture.Width / WallClimbLeft.Columns;
+                    Width = WallClimbLeft.Texture.Width / WallClimbLeft.Columns - 1;
                     Height = WallClimbLeft.Texture.Height - hitboxDiff;
                     break;
                 case PlayerState.Landing:
                     Landing.Update();
-                    Width = Landing.Texture.Width / Landing.Columns;
+                    Width = Landing.Texture.Width / Landing.Columns - 1;
                     Height = Landing.Texture.Height - hitboxDiff;
                     break;
                 case PlayerState.MidJump:
                     MidJump.Update();
-                    Width = MidJump.Texture.Width / MidJump.Columns;
+                    Width = MidJump.Texture.Width / MidJump.Columns - 1;
                     Height = MidJump.Texture.Height - hitboxDiff;
                     break;
                 case PlayerState.Falling:
                     Falling.Update();
-                    Width = Falling.Texture.Width / Falling.Columns;
+                    Width = Falling.Texture.Width / Falling.Columns - 1;
                     Height = Falling.Texture.Height - hitboxDiff;
                     break;
             }

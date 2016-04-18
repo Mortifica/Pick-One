@@ -558,10 +558,9 @@ namespace Pick_One
         {
 
             private SpriteFont font;
-            private Sprite background;
             private Options[] MenuOptions = new Options[1]
             {
-                Options.TryAgain
+                Options.MainMenu
             };
             private Vector2 MenuLocation = new Vector2(100, 100);
             private int currentOption = 1;
@@ -625,8 +624,8 @@ namespace Pick_One
 
 
                 Vector2 menu = MenuLocation;
-                spriteBatch.DrawString(font, "Press \"A\" to select an option.", new Vector2(50, 40), topColor);
-                spriteBatch.DrawString(font, "Navigate Menu with W,S,UP,Down.", new Vector2(50, 60), topColor);
+                spriteBatch.DrawString(font, "Thanks For Playing", new Vector2(50, 40), topColor);
+                spriteBatch.DrawString(font, "Please leave some comments", new Vector2(50, font.LineSpacing + 40), topColor);
 
                 for (int i = 0; i < MenuOptions.Length; i++)
                 {
@@ -638,12 +637,12 @@ namespace Pick_One
                     {
                         color = Color.Black;
                     }
-                    spriteBatch.DrawString(font, MenuOptions[i].ToString(), menu += new Vector2(0, font.LineSpacing), color);
+                    spriteBatch.DrawString(font, MenuOptions[i].ToString(), menu += new Vector2(0, font.LineSpacing*2 + 40), color);
                 }
             }
             public override void NextState()
             {
-                game.CurrentState = new PlayState(game);
+                game.CurrentState = new StartState(game);
             }
 
             public void NotifyOfChange(List<KeyAction> actions, GameTime gameTime)
@@ -663,7 +662,7 @@ namespace Pick_One
 
                     if (action.WasPressed)
                     {
-                        if (action.Key == Keys.A && MenuOptions[currentOption - 1].Equals(Options.TryAgain))
+                        if (action.Key == Keys.A && MenuOptions[currentOption - 1].Equals(Options.MainMenu))
                         {
                             NextState();
                             continue;
@@ -690,7 +689,7 @@ namespace Pick_One
 
                     if (action.IsBeingHeld)
                     {
-                        if (action.Key == Keys.A && MenuOptions[currentOption - 1].Equals(Options.TryAgain))
+                        if (action.Key == Keys.A && MenuOptions[currentOption - 1].Equals(Options.MainMenu))
                         {
                             NextState();
                             continue;
@@ -715,7 +714,7 @@ namespace Pick_One
 
             private enum Options
             {
-                TryAgain
+                MainMenu
             }
         }
         /// <summary>
