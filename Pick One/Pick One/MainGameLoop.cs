@@ -69,7 +69,7 @@ namespace Pick_One
 
             // Set inital level
             MediaPlayer.IsRepeating = true;
-            MediaPlayer.Volume = (float)0.25;
+            MediaPlayer.Volume = (float)0.10;
 
         }
 
@@ -641,6 +641,8 @@ namespace Pick_One
                 Vector2 menu = MenuLocation;
                 spriteBatch.DrawString(font, "Thanks For Playing", new Vector2(50, 40), topColor);
                 spriteBatch.DrawString(font, "Please leave some comments", new Vector2(50, font.LineSpacing + 40), topColor);
+
+                spriteBatch.DrawString(font, "Hankenstien: Art\nViperD: Coding\nTombz26:Coding\nKoukiiMonster:Music", new Vector2(50, font.LineSpacing*2 + 40), topColor);
 
                 for (int i = 0; i < MenuOptions.Length; i++)
                 {
