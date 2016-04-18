@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 using Pick_One.Camera;
+using Microsoft.Xna.Framework.Media;
 
 namespace Pick_One.Character
 {
@@ -725,6 +726,7 @@ namespace Pick_One.Character
             if (CurrentPlayerSpeciality.IsJumpable)
             {
                 IsJumping = true;
+                SoundContainer.Instance.Jump.Play();
             }
             //if (CurrentPlayerSpeciality.Movement.UpwardMovement > 0.0f)
             //{

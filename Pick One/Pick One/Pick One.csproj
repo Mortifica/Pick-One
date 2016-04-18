@@ -48,6 +48,7 @@
     <Compile Include="Camera\ICameraFocus.cs" />
     <Compile Include="Character\AbstractCharacter.cs" />
     <Compile Include="BasicClasses\MovementContainer.cs" />
+    <Compile Include="Character\SoundContainer.cs" />
     <Compile Include="Character\PlayerSpecialities\AbstractPlayerSpeciality.cs" />
     <Compile Include="Character\PlayerSpecialities\PlayerSpecialityEnum.cs" />
     <Compile Include="Character\PlayerSpecialities\Vertical.cs" />
