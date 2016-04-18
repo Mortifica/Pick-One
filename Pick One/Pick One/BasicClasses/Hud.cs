@@ -30,9 +30,9 @@ namespace Pick_One.BasicClasses
             var EndPosition = LevelManager.Instance.GetFinishingPosition();
             var PlayerPosition = LevelManager.Player.GetLocation();
             var helpHud = game.Camera.Focus.Location - new Vector2(200, 200);
-            var arrowLocation = game.Camera.Focus.Location - new Vector2(400, 200);
+            var arrowLocation = game.Camera.Focus.Location - new Vector2(0, 100);
             var rotation = 0f;
-            spriteBatch.Draw(directionalArrow, arrowLocation, new Rectangle(0, 0, directionalArrow.Width, directionalArrow.Height), Color.White, rotation, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(directionalArrow, arrowLocation, new Rectangle(0, 0, directionalArrow.Width, directionalArrow.Height), Color.White, rotation, new Vector2(directionalArrow.Width, directionalArrow.Height), 1f, SpriteEffects.None, 0f);
             spriteBatch.DrawString(font,"Test Text",helpHud, Color.White);
         }
     }
