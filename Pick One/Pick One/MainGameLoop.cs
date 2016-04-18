@@ -19,6 +19,8 @@ namespace Pick_One
     /// </summary>a
     public class MainGameLoop : Game
     {
+        private const string FONT_FOLDER = @"SpriteFonts\";
+
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
         public Player Player { get; set; }
@@ -110,7 +112,7 @@ namespace Pick_One
 
             poof = Content.Load<Texture2D>(@"test_Transition_Poof");
 
-            timerFont = Content.Load<SpriteFont>("timer_Font");
+            timerFont = Content.Load<SpriteFont>(FONT_FOLDER + "timer_Font");
             // Sound Effects
             SoundContainer.Instance.Death = Content.Load<SoundEffect>(@"SoundEffects\death");
             SoundContainer.Instance.CountDown = Content.Load<SoundEffect>(@"SoundEffects\countdown");
@@ -243,8 +245,8 @@ namespace Pick_One
             }
             private void init()
             {
-                titleFont = game.Content.Load<SpriteFont>("mainMenuFont");
-                optionFont = game.Content.Load<SpriteFont>("menu_Options_Font");
+                titleFont = game.Content.Load<SpriteFont>(FONT_FOLDER + "mainMenuFont");
+                optionFont = game.Content.Load<SpriteFont>(FONT_FOLDER + "menu_Options_Font");
                 
                 var tempSubscriber = new KeyboardSubscriber()
                 {
@@ -410,7 +412,7 @@ namespace Pick_One
             }
             private void init(MainGameLoop game)
             {
-                var font = game.Content.Load<SpriteFont>("game_Hud_Font");
+                var font = game.Content.Load<SpriteFont>(FONT_FOLDER + "game_Hud_Font");
                 var arrow = game.Content.Load<Texture2D>("directional_Arrow");
                 var hudBackground = game.Content.Load<Texture2D>("hud_Background");
                 hud = new Hud(game, this, font, arrow, hudBackground);
@@ -576,7 +578,7 @@ namespace Pick_One
             }
             private void init()
             {
-                font = game.Content.Load<SpriteFont>("mainMenuFont");
+                font = game.Content.Load<SpriteFont>(FONT_FOLDER + "mainMenuFont");
 
                 var tempSubscriber = new KeyboardSubscriber()
                 {
@@ -764,8 +766,8 @@ namespace Pick_One
             }
             private void init()
             {
-                titleFont = game.Content.Load<SpriteFont>("mainMenuFont");
-                optionFont = game.Content.Load<SpriteFont>("menu_Options_Font");
+                titleFont = game.Content.Load<SpriteFont>(FONT_FOLDER + "mainMenuFont");
+                optionFont = game.Content.Load<SpriteFont>(FONT_FOLDER + "menu_Options_Font");
                 circle = new Sprite(game.standingPlayer, 1, 4, 7);
                 hover = new Sprite(game.hoverStanding, 1, 4, 7);
                 square = new Sprite(game.standingClimb, 1, 4, 7);
