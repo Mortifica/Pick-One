@@ -505,7 +505,7 @@
 /processorParam:TextureFormat=Color
 /build:TileTextures/earth_Texture.png
 
-#begin TileTextures/finish_Texture.png
+#begin ground_Texture.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -527,9 +527,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:TileTextures/ground_Texture.png
+/build:earth_Texture.png
 
-#begin TileTextures/slow_Texture.png
+#begin start_Texture.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
