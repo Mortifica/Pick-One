@@ -8,3 +8,5 @@
 /Pick One/Pick One/obj/x86/Debug
 /Pick One/Pick One/Pick One.csproj.user
 *.suo
+/Pick One/Pick One/bin/Windows/x86/Release
+/Pick One/Pick One/obj/x86/Release
