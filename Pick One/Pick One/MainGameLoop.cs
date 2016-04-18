@@ -112,22 +112,22 @@ namespace Pick_One
 
             timerFont = Content.Load<SpriteFont>("timer_Font");
             // Sound Effects
-            SoundContainer.Instance.Death = Content.Load<SoundEffect>("death");
-            SoundContainer.Instance.CountDown = Content.Load<SoundEffect>("countdown");
-            SoundContainer.Instance.Go = Content.Load<SoundEffect>("go");
-            SoundContainer.Instance.Finish = Content.Load<SoundEffect>("finish");
-            SoundContainer.Instance.Hover = Content.Load<SoundEffect>("hover");
-            SoundContainer.Instance.Squish1 = Content.Load<SoundEffect>("squish_one");
-            SoundContainer.Instance.Squish2 = Content.Load<SoundEffect>("squish_two");
+            SoundContainer.Instance.Death = Content.Load<SoundEffect>(@"SoundEffects\death");
+            SoundContainer.Instance.CountDown = Content.Load<SoundEffect>(@"SoundEffects\countdown");
+            SoundContainer.Instance.Go = Content.Load<SoundEffect>(@"SoundEffects\go");
+            SoundContainer.Instance.Finish = Content.Load<SoundEffect>(@"SoundEffects\finish");
+            SoundContainer.Instance.Hover = Content.Load<SoundEffect>(@"SoundEffects\hover");
+            SoundContainer.Instance.Squish1 = Content.Load<SoundEffect>(@"SoundEffects\squish_one");
+            SoundContainer.Instance.Squish2 = Content.Load<SoundEffect>(@"SoundEffects\squish_two");
             //SoundContainer.Instance.Squish3 = Content.Load<SoundEffect>("squish_three");
-            SoundContainer.Instance.Jump = Content.Load<SoundEffect>("jump");
-            SoundContainer.Instance.Poof = Content.Load<SoundEffect>("poof");
-            SoundContainer.Instance.MenuSelect = Content.Load<SoundEffect>("MenuSelect");
-            SoundContainer.Instance.Select = Content.Load<SoundEffect>("select");
+            SoundContainer.Instance.Jump = Content.Load<SoundEffect>(@"SoundEffects\jump");
+            SoundContainer.Instance.Poof = Content.Load<SoundEffect>(@"SoundEffects\poof");
+            SoundContainer.Instance.MenuSelect = Content.Load<SoundEffect>(@"SoundEffects\MenuSelect");
+            SoundContainer.Instance.Select = Content.Load<SoundEffect>(@"SoundEffects\select");
 
             // Songs
-            SoundContainer.Instance.Tutorial = Content.Load<Song>("tutorial");
-            SoundContainer.Instance.LevelTheme = Content.Load<Song>("LevelTheme");
+            SoundContainer.Instance.Tutorial = Content.Load<Song>(@"Songs\tutorial");
+            SoundContainer.Instance.LevelTheme = Content.Load<Song>(@"Songs\LevelTheme");
 
             MediaPlayer.Play(SoundContainer.Instance.Tutorial);
 
