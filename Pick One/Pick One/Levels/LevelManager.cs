@@ -40,6 +40,8 @@ namespace Pick_One.Levels
 
         public static Player Player { set; get; }
 
+        public static bool FinishedGame { get; set; } = false;
+
         private LevelManager()
         {
             levelTimer = new Stopwatch();
@@ -53,6 +55,8 @@ namespace Pick_One.Levels
 
         public void SetLevel(string levelname, string nextLevel)
         {
+            FinishedGame = false;
+
             CurrentLevel = levelname;
             NextLevel = nextLevel;
             var texture = Content.Load<Texture2D>(FOLDER_PATH + levelname);
@@ -66,6 +70,7 @@ namespace Pick_One.Levels
             if (string.IsNullOrEmpty(NextLevel))
             {
                 // End the game or go back
+                FinishedGame = true;
             }
             else
             {
@@ -120,9 +125,9 @@ namespace Pick_One.Levels
             else if (CurrentLevel == "Level4")
             {
                 // Next level
-                SetLevel("Level4", "Level1");
+                SetLevel("Level4", "");
                 LevelMusic(SoundContainer.Instance.LevelTheme);
-                Timer(30);
+                Timer(60);
             }
         }
 
