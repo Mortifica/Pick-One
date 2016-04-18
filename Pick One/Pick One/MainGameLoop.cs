@@ -44,6 +44,8 @@ namespace Pick_One
         private Texture2D movingRightClimb;
         private Texture2D poof;
 
+        public SpriteFont timerFont;
+
 
         public MainGameLoop()
         {
@@ -107,7 +109,7 @@ namespace Pick_One
 
             poof = Content.Load<Texture2D>(@"test_Transition_Poof");
 
-
+            timerFont = Content.Load<SpriteFont>("timer_Font");
             // Sound Effects
             SoundContainer.Instance.Death = Content.Load<SoundEffect>("death");
             SoundContainer.Instance.CountDown = Content.Load<SoundEffect>("countdown");
@@ -406,7 +408,7 @@ namespace Pick_One
             }
             private void init(MainGameLoop game)
             {
-                var font = game.Content.Load<SpriteFont>("mainMenuFont");
+                var font = game.Content.Load<SpriteFont>("game_Hud_Font");
                 var arrow = game.Content.Load<Texture2D>("directional_Arrow");
                 var hudBackground = game.Content.Load<Texture2D>("hud_Background");
                 hud = new Hud(game, this, font, arrow, hudBackground);
@@ -495,7 +497,7 @@ namespace Pick_One
                 });
                 game.Camera.Focus = game.Player;
                 game.Camera.Zoom = 1f;
-                game.Camera.FocusOffest = new Vector3(game.graphics.PreferredBackBufferWidth / 4, game.graphics.PreferredBackBufferHeight / 4, 0);
+                game.Camera.FocusOffest = new Vector3(game.graphics.PreferredBackBufferWidth / 2, game.graphics.PreferredBackBufferHeight / 2, 0);
 
             }
 

@@ -12,6 +12,7 @@ namespace Pick_One.BasicClasses
     public class Hud
     {
         private SpriteFont font;
+        private SpriteFont timerFont;
         private MainGameLoop game;
         private GameState state;
         private Texture2D directionalArrow;
@@ -24,6 +25,7 @@ namespace Pick_One.BasicClasses
             font = spriteFont;
             directionalArrow = arrow;
             hudBackground = background;
+            timerFont = game.timerFont;
         }
 
         public void Update(GameTime gameTime)
@@ -39,16 +41,16 @@ namespace Pick_One.BasicClasses
             var PlayerPosition = LevelManager.Player.GetLocation();
             var windowWidth = game.GraphicsDevice.Viewport.Width;
             var windowHeight = game.GraphicsDevice.Viewport.Height;
-            var helpHud = game.Camera.Focus.Location - new Vector2(windowWidth/4 - 10, windowHeight/4 - 10);
-            var arrowLocation = game.Camera.Focus.Location - new Vector2(0, windowHeight/6);
+            var helpHud = game.Camera.Focus.Location - new Vector2(windowWidth/2 - 10, windowHeight/2 - 10);
+            var arrowLocation = game.Camera.Focus.Location - new Vector2(0, windowHeight/3);
             double dx = EndPosition.X - arrowLocation.X;
             double dy = EndPosition.Y - arrowLocation.Y;
             var rotation = Math.Atan2(dy,dx);
 
             spriteBatch.Draw(directionalArrow, arrowLocation, new Rectangle(0, 0, directionalArrow.Width, directionalArrow.Height), Color.White, (float)rotation, new Vector2(directionalArrow.Width, directionalArrow.Height), 2f, SpriteEffects.None, 0f);
-            spriteBatch.Draw(hudBackground, helpHud, Color.White);
-            spriteBatch.DrawString(font,"Test Text",helpHud + new Vector2(10,10), Color.Black);
-            spriteBatch.DrawString(font, (LevelManager.LevelTimeLimit - LevelManager.LevelTimer.Elapsed.Seconds).ToString() ,helpHud + new Vector2(10,25), Color.White);
+            spriteBatch.Draw(hudBackground, new Rectangle((int)helpHud.X, (int)helpHud.Y, directionalArrow.Width * 2, directionalArrow.Height), new Rectangle((int)helpHud.X, (int)helpHud.Y, directionalArrow.Width , directionalArrow.Height), Color.White);
+            spriteBatch.DrawString(font,game.Player.GetCurrentState().Item2.ToString(),helpHud + new Vector2(10,10), Color.Black);
+            spriteBatch.DrawString(timerFont, (LevelManager.LevelTimeLimit - LevelManager.LevelTimer.Elapsed.Seconds).ToString() , arrowLocation + new Vector2(0,directionalArrow.Width + 10), Color.White);
         }
     }
 }
