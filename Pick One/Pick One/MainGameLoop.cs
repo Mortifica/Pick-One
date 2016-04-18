@@ -151,7 +151,7 @@ namespace Pick_One
             GraphicsDevice.Clear(Color.CornflowerBlue);
             // TODO: Add your drawing code here
             spriteBatch.Begin(
-                                SpriteSortMode.BackToFront,
+                                SpriteSortMode.Immediate,
                                 BlendState.AlphaBlend,
                                 SamplerState.PointClamp,
                                 null,
@@ -393,7 +393,7 @@ namespace Pick_One
                     MovingLeftSprite = new Sprite(movingPlayerLeft, 1, 4, 7),
                     MidJumpSprite = new Sprite(standingPlayer, 1, 4, 7),
                     LandingSprite = new Sprite(standingPlayer, 1, 6, 7),
-                    FallingSprite = new Sprite(fallingPlayer, 1, 4, 7),
+                    FallingSprite = new Sprite(standingPlayer, 1, 4, 7),
                     MovingRightSprite = new Sprite(movingPlayerRight, 1, 4, 7),
                     JumpingSprite = new Sprite(standingPlayer, 1, 4, 7),
                     WallClimbLeft = new Sprite(standingPlayer, 1, 4, 7),
@@ -402,15 +402,15 @@ namespace Pick_One
                 });
                 PlayerSpriteContainers.Add(new PlayerSpriteContainer() // Speed
                 {
-                    StandingSprite = new Sprite(fallingPlayer, 1, 4, 7),
-                    MovingLeftSprite = new Sprite(climbingPlayer, 1, 4, 7),
-                    MidJumpSprite = new Sprite(fallingPlayer, 1, 4, 7),
-                    LandingSprite = new Sprite(fallingPlayer, 1, 6, 7),
-                    FallingSprite = new Sprite(fallingPlayer, 1, 4, 7),
-                    MovingRightSprite = new Sprite(standingPlayer, 1, 4, 7),
-                    JumpingSprite = new Sprite(fallingPlayer, 1, 4, 7),
-                    WallClimbLeft = new Sprite(fallingPlayer, 1, 4, 7),
-                    WallClimbRight = new Sprite(fallingPlayer, 1, 4, 7),
+                    StandingSprite = new Sprite(standingPlayer, 1, 4, 7),
+                    MovingLeftSprite = new Sprite(movingPlayerLeft, 1, 4, 7),
+                    MidJumpSprite = new Sprite(standingPlayer, 1, 4, 7),
+                    LandingSprite = new Sprite(standingPlayer, 1, 6, 7),
+                    FallingSprite = new Sprite(standingPlayer, 1, 4, 7),
+                    MovingRightSprite = new Sprite(movingPlayerRight, 1, 4, 7),
+                    JumpingSprite = new Sprite(standingPlayer, 1, 4, 7),
+                    WallClimbLeft = new Sprite(standingPlayer, 1, 4, 7),
+                    WallClimbRight = new Sprite(standingPlayer, 1, 4, 7),
                     Poof = new Sprite(poof, 1, 13, 2)
                 });
                 PlayerSpriteContainers.Add(new PlayerSpriteContainer() // Stretch
