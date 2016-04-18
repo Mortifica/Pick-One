@@ -224,17 +224,14 @@ namespace Pick_One
             private Sprite hover;
             private Sprite square;
             private Sprite triangle;
-            private Options[] MenuOptions = new Options[3]
+            private Options[] MenuOptions = new Options[1]
             {
-                Options.StartGame,
-                Options.Help,
-                Options.Credits
+                Options.StartGame
             };
             private Vector2 MenuLocation = new Vector2(100, 100);
             private int currentOption = 1;
             private TimeSpan elapseTime = TimeSpan.Zero;
             private int menuSpeed = 100;
-            private int currentColor = 0;
             public StartState(MainGameLoop game)
                 : base(game)
             {
@@ -312,9 +309,13 @@ namespace Pick_One
             }
             public override void NextState()
             {
-                game.CurrentState = new PlayState(game);
+                game.CurrentState = new HelpState(game);
+                //game.CurrentState = new PlayState(game);
             }
-
+            private void HelpState()
+            {
+                
+            }
             public void NotifyOfChange(List<KeyAction> actions, GameTime gameTime)
             {
                 if (elapseTime > TimeSpan.FromMilliseconds(menuSpeed))
@@ -337,18 +338,19 @@ namespace Pick_One
                             NextState();
                             continue;
                         }
-                        if ((action.Key == Keys.W || action.Key == Keys.Up) && elapseTime >= TimeSpan.FromMilliseconds(menuSpeed))
-                        {
-                            currentOption = currentOption - 1;
-                            if (currentOption < 1) currentOption = 1;
-                            continue;
-                        }
-                        if ((action.Key == Keys.S || action.Key == Keys.Down) && elapseTime >= TimeSpan.FromMilliseconds(menuSpeed))
-                        {
-                            currentOption = currentOption + 1;
-                            if (currentOption > 3) currentOption = 3;
-                            continue;
-                        }
+
+                        //if ((action.Key == Keys.W || action.Key == Keys.Up) && elapseTime >= TimeSpan.FromMilliseconds(menuSpeed))
+                        //{
+                        //    currentOption = currentOption - 1;
+                        //    if (currentOption < 1) currentOption = 1;
+                        //    continue;
+                        //}
+                        //if ((action.Key == Keys.S || action.Key == Keys.Down) && elapseTime >= TimeSpan.FromMilliseconds(menuSpeed))
+                        //{
+                        //    currentOption = currentOption + 1;
+                        //    if (currentOption > 3) currentOption = 3;
+                        //    continue;
+                        //}
 
                     }
 
@@ -364,18 +366,18 @@ namespace Pick_One
                             NextState();
                             continue;
                         }
-                        if ((action.Key == Keys.W || action.Key == Keys.Up) && elapseTime >= TimeSpan.FromMilliseconds(menuSpeed))
-                        {
-                            currentOption = currentOption - 1;
-                            if (currentOption < 1) currentOption = 1;
-                            continue;
-                        }
-                        if ((action.Key == Keys.S || action.Key == Keys.Down) && elapseTime >= TimeSpan.FromMilliseconds(menuSpeed))
-                        {
-                            currentOption = currentOption + 1;
-                            if (currentOption > 3) currentOption = 3;
-                            continue;
-                        }
+                        //if ((action.Key == Keys.W || action.Key == Keys.Up) && elapseTime >= TimeSpan.FromMilliseconds(menuSpeed))
+                        //{
+                        //    currentOption = currentOption - 1;
+                        //    if (currentOption < 1) currentOption = 1;
+                        //    continue;
+                        //}
+                        //if ((action.Key == Keys.S || action.Key == Keys.Down) && elapseTime >= TimeSpan.FromMilliseconds(menuSpeed))
+                        //{
+                        //    currentOption = currentOption + 1;
+                        //    if (currentOption > 3) currentOption = 3;
+                        //    continue;
+                        //}
 
                     }
                 }
@@ -383,9 +385,7 @@ namespace Pick_One
             }
             private enum Options
             {
-                StartGame,
-                Help,
-                Credits
+                StartGame
             }
         }
 
@@ -715,6 +715,193 @@ namespace Pick_One
                 TryAgain
             }
         }
+        /// <summary>
+        /// Start State
+        /// </summary>
+        public class HelpState : GameState, IInputSubscriber
+        {
 
+            private SpriteFont titleFont;
+            private SpriteFont optionFont;
+            private Sprite circle;
+            private Sprite hover;
+            private Sprite square;
+            private Sprite triangle;
+            private Options[] MenuOptions = new Options[1]
+            {
+                Options.Start
+            };
+            private Vector2 MenuLocation = new Vector2(100, 100);
+            private int currentOption = 1;
+            private TimeSpan elapseTime = TimeSpan.Zero;
+            private int menuSpeed = 100;
+            private int currentColor = 0;
+            private bool isLoading = true;
+            private TimeSpan loadingTime = TimeSpan.Zero;
+            public HelpState(MainGameLoop game)
+                : base(game)
+            {
+                init();
+            }
+            private void init()
+            {
+                titleFont = game.Content.Load<SpriteFont>("mainMenuFont");
+                optionFont = game.Content.Load<SpriteFont>("menu_Options_Font");
+                circle = new Sprite(game.standingPlayer, 1, 4, 7);
+                hover = new Sprite(game.hoverStanding, 1, 4, 7);
+                square = new Sprite(game.standingClimb, 1, 4, 7);
+                triangle = new Sprite(game.standingVertical, 1, 4, 7);
+                var tempSubscriber = new KeyboardSubscriber()
+                {
+                    Subscriber = this,
+                    IsPaused = false,
+                    WatchedKeys = new List<Keys>()
+                    {
+                        Keys.A,
+                        Keys.S,
+                        Keys.W,
+                        Keys.Up,
+                        Keys.Down
+            }
+                };
+
+                Listener = new KeyboardListener();
+                Listener.AddSubscriber(tempSubscriber);
+            }
+
+            public override void Update(GameTime gameTime)
+            {
+                Listener.Update(Keyboard.GetState(), gameTime);
+                circle.Update();
+                hover.Update();
+                square.Update();
+                triangle.Update();
+            }
+
+            public override void Draw(SpriteBatch spriteBatch)
+            {
+                Color color = Color.White;
+                Color topColor = Color.White;
+
+                
+                circle.Draw(spriteBatch, new Vector2(100, 300), 2);
+                spriteBatch.DrawString(optionFont, "Rolli is fast left and right, but cannot jump.", new Vector2(200, 300), Color.Orange);
+                spriteBatch.DrawString(optionFont, "Press 1 to ShapeShift to him", new Vector2(200, 300 + optionFont.LineSpacing), Color.Orange);
+                hover.Draw(spriteBatch, new Vector2(100, 400), 2);
+                spriteBatch.DrawString(optionFont, "Hovi is slow left and right. He cannot jump, and is not effected by gravity.", new Vector2(200, 400), Color.Orange);
+                spriteBatch.DrawString(optionFont, "Press 2 to ShapeShift to him", new Vector2(200, 400 + optionFont.LineSpacing), Color.Orange);
+                square.Draw(spriteBatch, new Vector2(100, 500), 2);
+                spriteBatch.DrawString(optionFont, "Climbi is slow left and right. He cannot jump, but can climb some walls", new Vector2(200, 500), Color.Orange);
+                spriteBatch.DrawString(optionFont, "Press 3 to ShapeShift to him", new Vector2(200, 500 + optionFont.LineSpacing), Color.Orange);
+                triangle.Draw(spriteBatch, new Vector2(100, 600), 2);
+                spriteBatch.DrawString(optionFont, "Jumpi cannot move left and right, but can he can jump up levels", new Vector2(200, 600), Color.Orange);
+                spriteBatch.DrawString(optionFont, "Press 4 to ShapeShift to him", new Vector2(200, 600 + optionFont.LineSpacing), Color.Orange);
+
+                spriteBatch.DrawString(titleFont, "How to Play", new Vector2(200, 0), topColor);
+                spriteBatch.DrawString(optionFont, "W,A,S,D for movement and Space to Jump", new Vector2(200, titleFont.LineSpacing + 5), topColor);
+                spriteBatch.DrawString(optionFont, "The number keys will ShapeShift you into other characters.", new Vector2(200, titleFont.LineSpacing + 5 + optionFont.LineSpacing), topColor);
+                spriteBatch.DrawString(optionFont, "Goal: get to the end of the level in the given time.  The Green arrow points at the Finish Zone.", new Vector2(200, titleFont.LineSpacing + 5 + optionFont.LineSpacing*2), topColor);
+                Vector2 menu = new Vector2(300, titleFont.LineSpacing + 5 + (optionFont.LineSpacing*3));
+                for (int i = 0; i < MenuOptions.Length; i++)
+                {
+                    if (currentOption == i + 1)
+                    {
+                        color = Color.Red;
+                    }
+                    else
+                    {
+                        color = Color.White;
+                    }
+                    spriteBatch.DrawString(optionFont, "Press \"A\" to " + MenuOptions[i].ToString(), menu, color);
+                }
+            }
+            public override void NextState()
+            {
+                game.CurrentState = new PlayState(game);
+            }
+
+            public void NotifyOfChange(List<KeyAction> actions, GameTime gameTime)
+            {
+                if (isLoading)
+                {
+                    loadingTime += gameTime.ElapsedGameTime;
+                    if(loadingTime > TimeSpan.FromMilliseconds(100))
+                    {
+                        isLoading = false;
+                    }
+                    return;
+                }
+                
+
+                if (elapseTime > TimeSpan.FromMilliseconds(menuSpeed))
+                {
+                    elapseTime = TimeSpan.Zero;
+                }
+                elapseTime += gameTime.ElapsedGameTime;
+                foreach (var action in actions)
+                {
+
+                    if (action.HasNoAction)
+                    {
+                        continue;
+                    }
+
+                    if (action.WasPressed)
+                    {
+                        if (action.Key == Keys.A && MenuOptions[currentOption - 1].Equals(Options.Start))
+                        {
+                            NextState();
+                            continue;
+                        }
+                        //if ((action.Key == Keys.W || action.Key == Keys.Up) && elapseTime >= TimeSpan.FromMilliseconds(menuSpeed))
+                        //{
+                        //    currentOption = currentOption - 1;
+                        //    if (currentOption < 1) currentOption = 1;
+                        //    continue;
+                        //}
+                        //if ((action.Key == Keys.S || action.Key == Keys.Down) && elapseTime >= TimeSpan.FromMilliseconds(menuSpeed))
+                        //{
+                        //    currentOption = currentOption + 1;
+                        //    if (currentOption > 3) currentOption = 3;
+                        //    continue;
+                        //}
+
+                    }
+
+                    if (action.WasReleased)
+                    {
+                        //no action
+                    }
+
+                    if (action.IsBeingHeld)
+                    {
+                        if (action.Key == Keys.A && MenuOptions[currentOption - 1].Equals(Options.Start))
+                        {
+                            //NextState();
+                            continue;
+                        }
+                        //if ((action.Key == Keys.W || action.Key == Keys.Up) && elapseTime >= TimeSpan.FromMilliseconds(menuSpeed))
+                        //{
+                        //    currentOption = currentOption - 1;
+                        //    if (currentOption < 1) currentOption = 1;
+                        //    continue;
+                        //}
+                        //if ((action.Key == Keys.S || action.Key == Keys.Down) && elapseTime >= TimeSpan.FromMilliseconds(menuSpeed))
+                        //{
+                        //    currentOption = currentOption + 1;
+                        //    if (currentOption > 3) currentOption = 3;
+                        //    continue;
+                        //}
+
+                    }
+                }
+
+            }
+
+            private enum Options
+            {
+                Start
+            }
         }
+    }
 }
