@@ -77,14 +77,15 @@ namespace Pick_One.Character
 
             KeysForMovement = new List<Keys>
             {
+                Keys.Left,
+                Keys.Right,
                 Keys.A,
                 Keys.D,
                 Keys.Space
             };
             KeysForTransform = new List<Keys>
             {
-                Keys.Left,
-                Keys.Right,
+
                 Keys.D1,
                 Keys.D2,
                 Keys.D3,
@@ -645,7 +646,8 @@ namespace Pick_One.Character
                         {
                             Transform(action.Key);
                         }
-                        else {
+                        else
+                        {
                             if (KeysForMovement.Contains(action.Key))
                             {
                                 if (action.Key == Keys.Space && action.WasPressed)
@@ -668,6 +670,8 @@ namespace Pick_One.Character
 
             switch (action.Key)
             {
+
+                case Keys.Left:
                 case Keys.A:
 
                     MoveHorizontally(-CurrentPlayerSpeciality.Movement.LeftMovement);
@@ -687,6 +691,7 @@ namespace Pick_One.Character
                         }
                     }
                     break;
+                case Keys.Right:
                 case Keys.D:
                     MoveHorizontally(CurrentPlayerSpeciality.Movement.RightMovement);
                     if (IsClimbable())
