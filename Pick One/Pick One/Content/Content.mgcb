@@ -463,3 +463,9 @@
 /processorParam:TextureFormat=Compressed
 /build:game_Hud_Font.spritefont
 
+#begin timer_Font.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:timer_Font.spritefont
+
