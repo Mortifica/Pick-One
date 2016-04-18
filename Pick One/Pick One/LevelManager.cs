@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 using Pick_One.BasicClasses;
 using Pick_One.Character;
 using Pick_One.Levels;
@@ -85,24 +86,17 @@ namespace Pick_One
             if (NextLevel == "TestLevel")
             {
                 SetLevel("TestLevel", "LargeTestLevel1");
+                MediaPlayer.Stop();
+                MediaPlayer.IsRepeating = true;
+                MediaPlayer.Play(SoundContainer.Instance.Tutorial);
             }
             else if (NextLevel == "LargeTestLevel1")
             {
                 // Next level
-                SetLevel("LargeTestLevel1", "LargeTestLevel1");
-            }
-            else if (NextLevel == "TestLevel3")
-            {
-                // Next level
-                SetLevel("TestLevel3", "TestLevel4");
-            }
-            else if (NextLevel == "TestLevel4")
-            {
-                SetLevel("TestLevel4", ""); // Last level
-            }
-            else
-            {
-
+                SetLevel("LargeTestLevel1", "TestLevel");
+                MediaPlayer.Stop();
+                MediaPlayer.IsRepeating = true;
+                MediaPlayer.Play(SoundContainer.Instance.LevelTheme);
             }
         }
 

@@ -63,25 +63,23 @@ namespace Pick_One
             CurrentState = new StartState(this);
             Camera = new Camera2D(CurrentState);
 
+            // Sound Effects
+            SoundContainer.Instance.Death = Content.Load<SoundEffect>("death");
+            SoundContainer.Instance.CountDown = Content.Load<SoundEffect>("countdown");
+            SoundContainer.Instance.Go = Content.Load<SoundEffect>("go");
+            SoundContainer.Instance.Finish = Content.Load<SoundEffect>("finish");
+            SoundContainer.Instance.Hover = Content.Load<SoundEffect>("hover");
+            SoundContainer.Instance.Squish1 = Content.Load<SoundEffect>("squish_one");
+            SoundContainer.Instance.Squish2 = Content.Load<SoundEffect>("squish_two");
+            SoundContainer.Instance.Squish3 = Content.Load<SoundEffect>("squish_three");
+            SoundContainer.Instance.Jump = Content.Load<SoundEffect>("jump");
+            SoundContainer.Instance.Poof = Content.Load<SoundEffect>("poof");
+            SoundContainer.Instance.MenuSelect = Content.Load<SoundEffect>("MenuSelect");
+            SoundContainer.Instance.Select = Content.Load<SoundEffect>("select");
 
-
-
-            // load sounds
-            var deathSound = Content.Load<Song>("death");
-            var countdownSound = Content.Load<Song>("countdown");
-            var goSound = Content.Load<Song>("go");
-            var finishSound = Content.Load<Song>("finish");
-            var hoverSound = Content.Load<Song>("hover");
-            var squishOneSound = Content.Load<Song>("squish_one");
-            var squishTwoSound = Content.Load<Song>("squish_two");
-            var squishThreeSound = Content.Load<Song>("squish_three");
-            var jumpSound = Content.Load<Song>("jump");
-            var poofSound = Content.Load<Song>("poof");
-            var menuOptionChangeSound = Content.Load<Song>("MenuSelect");
-            var menuSelectSound = Content.Load<Song>("select");
-            var tutorialTheme = Content.Load<Song>("tutorial");
-            var levelTheme = Content.Load<Song>("LevelTheme");
-
+            // Songs
+            SoundContainer.Instance.Tutorial = Content.Load<Song>("tutorial");
+            SoundContainer.Instance.LevelTheme = Content.Load<Song>("LevelTheme");
             
             //MediaPlayer.IsRepeating = true;
            // MediaLibrary mediaLibrary = new MediaLibrary();
@@ -89,8 +87,6 @@ namespace Pick_One
 
             //SongCollection songs = mediaLibrary.Songs;
             //Song song = songs[0];
-
-            MediaPlayer.Play(jumpSound);
             //MediaPlayer.Volume = 2;
             // TODO: use this.Content to load your game content here
         }
