@@ -38,24 +38,13 @@ namespace Pick_One.Levels
                     {
                         listPosition.Add(new Tile(content, Tile.TileTypes.Floor, x, y));
                     }
-                    else
+                    else if (color == LevelColorMap.UnclimbableWall)
                     {
-                        if (color == LevelColorMap.UnclimbableWall)
-                        {
-                            listPosition.Add(new Tile(content, Tile.TileTypes.Unclimbable, x, y));
-                        }
-                        else
-                        {
-                            if (color == LevelColorMap.SlowFloor)
-                            {
-                                listPosition.Add(new Tile(content, Tile.TileTypes.Slow, x, y));
-                            }
-                            else
-                            {
-                                // Empty won't be added to the list
-                                //listPosition.Add(new Tile(content, Tile.Type.Empty, 0, 0));
-                            }
-                        }
+                        listPosition.Add(new Tile(content, Tile.TileTypes.Unclimbable, x, y));
+                    }
+                    else if (color == LevelColorMap.SlowFloor)
+                    {
+                        listPosition.Add(new Tile(content, Tile.TileTypes.Slow, x, y));
                     }
                 }
             }
