@@ -107,7 +107,7 @@ namespace Pick_One.Levels
             {
                 SetLevel("Level1", ""); "Level2");
                 LevelMusic(SoundContainer.Instance.LevelTheme);
-                Timer(5);
+                Timer(30);
             }
             else if (CurrentLevel == "Level2")
             {
