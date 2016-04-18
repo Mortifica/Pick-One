@@ -289,12 +289,6 @@
 /processorParam:TextureFormat=Color
 /build:test_Transition_Poof.png
 
-#begin mainMenuFont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:TextureFormat=Compressed
-/build:mainMenuFont
-
 #begin directional_Arrow.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -343,18 +337,6 @@
 /processorParam:TextureFormat=Color
 /build:hud_Background.png
 
-#begin menu_Options_Font.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:TextureFormat=Compressed
-/build:menu_Options_Font.spritefont
-
-#begin game_Hud_Font.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:TextureFormat=Compressed
-/build:game_Hud_Font.spritefont
-
 #begin Levels/Level1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -390,12 +372,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Levels/Level3.png
-
-#begin timer_Font.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:TextureFormat=Compressed
-/build:timer_Font.spritefont
 
 #begin Levels/Level4.png
 /importer:TextureImporter
@@ -564,4 +540,28 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:TileTextures/ground_Texture.png
+
+#begin SpriteFonts/game_Hud_Font.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:SpriteFonts/game_Hud_Font.spritefont
+
+#begin SpriteFonts/mainMenuFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:SpriteFonts/mainMenuFont.spritefont
+
+#begin SpriteFonts/menu_Options_Font.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:SpriteFonts/menu_Options_Font.spritefont
+
+#begin SpriteFonts/timer_Font.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:SpriteFonts/timer_Font.spritefont
 
