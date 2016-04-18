@@ -81,31 +81,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\test_Circle_Falling_Animation.png" />
-    <Content Include="Content\test_Circle_Moving_Animation.png" />
-    <Content Include="Content\test_Circle_Moving_Left_Animation.png" />
-    <Content Include="Content\test_Circle_Moving_Right_Animation.png" />
-    <Content Include="Content\test_Circle_Standing_Animation.png" />
-    <Content Include="Content\test_Circle_WallClimb_Animation.png" />
-    <Content Include="Content\test_Finish_Texture.png" />
-    <Content Include="Content\test_Ground_Texture.png" />
-    <Content Include="Content\test_Hover_Moving_Left_Animation.png" />
-    <Content Include="Content\test_Hover_Moving_Right_Animation.png" />
-    <Content Include="Content\test_Hover_Standing_Animation.png" />
-    <Content Include="Content\test_Slow_Texture.png" />
-    <Content Include="Content\test_Square_Moving_Left_Animation.png" />
-    <Content Include="Content\test_Square_Moving_Right_Animation.png" />
-    <Content Include="Content\test_Square_Standing_Animation.png" />
-    <Content Include="Content\test_Start_Texture.png" />
-    <Content Include="Content\test_Transition_Poof.png" />
-    <Content Include="Content\test_Triangle_Falling_Animation.png" />
-    <Content Include="Content\test_Triangle_FLanding_Animation.png" />
-    <Content Include="Content\test_Triangle_JLanding_Animation.png" />
-    <Content Include="Content\test_Triangle_Jumping_Animation.png" />
-    <Content Include="Content\test_Triangle_MidFall_Animation.png" />
-    <Content Include="Content\test_Triangle_MidJump_Animation.png" />
-    <Content Include="Content\test_Triangle_Standing_Animation.png" />
-    <Content Include="Content\test_UnClimbable_Texture.png" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
