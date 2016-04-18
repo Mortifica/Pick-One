@@ -16,8 +16,6 @@ namespace Pick_One.BasicClasses
         private GameState state;
         private Texture2D directionalArrow;
         private Texture2D hudBackground;
-        private TimeSpan timer;
-        private int levelTime = 30;
 
         public Hud(MainGameLoop gameLoop, GameState gameState, SpriteFont spriteFont, Texture2D arrow, Texture2D background)
         {
@@ -30,8 +28,7 @@ namespace Pick_One.BasicClasses
 
         public void Update(GameTime gameTime)
         {
-            timer += gameTime.ElapsedGameTime;
-            if(timer.Seconds > levelTime)
+            if(LevelManager.LevelTimer.Elapsed.Seconds > LevelManager.LevelTimeLimit)
             {
                 state.NextState();
             }
@@ -51,7 +48,7 @@ namespace Pick_One.BasicClasses
             spriteBatch.Draw(directionalArrow, arrowLocation, new Rectangle(0, 0, directionalArrow.Width, directionalArrow.Height), Color.White, (float)rotation, new Vector2(directionalArrow.Width, directionalArrow.Height), 2f, SpriteEffects.None, 0f);
             spriteBatch.Draw(hudBackground, helpHud, Color.White);
             spriteBatch.DrawString(font,"Test Text",helpHud + new Vector2(10,10), Color.Black);
-            spriteBatch.DrawString(font, (levelTime - timer.Seconds).ToString() ,helpHud + new Vector2(10,25), Color.White);
+            spriteBatch.DrawString(font, (LevelManager.LevelTimeLimit - LevelManager.LevelTimer.Elapsed.Seconds).ToString() ,helpHud + new Vector2(10,25), Color.White);
         }
     }
 }
