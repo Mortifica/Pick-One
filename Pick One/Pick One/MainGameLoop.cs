@@ -148,7 +148,7 @@ namespace Pick_One
         {
             frameCounter++;
 
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
             // TODO: Add your drawing code here
             spriteBatch.Begin(
                                 SpriteSortMode.Immediate,
@@ -257,7 +257,7 @@ namespace Pick_One
                     spriteBatch.DrawString(font, MenuOptions[i].ToString(), menu += new Vector2(0, font.LineSpacing), color);
                 }
             }
-            public void NextState()
+            public override void NextState()
             {
                 game.CurrentState = new PlayState(game);
             }
@@ -355,7 +355,7 @@ namespace Pick_One
             {
                 var font = game.Content.Load<SpriteFont>("mainMenuFont");
                 var arrow = game.Content.Load<Texture2D>("directional_Arrow");
-                hud = new Hud(game, font, arrow);
+                hud = new Hud(game, this, font, arrow);
                 //Normal
                 var standingPlayer = game.Content.Load<Texture2D>(@"test_Circle_Standing_Animation");
                 var fallingPlayer = game.Content.Load<Texture2D>(@"test_Circle_Falling_Animation");
@@ -477,6 +477,7 @@ namespace Pick_One
                 //Listener.Update(Keyboard.GetState(), gameTime);
                 PlayStateKeyListener.Update(Keyboard.GetState(), gameTime);
                 game.Player.Update(gameTime);
+                hud.Update(gameTime);
             }
             public override void Draw(SpriteBatch spriteBatch)
             {
@@ -484,6 +485,10 @@ namespace Pick_One
                 LevelManager.Instance.DrawLevel(spriteBatch);
                 
                 hud.Draw(spriteBatch);
+            }
+            public override void NextState()
+            {
+                game.CurrentState = new DeadState(game);
             }
             public void NotifyOfChange(List<KeyAction> actions, GameTime gameTime)
             {
@@ -512,6 +517,173 @@ namespace Pick_One
                 }
             }
         }
+        /// <summary>
+        /// Start State
+        /// </summary>
+        public class DeadState : GameState, IInputSubscriber
+        {
 
-    }
+            private SpriteFont font;
+            private Sprite background;
+            private Options[] MenuOptions = new Options[1]
+            {
+                Options.TryAgain
+            };
+            private Vector2 MenuLocation = new Vector2(100, 100);
+            private int currentOption = 1;
+            private TimeSpan elapseTime = TimeSpan.Zero;
+            private int menuSpeed = 100;
+            private int currentColor = 0;
+            public DeadState(MainGameLoop game)
+                : base(game)
+            {
+                init();
+            }
+            private void init()
+            {
+                font = game.Content.Load<SpriteFont>("mainMenuFont");
+
+                var tempSubscriber = new KeyboardSubscriber()
+                {
+                    Subscriber = this,
+                    IsPaused = false,
+                    WatchedKeys = new List<Keys>()
+                    {
+                        Keys.A,
+                        Keys.S,
+                        Keys.W,
+                        Keys.Up,
+                        Keys.Down
+            }
+                };
+
+                Listener = new KeyboardListener();
+                Listener.AddSubscriber(tempSubscriber);
+            }
+
+            public override void Update(GameTime gameTime)
+            {
+                Listener.Update(Keyboard.GetState(), gameTime);
+
+            }
+
+            public override void Draw(SpriteBatch spriteBatch)
+            {
+                Color color = Color.Black;
+                Color topColor = Color.Black;
+                currentColor += 1;
+                if (currentColor % 1 == 0)
+                {
+                    topColor = Color.Black;
+                }
+                if (currentColor % 2 == 0)
+                {
+                    topColor = Color.Pink;
+                }
+                if (currentColor % 3 == 0)
+                {
+                    topColor = Color.Blue;
+                }
+                if (currentColor >= 1000)
+                {
+                    currentColor = 0;
+                }
+
+
+                Vector2 menu = MenuLocation;
+                spriteBatch.DrawString(font, "Press \"A\" to select an option.", new Vector2(50, 40), topColor);
+                spriteBatch.DrawString(font, "Navigate Menu with W,S,UP,Down.", new Vector2(50, 60), topColor);
+
+                for (int i = 0; i < MenuOptions.Length; i++)
+                {
+                    if (currentOption == i + 1)
+                    {
+                        color = Color.Red;
+                    }
+                    else
+                    {
+                        color = Color.Black;
+                    }
+                    spriteBatch.DrawString(font, MenuOptions[i].ToString(), menu += new Vector2(0, font.LineSpacing), color);
+                }
+            }
+            public override void NextState()
+            {
+                game.CurrentState = new PlayState(game);
+            }
+
+            public void NotifyOfChange(List<KeyAction> actions, GameTime gameTime)
+            {
+                if (elapseTime > TimeSpan.FromMilliseconds(menuSpeed))
+                {
+                    elapseTime = TimeSpan.Zero;
+                }
+                elapseTime += gameTime.ElapsedGameTime;
+                foreach (var action in actions)
+                {
+
+                    if (action.HasNoAction)
+                    {
+                        continue;
+                    }
+
+                    if (action.WasPressed)
+                    {
+                        if (action.Key == Keys.A && MenuOptions[currentOption - 1].Equals(Options.TryAgain))
+                        {
+                            NextState();
+                            continue;
+                        }
+                        if ((action.Key == Keys.W || action.Key == Keys.Up) && elapseTime >= TimeSpan.FromMilliseconds(menuSpeed))
+                        {
+                            currentOption = currentOption - 1;
+                            if (currentOption < 1) currentOption = 1;
+                            continue;
+                        }
+                        if ((action.Key == Keys.S || action.Key == Keys.Down) && elapseTime >= TimeSpan.FromMilliseconds(menuSpeed))
+                        {
+                            currentOption = currentOption + 1;
+                            if (currentOption > 3) currentOption = 3;
+                            continue;
+                        }
+
+                    }
+
+                    if (action.WasReleased)
+                    {
+                        //no action
+                    }
+
+                    if (action.IsBeingHeld)
+                    {
+                        if (action.Key == Keys.A && MenuOptions[currentOption - 1].Equals(Options.TryAgain))
+                        {
+                            NextState();
+                            continue;
+                        }
+                        if ((action.Key == Keys.W || action.Key == Keys.Up) && elapseTime >= TimeSpan.FromMilliseconds(menuSpeed))
+                        {
+                            currentOption = currentOption - 1;
+                            if (currentOption < 1) currentOption = 1;
+                            continue;
+                        }
+                        if ((action.Key == Keys.S || action.Key == Keys.Down) && elapseTime >= TimeSpan.FromMilliseconds(menuSpeed))
+                        {
+                            currentOption = currentOption + 1;
+                            if (currentOption > 3) currentOption = 3;
+                            continue;
+                        }
+
+                    }
+                }
+
+            }
+
+            private enum Options
+            {
+                TryAgain
+            }
+        }
+
+        }
 }

@@ -12,30 +12,42 @@ namespace Pick_One.BasicClasses
     {
         private SpriteFont font;
         private MainGameLoop game;
+        private GameState state;
         private Texture2D directionalArrow;
+        private TimeSpan timer;
+        private int levelTime = 30;
 
-        public Hud(MainGameLoop gameLoop, SpriteFont spriteFont, Texture2D arrow)
+        public Hud(MainGameLoop gameLoop, GameState gameState, SpriteFont spriteFont, Texture2D arrow)
         {
             game = gameLoop;
+            state = gameState;
             font = spriteFont;
             directionalArrow = arrow;
         }
 
         public void Update(GameTime gameTime)
         {
-
+            timer += gameTime.ElapsedGameTime;
+            if(timer.Seconds > levelTime)
+            {
+                state.NextState();
+            }
         }
         public void Draw(SpriteBatch spriteBatch)
         {
             var EndPosition = LevelManager.Instance.GetFinishingPosition();
             var PlayerPosition = LevelManager.Player.GetLocation();
-            var helpHud = game.Camera.Focus.Location - new Vector2(200, 200);
-            var arrowLocation = game.Camera.Focus.Location - new Vector2(0, 100);
-            double dx = EndPosition.X - PlayerPosition.XLocation;
-            double dy = EndPosition.Y - PlayerPosition.YLocation;
+            var windowWidth = game.GraphicsDevice.Viewport.Width;
+            var windowHeight = game.GraphicsDevice.Viewport.Height;
+            var helpHud = game.Camera.Focus.Location - new Vector2(windowWidth/4 - 10, windowHeight/4 - 10);
+            var arrowLocation = game.Camera.Focus.Location - new Vector2(0, windowHeight/6);
+            double dx = EndPosition.X - arrowLocation.X;
+            double dy = EndPosition.Y - arrowLocation.Y;
             var rotation = Math.Atan2(dy,dx);
-            spriteBatch.Draw(directionalArrow, arrowLocation, new Rectangle(0, 0, directionalArrow.Width, directionalArrow.Height), Color.White, (float)rotation, new Vector2(directionalArrow.Width, directionalArrow.Height), 1f, SpriteEffects.None, 0f);
+
+            spriteBatch.Draw(directionalArrow, arrowLocation, new Rectangle(0, 0, directionalArrow.Width, directionalArrow.Height), Color.White, (float)rotation, new Vector2(directionalArrow.Width, directionalArrow.Height), 2f, SpriteEffects.None, 0f);
             spriteBatch.DrawString(font,"Test Text",helpHud, Color.White);
+            spriteBatch.DrawString(font, (levelTime - timer.Seconds).ToString() ,helpHud + new Vector2(0,25), Color.White);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Pick_One.BasicClasses
             YOffset = yOffset;
             this.game = game;
         }
-
+        public abstract void NextState();
         public abstract void Update(GameTime gameTime);
 
         public abstract void Draw(SpriteBatch spriteBatch);
