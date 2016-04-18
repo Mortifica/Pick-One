@@ -54,11 +54,18 @@ namespace Pick_One.Character
             // CollisionManager = collisionManager;
             MovementVector = new Vector2();
 
-            NormalSpeciality = new Normal(container[0], PlayerHitbox);
+            NormalSpeciality = new Normal(container[0], PlayerHitbox);            
             SpeedSpeciality = new Speed(container[1], PlayerHitbox);
             StretchSpeciality = new Stretch(container[2], PlayerHitbox);
             VerticalSpeciality = new Vertical(container[3], PlayerHitbox);
             WallClimbSpeciality = new WallClimb(container[4], PlayerHitbox);
+
+            //Updateee all hitboxes to have dimensions
+            NormalSpeciality.UpdateHitBox(PlayerLocation.XLocation, PlayerLocation.YLocation);
+            SpeedSpeciality.UpdateHitBox(PlayerLocation.XLocation, PlayerLocation.YLocation);
+            StretchSpeciality.UpdateHitBox(PlayerLocation.XLocation, PlayerLocation.YLocation);
+            VerticalSpeciality.UpdateHitBox(PlayerLocation.XLocation, PlayerLocation.YLocation);
+            WallClimbSpeciality.UpdateHitBox(PlayerLocation.XLocation, PlayerLocation.YLocation);
             NormalSpeciality.NextTransform = SpeedSpeciality;
             NormalSpeciality.PrevTransform = WallClimbSpeciality;
             CurrentPlayerSpeciality = SpeedSpeciality;
@@ -132,12 +139,28 @@ namespace Pick_One.Character
                     //  }
                     break;
             }
+            correctPlayerLocationForTransform(speciality);
+            PreviousPlayerSpeciality = CurrentPlayerSpeciality;
+            CurrentPlayerSpeciality = speciality;
+            CurrentPlayerSpeciality.CurrentState = CurrentState;
+            CurrentPlayerSpeciality.UpdateHitBox(PlayerLocation.XLocation, PlayerLocation.YLocation);
+            if(CurrentPlayerSpeciality != VerticalSpeciality)
+            {
+                IsJumping = false;
+                this.JumpTime = 0;
+                
+            }
+
+        }
+
+        private void correctPlayerLocationForTransform(AbstractPlayerSpeciality speciality)
+        {
             var heightDiff = speciality.Height - CurrentPlayerSpeciality.Height;
-            if (heightDiff > 0)
+            if (Math.Abs(heightDiff) > 0)
             {
                 if (LevelManager.Instance.GetBlocksAt(PlayerLocation.XLocation, PlayerLocation.YLocation - heightDiff, heightDiff, 1).Count() > 0)
                 {
-                    PlayerLocation.YLocation += heightDiff;
+                    PlayerLocation.YLocation -= heightDiff;
                 }
                 else
                 {
@@ -154,7 +177,14 @@ namespace Pick_One.Character
                 }
                 else
                 {
-                    PlayerLocation.XLocation -= (widthDiff / 2);
+                    if (LevelManager.Instance.GetBlocksAt(PlayerLocation.XLocation - widthDiff, PlayerLocation.YLocation, 1, widthDiff).Count() > 0)
+                    {
+                        //Spawn at same location
+
+                    }
+                    else {
+                        PlayerLocation.XLocation -= (widthDiff / 2);
+                    }
                 }
                 //else
                 //{
@@ -165,17 +195,6 @@ namespace Pick_One.Character
 
                 //}
             }
-            PreviousPlayerSpeciality = CurrentPlayerSpeciality;
-            CurrentPlayerSpeciality = speciality;
-            CurrentPlayerSpeciality.CurrentState = CurrentState;
-            CurrentPlayerSpeciality.UpdateHitBox(PlayerLocation.XLocation, PlayerLocation.YLocation);
-            if(CurrentPlayerSpeciality != VerticalSpeciality)
-            {
-                IsJumping = false;
-                this.JumpTime = 0;
-                
-            }
-
         }
 
         public Tuple<PlayerState, PlayerSpecialityEnum> GetCurrentState()
