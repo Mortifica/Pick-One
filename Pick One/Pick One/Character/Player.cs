@@ -98,48 +98,50 @@ namespace Pick_One.Character
             AbstractPlayerSpeciality speciality = null;
             switch (key)
             {
-                case Keys.Left:
-                    speciality = CurrentPlayerSpeciality.PrevTransform;
-                    break;
-                case Keys.Right:
-                    speciality = CurrentPlayerSpeciality.NextTransform;
+                //case Keys.Left:
+                //    speciality = CurrentPlayerSpeciality.PrevTransform;
+                //    break;
+                //case Keys.Right:
+                //    speciality = CurrentPlayerSpeciality.NextTransform;
 
-                    break;
+                //    break;
+                //case Keys.D1:
+                //    //  if (CurrentPlayerSpeciality.GetType() != typeof(Normal))
+                //    // {
+                //    speciality = NormalSpeciality;
+                //    tranformAnimation = 0;
+                //    // }
+                //    break;
                 case Keys.D1:
-                    //  if (CurrentPlayerSpeciality.GetType() != typeof(Normal))
-                    // {
-                    speciality = NormalSpeciality;
-                    tranformAnimation = 0;
-                    // }
-                    break;
-                case Keys.D2:
                     // if (CurrentPlayerSpeciality.GetType() != typeof(Speed))
                     // {
                     speciality = SpeedSpeciality;
                     tranformAnimation = 0;
                     //}
                     break;
-                case Keys.D3:
+                case Keys.D2:
                     //if (CurrentPlayerSpeciality.GetType() != typeof(Stretch))
                     // {
                     speciality = StretchSpeciality;
                     tranformAnimation = 0;
                     // }
                     break;
-                case Keys.D4:
+                case Keys.D3:
                     //  if (CurrentPlayerSpeciality.GetType() != typeof(Vertical))
                     // {
                     speciality = VerticalSpeciality;
                     tranformAnimation = 0;
                     // }
                     break;
-                case Keys.D5:
+                case Keys.D4:
                     //   if (CurrentPlayerSpeciality.GetType() != typeof(WallClimb))
                     // {
                     speciality = WallClimbSpeciality;
                     tranformAnimation = 0;
                     //  }
                     break;
+                default:
+                    return;
             }
             correctPlayerLocationForTransform(speciality);
             PreviousPlayerSpeciality = CurrentPlayerSpeciality;

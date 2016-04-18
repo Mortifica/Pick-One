@@ -22,11 +22,11 @@ namespace Pick_One.Levels
 
         private List<Tile> Level;
 
+        private CollisionManager Collision;
+
         public static string CurrentLevel { get; set; }
 
         public static string NextLevel { get; set; }
-
-        private CollisionManager Collision;
 
         private static Stopwatch levelTimer;
         public static Stopwatch LevelTimer { get { return levelTimer; } }
@@ -106,7 +106,7 @@ namespace Pick_One.Levels
             else if (CurrentLevel == "Level2")
             {
                 // Next level
-                SetLevel("Level2","Level3");
+                SetLevel("Level2", "Level3");
                 LevelMusic(SoundContainer.Instance.LevelTheme);
                 Timer(30);
             }
