@@ -704,11 +704,11 @@ namespace Pick_One
 
                     if (action.IsBeingHeld)
                     {
-                        if (action.Key == Keys.A && MenuOptions[currentOption - 1].Equals(Options.MainMenu))
-                        {
-                            NextState();
-                            continue;
-                        }
+                        //if (action.Key == Keys.A && MenuOptions[currentOption - 1].Equals(Options.MainMenu))
+                        //{
+                        //    NextState();
+                        //    continue;
+                        //}
                         if ((action.Key == Keys.W || action.Key == Keys.Up) && elapseTime >= TimeSpan.FromMilliseconds(menuSpeed))
                         {
                             currentOption = currentOption - 1;
