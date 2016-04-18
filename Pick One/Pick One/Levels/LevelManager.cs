@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Pick_One
+namespace Pick_One.Levels
 {
     public sealed class LevelManager
     {
