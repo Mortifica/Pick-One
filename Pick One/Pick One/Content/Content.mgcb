@@ -475,3 +475,9 @@
 /processorParam:TextureFormat=Color
 /build:Levels/Level3.png
 
+#begin timer_Font.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:timer_Font.spritefont
+
