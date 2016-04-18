@@ -230,14 +230,17 @@ namespace Pick_One
             private Sprite hover;
             private Sprite square;
             private Sprite triangle;
-            private Options[] MenuOptions = new Options[1]
+            private Options[] MenuOptions = new Options[2]
             {
-                Options.StartGame
+                Options.StartGame,
+                Options.Credits
             };
             private Vector2 MenuLocation = new Vector2(100, 100);
             private int currentOption = 1;
             private TimeSpan elapseTime = TimeSpan.Zero;
             private int menuSpeed = 100;
+            private bool isLoading = true;
+            private TimeSpan loadingTime = TimeSpan.Zero;
             public StartState(MainGameLoop game)
                 : base(game)
             {
@@ -272,11 +275,23 @@ namespace Pick_One
 
             public override void Update(GameTime gameTime)
             {
-                Listener.Update(Keyboard.GetState(), gameTime);
                 circle.Update();
                 hover.Update();
                 square.Update();
                 triangle.Update();
+                if (isLoading)
+                {
+                    loadingTime += gameTime.ElapsedGameTime;
+                    if (loadingTime > TimeSpan.FromMilliseconds(1000))
+                    {
+                        isLoading = false;
+                    }
+                    return;
+                }
+
+
+                Listener.Update(Keyboard.GetState(), gameTime);
+
             }
 
             public override void Draw(SpriteBatch spriteBatch)
@@ -310,20 +325,21 @@ namespace Pick_One
                     {
                         color = Color.White;
                     }
-                    spriteBatch.DrawString(optionFont, MenuOptions[i].ToString(), menu += new Vector2(0, optionFont.LineSpacing), color);
+                    spriteBatch.DrawString(optionFont, MenuOptions[i].ToString(), menu += new Vector2(0, optionFont.LineSpacing * i), color);
                 }
             }
             public override void NextState()
             {
                 game.CurrentState = new HelpState(game);
-                //game.CurrentState = new PlayState(game);
-            }
-            private void HelpState()
-            {
                 
+            }
+            private void CreditsState()
+            {
+                game.CurrentState = new DeadState(game);
             }
             public void NotifyOfChange(List<KeyAction> actions, GameTime gameTime)
             {
+
                 if (elapseTime > TimeSpan.FromMilliseconds(menuSpeed))
                 {
                     elapseTime = TimeSpan.Zero;
@@ -344,19 +360,23 @@ namespace Pick_One
                             NextState();
                             continue;
                         }
-
-                        //if ((action.Key == Keys.W || action.Key == Keys.Up) && elapseTime >= TimeSpan.FromMilliseconds(menuSpeed))
-                        //{
-                        //    currentOption = currentOption - 1;
-                        //    if (currentOption < 1) currentOption = 1;
-                        //    continue;
-                        //}
-                        //if ((action.Key == Keys.S || action.Key == Keys.Down) && elapseTime >= TimeSpan.FromMilliseconds(menuSpeed))
-                        //{
-                        //    currentOption = currentOption + 1;
-                        //    if (currentOption > 3) currentOption = 3;
-                        //    continue;
-                        //}
+                        if (action.Key == Keys.A && MenuOptions[currentOption - 1].Equals(Options.Credits))
+                        {
+                            CreditsState();
+                            continue;
+                        }
+                        if ((action.Key == Keys.W || action.Key == Keys.Up) && elapseTime >= TimeSpan.FromMilliseconds(menuSpeed))
+                        {
+                            currentOption = currentOption - 1;
+                            if (currentOption < 1) currentOption = 1;
+                            continue;
+                        }
+                        if ((action.Key == Keys.S || action.Key == Keys.Down) && elapseTime >= TimeSpan.FromMilliseconds(menuSpeed))
+                        {
+                            currentOption = currentOption + 1;
+                            if (currentOption > 2) currentOption = 2;
+                            continue;
+                        }
 
                     }
 
@@ -372,18 +392,23 @@ namespace Pick_One
                             NextState();
                             continue;
                         }
-                        //if ((action.Key == Keys.W || action.Key == Keys.Up) && elapseTime >= TimeSpan.FromMilliseconds(menuSpeed))
-                        //{
-                        //    currentOption = currentOption - 1;
-                        //    if (currentOption < 1) currentOption = 1;
-                        //    continue;
-                        //}
-                        //if ((action.Key == Keys.S || action.Key == Keys.Down) && elapseTime >= TimeSpan.FromMilliseconds(menuSpeed))
-                        //{
-                        //    currentOption = currentOption + 1;
-                        //    if (currentOption > 3) currentOption = 3;
-                        //    continue;
-                        //}
+                        if (action.Key == Keys.A && MenuOptions[currentOption - 1].Equals(Options.Credits))
+                        {
+                            CreditsState();
+                            continue;
+                        }
+                        if ((action.Key == Keys.W || action.Key == Keys.Up) && elapseTime >= TimeSpan.FromMilliseconds(menuSpeed))
+                        {
+                            currentOption = currentOption - 1;
+                            if (currentOption < 1) currentOption = 1;
+                            continue;
+                        }
+                        if ((action.Key == Keys.S || action.Key == Keys.Down) && elapseTime >= TimeSpan.FromMilliseconds(menuSpeed))
+                        {
+                            currentOption = currentOption + 1;
+                            if (currentOption > 2) currentOption = 2;
+                            continue;
+                        }
 
                     }
                 }
@@ -391,7 +416,8 @@ namespace Pick_One
             }
             private enum Options
             {
-                StartGame
+                StartGame,
+                Credits
             }
         }
 
@@ -569,7 +595,7 @@ namespace Pick_One
             private TimeSpan elapseTime = TimeSpan.Zero;
             private int menuSpeed = 100;
             private int currentColor = 0;
-            private bool isloading = true;
+            private bool isLoading = true;
             private TimeSpan loadingTime = TimeSpan.Zero;
             public DeadState(MainGameLoop game)
                 : base(game)
@@ -600,19 +626,18 @@ namespace Pick_One
 
             public override void Update(GameTime gameTime)
             {
-                
-                if (isloading)
+
+                if (isLoading)
                 {
                     loadingTime += gameTime.ElapsedGameTime;
-                    if(loadingTime > TimeSpan.FromMilliseconds(100))
+                    if (loadingTime > TimeSpan.FromMilliseconds(1000))
                     {
-                        isloading = false;
+                        isLoading = false;
                     }
+                    return;
                 }
-                else
-                {
-                    Listener.Update(Keyboard.GetState(), gameTime);
-                }
+                Listener.Update(Keyboard.GetState(), gameTime);
+                
                 
 
             }
@@ -792,11 +817,21 @@ namespace Pick_One
 
             public override void Update(GameTime gameTime)
             {
-                Listener.Update(Keyboard.GetState(), gameTime);
                 circle.Update();
                 hover.Update();
                 square.Update();
                 triangle.Update();
+                if (isLoading)
+                {
+                    loadingTime += gameTime.ElapsedGameTime;
+                    if (loadingTime > TimeSpan.FromMilliseconds(1000))
+                    {
+                        isLoading = false;
+                    }
+                    return;
+                }
+                Listener.Update(Keyboard.GetState(), gameTime);
+
             }
 
             public override void Draw(SpriteBatch spriteBatch)
@@ -819,7 +854,7 @@ namespace Pick_One
                 spriteBatch.DrawString(optionFont, "Press 4 to ShapeShift to him", new Vector2(200, 600 + optionFont.LineSpacing), Color.Orange);
 
                 spriteBatch.DrawString(titleFont, "How to Play", new Vector2(200, 0), topColor);
-                spriteBatch.DrawString(optionFont, "W,A,S,D for movement and Space to Jump", new Vector2(200, titleFont.LineSpacing + 5), topColor);
+                spriteBatch.DrawString(optionFont, "A,D for movement and Space to Jump", new Vector2(200, titleFont.LineSpacing + 5), topColor);
                 spriteBatch.DrawString(optionFont, "The number keys will ShapeShift you into other characters.", new Vector2(200, titleFont.LineSpacing + 5 + optionFont.LineSpacing), topColor);
                 spriteBatch.DrawString(optionFont, "Goal: get to the end of the level in the given time.  The Green arrow points at the Finish Zone.", new Vector2(200, titleFont.LineSpacing + 5 + optionFont.LineSpacing*2), topColor);
                 Vector2 menu = new Vector2(300, titleFont.LineSpacing + 5 + (optionFont.LineSpacing*3));
@@ -833,7 +868,7 @@ namespace Pick_One
                     {
                         color = Color.White;
                     }
-                    spriteBatch.DrawString(optionFont, "Press \"A\" to " + MenuOptions[i].ToString(), menu, color);
+                    spriteBatch.DrawString(optionFont, "Press \"A\" to continue" + MenuOptions[i].ToString(), menu, color);
                 }
             }
             public override void NextState()
@@ -843,16 +878,6 @@ namespace Pick_One
 
             public void NotifyOfChange(List<KeyAction> actions, GameTime gameTime)
             {
-                if (isLoading)
-                {
-                    loadingTime += gameTime.ElapsedGameTime;
-                    if(loadingTime > TimeSpan.FromMilliseconds(100))
-                    {
-                        isLoading = false;
-                    }
-                    return;
-                }
-                
 
                 if (elapseTime > TimeSpan.FromMilliseconds(menuSpeed))
                 {
