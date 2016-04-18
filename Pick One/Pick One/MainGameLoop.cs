@@ -567,6 +567,8 @@ namespace Pick_One
             private TimeSpan elapseTime = TimeSpan.Zero;
             private int menuSpeed = 100;
             private int currentColor = 0;
+            private bool isloading = true;
+            private TimeSpan loadingTime = TimeSpan.Zero;
             public DeadState(MainGameLoop game)
                 : base(game)
             {
@@ -596,7 +598,20 @@ namespace Pick_One
 
             public override void Update(GameTime gameTime)
             {
-                Listener.Update(Keyboard.GetState(), gameTime);
+                
+                if (isloading)
+                {
+                    loadingTime += gameTime.ElapsedGameTime;
+                    if(loadingTime > TimeSpan.FromMilliseconds(100))
+                    {
+                        isloading = false;
+                    }
+                }
+                else
+                {
+                    Listener.Update(Keyboard.GetState(), gameTime);
+                }
+                
 
             }
 
