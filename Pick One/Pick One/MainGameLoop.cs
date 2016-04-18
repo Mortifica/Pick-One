@@ -151,7 +151,7 @@ namespace Pick_One
             GraphicsDevice.Clear(Color.CornflowerBlue);
             // TODO: Add your drawing code here
             spriteBatch.Begin(
-                                SpriteSortMode.BackToFront,
+                                SpriteSortMode.Immediate,
                                 BlendState.AlphaBlend,
                                 SamplerState.PointClamp,
                                 null,
@@ -467,7 +467,7 @@ namespace Pick_One
                     IsPaused = false
                 });
                 game.Camera.Focus = game.Player;
-                game.Camera.Zoom = 1;
+                game.Camera.Zoom = 2;
                 game.Camera.FocusOffest = new Vector3(game.graphics.PreferredBackBufferWidth / 4, game.graphics.PreferredBackBufferHeight / 4, 0);
 
             }
