@@ -52,7 +52,51 @@ namespace Pick_One.Character.PlayerSpecialities
             get; set;
         }
         public float Height { get; set; }
-
+        public void UpdateHitBox(float x, float y)
+        {
+            PlayerHitbox.Update(x, y);
+            switch (CurrentState)
+            {
+                case PlayerState.Standing:
+                    Width = StandingSprite.Texture.Width / StandingSprite.Columns;
+                    Height = StandingSprite.Texture.Height - hitboxDiff;
+                    break;
+                case PlayerState.Jump:
+                    Width = Jump.Texture.Width / Jump.Columns;
+                    Height = Jump.Texture.Height - hitboxDiff;
+                    break;
+                case PlayerState.MovingLeft:
+                    Width = MovingLeft.Texture.Width / MovingLeft.Columns;
+                    Height = MovingLeft.Texture.Height - hitboxDiff;
+                    break;
+                case PlayerState.MovingRight:
+                    Width = MovingRight.Texture.Width / MovingRight.Columns;
+                    Height = MovingRight.Texture.Height - hitboxDiff;
+                    break;
+                case PlayerState.WallClimbRight:
+                    Width = WallClimbRight.Texture.Width / WallClimbRight.Columns;
+                    Height = WallClimbRight.Texture.Height - hitboxDiff;
+                    break;
+                case PlayerState.WallClimbLeft:
+                    Width = WallClimbLeft.Texture.Width / WallClimbLeft.Columns;
+                    Height = WallClimbLeft.Texture.Height - hitboxDiff;
+                    break;
+                case PlayerState.Landing:
+                    Width = Landing.Texture.Width / Landing.Columns;
+                    Height = Landing.Texture.Height - hitboxDiff;
+                    break;
+                case PlayerState.MidJump:
+                    Width = MidJump.Texture.Width / MidJump.Columns;
+                    Height = MidJump.Texture.Height - hitboxDiff;
+                    break;
+                case PlayerState.Falling:
+                    Width = Falling.Texture.Width / Falling.Columns;
+                    Height = Falling.Texture.Height - hitboxDiff;
+                    break;
+            }
+            PlayerHitbox.HitBoxRectangle.Height = (int)Height;
+            PlayerHitbox.HitBoxRectangle.Width = (int)Width;
+        }
         internal void UpdateSprite()
         {
             switch (CurrentState)
@@ -60,7 +104,7 @@ namespace Pick_One.Character.PlayerSpecialities
                 case PlayerState.Standing:
                     StandingSprite.Update();
                     Width = StandingSprite.Texture.Width / StandingSprite.Columns;
-                    Height = StandingSprite.Texture.Height -hitboxDiff;
+                    Height = StandingSprite.Texture.Height - hitboxDiff;
                     break;
                 case PlayerState.Jump:
                     Jump.Update();

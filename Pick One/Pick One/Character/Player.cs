@@ -168,9 +168,13 @@ namespace Pick_One.Character
             PreviousPlayerSpeciality = CurrentPlayerSpeciality;
             CurrentPlayerSpeciality = speciality;
             CurrentPlayerSpeciality.CurrentState = CurrentState;
-            CurrentPlayerSpeciality.PlayerHitbox.Update(PlayerLocation.XLocation, PlayerLocation.YLocation);
-            CurrentPlayerSpeciality.PlayerHitbox.HitBoxRectangle.Width = (int)CurrentPlayerSpeciality.Width;
-            CurrentPlayerSpeciality.PlayerHitbox.HitBoxRectangle.Height = (int)CurrentPlayerSpeciality.Height;
+            CurrentPlayerSpeciality.UpdateHitBox(PlayerLocation.XLocation, PlayerLocation.YLocation);
+            if(CurrentPlayerSpeciality != VerticalSpeciality)
+            {
+                IsJumping = false;
+                this.JumpTime = 0;
+                
+            }
 
         }
 
@@ -240,7 +244,7 @@ namespace Pick_One.Character
             ApplyMovement();
 
             UpdateSprite();
-            CurrentPlayerSpeciality.PlayerHitbox.Update(PlayerLocation.XLocation, PlayerLocation.YLocation);
+            CurrentPlayerSpeciality.UpdateHitBox(PlayerLocation.XLocation, PlayerLocation.YLocation);
 
             //Clear Objects that need to for next update
             MovementVector.X = 0;
