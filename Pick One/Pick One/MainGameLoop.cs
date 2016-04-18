@@ -489,7 +489,7 @@ namespace Pick_One
                 LevelManager.Instance.SetLevel(@"Level1");
                 
                 PlayStateKeyListener = new KeyboardListener();
-                game.Player = new Player(LevelManager.Instance.GetPlayerStartingLocation(), PlayerSpriteContainers);
+                game.Player = new Player(LevelManager.Instance.GetStartingPosition(), PlayerSpriteContainers);
                 LevelManager.Player = game.Player;
                 PlayStateKeyListener.AddSubscriber(new KeyboardSubscriber()
                 {

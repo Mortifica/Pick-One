@@ -34,8 +34,8 @@ namespace Pick_One.BasicClasses
             if(LevelManager.LevelTimer.Elapsed.Seconds > LevelManager.LevelTimeLimit)
             {
                 SoundContainer.Instance.Death.Play();
-                LevelManager.Player.Location = LevelManager.Instance.GetPlayerStartingLocation();
                 LevelManager.Instance.SetLevel(LevelManager.CurrentLevel);
+                LevelManager.Player.RestartPlayer();
             }
             else if(LevelManager.FinishedGame)
             {
