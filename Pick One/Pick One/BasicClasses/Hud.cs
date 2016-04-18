@@ -14,15 +14,17 @@ namespace Pick_One.BasicClasses
         private MainGameLoop game;
         private GameState state;
         private Texture2D directionalArrow;
+        private Texture2D hudBackground;
         private TimeSpan timer;
         private int levelTime = 30;
 
-        public Hud(MainGameLoop gameLoop, GameState gameState, SpriteFont spriteFont, Texture2D arrow)
+        public Hud(MainGameLoop gameLoop, GameState gameState, SpriteFont spriteFont, Texture2D arrow, Texture2D background)
         {
             game = gameLoop;
             state = gameState;
             font = spriteFont;
             directionalArrow = arrow;
+            hudBackground = background;
         }
 
         public void Update(GameTime gameTime)
@@ -46,8 +48,9 @@ namespace Pick_One.BasicClasses
             var rotation = Math.Atan2(dy,dx);
 
             spriteBatch.Draw(directionalArrow, arrowLocation, new Rectangle(0, 0, directionalArrow.Width, directionalArrow.Height), Color.White, (float)rotation, new Vector2(directionalArrow.Width, directionalArrow.Height), 2f, SpriteEffects.None, 0f);
-            spriteBatch.DrawString(font,"Test Text",helpHud, Color.White);
-            spriteBatch.DrawString(font, (levelTime - timer.Seconds).ToString() ,helpHud + new Vector2(0,25), Color.White);
+            spriteBatch.Draw(hudBackground, helpHud, Color.White);
+            spriteBatch.DrawString(font,"Test Text",helpHud + new Vector2(10,10), Color.Black);
+            spriteBatch.DrawString(font, (levelTime - timer.Seconds).ToString() ,helpHud + new Vector2(10,25), Color.White);
         }
     }
 }

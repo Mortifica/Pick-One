@@ -355,7 +355,8 @@ namespace Pick_One
             {
                 var font = game.Content.Load<SpriteFont>("mainMenuFont");
                 var arrow = game.Content.Load<Texture2D>("directional_Arrow");
-                hud = new Hud(game, this, font, arrow);
+                var hudBackground = game.Content.Load<Texture2D>("hud_Background");
+                hud = new Hud(game, this, font, arrow, hudBackground);
                 //Normal
                 var standingPlayer = game.Content.Load<Texture2D>(@"test_Circle_Standing_Animation");
                 var fallingPlayer = game.Content.Load<Texture2D>(@"test_Circle_Falling_Animation");
@@ -467,7 +468,7 @@ namespace Pick_One
                     IsPaused = false
                 });
                 game.Camera.Focus = game.Player;
-                game.Camera.Zoom = 2;
+                game.Camera.Zoom = 1.5f;
                 game.Camera.FocusOffest = new Vector3(game.graphics.PreferredBackBufferWidth / 4, game.graphics.PreferredBackBufferHeight / 4, 0);
 
             }
