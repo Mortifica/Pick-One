@@ -21,7 +21,7 @@ namespace Pick_One.Character
         public SoundEffect Hover { get; set; }
         public SoundEffect Squish1 { get; set; }
         public SoundEffect Squish2 { get; set; }
-        public SoundEffect Squish3 { get; set; }
+        //public SoundEffect Squish3 { get; set; }
         public SoundEffect Jump { get; set; }
         public SoundEffect Poof { get; set; }
         public SoundEffect MenuSelect { get; set; }

@@ -83,6 +83,8 @@ namespace Pick_One
 
         private void GetLevelInfo()
         {
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Volume = (float)0.25;
             if (NextLevel == "TestLevel")
             {
                 SetLevel("TestLevel", "LargeTestLevel1");
@@ -95,7 +97,6 @@ namespace Pick_One
                 // Next level
                 SetLevel("LargeTestLevel1", "TestLevel");
                 MediaPlayer.Stop();
-                MediaPlayer.IsRepeating = true;
                 MediaPlayer.Play(SoundContainer.Instance.LevelTheme);
             }
         }

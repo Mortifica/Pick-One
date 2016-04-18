@@ -71,7 +71,7 @@ namespace Pick_One
             SoundContainer.Instance.Hover = Content.Load<SoundEffect>("hover");
             SoundContainer.Instance.Squish1 = Content.Load<SoundEffect>("squish_one");
             SoundContainer.Instance.Squish2 = Content.Load<SoundEffect>("squish_two");
-            SoundContainer.Instance.Squish3 = Content.Load<SoundEffect>("squish_three");
+            //SoundContainer.Instance.Squish3 = Content.Load<SoundEffect>("squish_three");
             SoundContainer.Instance.Jump = Content.Load<SoundEffect>("jump");
             SoundContainer.Instance.Poof = Content.Load<SoundEffect>("poof");
             SoundContainer.Instance.MenuSelect = Content.Load<SoundEffect>("MenuSelect");
@@ -88,7 +88,7 @@ namespace Pick_One
             //SongCollection songs = mediaLibrary.Songs;
             //Song song = songs[0];
 
-            MediaPlayer.Play(tutorialTheme);
+            //MediaPlayer.Play(tutorialTheme);
             //MediaPlayer.Volume = 2;
             // TODO: use this.Content to load your game content here
         }
