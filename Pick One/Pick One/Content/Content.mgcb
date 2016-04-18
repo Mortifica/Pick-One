@@ -73,71 +73,11 @@
 /processorParam:TextureFormat=Color
 /build:test_Circle_Standing_Animation.png
 
-#begin death.ogg
-/importer:OggImporter
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:death.ogg
-
-#begin finish.ogg
-/importer:OggImporter
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:finish.ogg
-
-#begin jump.ogg
-/importer:OggImporter
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:jump.ogg
-
-#begin rotate.ogg
-/importer:OggImporter
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:rotate.ogg
-
 #begin tutorial.ogg
 /importer:OggImporter
 /processor:SongProcessor
 /processorParam:Quality=Best
 /build:tutorial.ogg
-
-#begin squish_one.ogg
-/importer:OggImporter
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:squish_one.ogg
-
-#begin squish_two.ogg
-/importer:OggImporter
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:squish_two.ogg
-
-#begin MenuSelect.ogg
-/importer:OggImporter
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:MenuSelect.ogg
-
-#begin select.ogg
-/importer:OggImporter
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:select.ogg
-
-#begin countdown.ogg
-/importer:OggImporter
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:countdown.ogg
-
-#begin go.ogg
-/importer:OggImporter
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:go.ogg
 
 #begin LevelTheme.ogg
 /importer:OggImporter
@@ -241,27 +181,75 @@
 /processorParam:TextureFormat=Color
 /build:test_Hover_Standing_Animation.png
 
-#begin test.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
+#begin countdown.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:test.mp3
+/build:countdown.wav
 
-#begin squish_three.ogg
-/importer:OggImporter
-/processor:SongProcessor
+#begin death.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:squish_three.ogg
+/build:death.wav
 
-#begin hover.ogg
-/importer:OggImporter
-/processor:SongProcessor
+#begin finish.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:hover.ogg
+/build:finish.wav
 
-#begin poof.ogg
-/importer:OggImporter
-/processor:SongProcessor
+#begin go.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:poof.ogg
+/build:go.wav
+
+#begin hover.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:hover.wav
+
+#begin jump.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:jump.wav
+
+#begin MenuSelect.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:MenuSelect.wav
+
+#begin poof.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:poof.wav
+
+#begin rotate.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:rotate.wav
+
+#begin select.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:select.wav
+
+#begin squish_one.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:squish_one.wav
+
+#begin squish_two.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:squish_two.wav
 

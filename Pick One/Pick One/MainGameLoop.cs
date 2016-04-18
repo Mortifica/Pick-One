@@ -157,7 +157,7 @@ namespace Pick_One
             //SongCollection songs = mediaLibrary.Songs;
             //Song song = songs[0];
 
-            MediaPlayer.Play(jumpSound);
+            MediaPlayer.Play(tutorialTheme);
             //MediaPlayer.Volume = 2;
             // TODO: use this.Content to load your game content here
         }
