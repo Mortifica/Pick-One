@@ -86,12 +86,12 @@ namespace Pick_One
             standingPlayer = Content.Load<Texture2D>(@"test_Circle_Standing_Animation");
             fallingPlayer = Content.Load<Texture2D>(@"test_Circle_Falling_Animation");
             movingPlayer = Content.Load<Texture2D>(@"test_Circle_Standing_Animation");
-            movingPlayerLeft = Content.Load<Texture2D>(@"circle_Moving_Left_Animation");
+            movingPlayerLeft = Content.Load<Texture2D>(@"test_Circle_Moving_Left_Animation");
             movingPlayerRight = Content.Load<Texture2D>(@"test_Circle_Moving_Right_Animation");
 
 
             //Hover
-            hoverStanding = Content.Load<Texture2D>(@"hover_Standing_Animation");
+            hoverStanding = Content.Load<Texture2D>(@"test_Hover_Standing_Animation");
             hoverMovingLeft = Content.Load<Texture2D>(@"test_Hover_Moving_Left_Animation");
             hoverMovingRight = Content.Load<Texture2D>(@"test_Hover_Moving_Right_Animation");
 
