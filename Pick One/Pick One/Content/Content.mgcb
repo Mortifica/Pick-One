@@ -553,7 +553,7 @@
 /processorParam:TextureFormat=Color
 /build:TileTextures/unClimbable_Texture.png
 
-#begin circle_Moving_Left_Animation.png
+#begin TileTextures/ground_Texture.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -563,17 +563,5 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:circle_Moving_Left_Animation.png
-
-#begin hover_Standing_Animation.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:hover_Standing_Animation.png
+/build:TileTextures/ground_Texture.png
 
