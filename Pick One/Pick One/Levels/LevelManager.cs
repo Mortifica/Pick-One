@@ -94,12 +94,12 @@ namespace Pick_One.Levels
             else
                 return new Vector2(0, 0);
         }
-        public Vector2 GetPlayerStartingLocation()
-        {
-            Vector2 startingPlace = LevelManager.Instance.GetStartingPosition();
-            startingPlace.Y -= 32;
-            return startingPlace;
-        }
+        //public Vector2 GetPlayerStartingLocation()
+        //{
+        //    Vector2 startingPlace = LevelManager.Instance.GetStartingPosition();
+        //    startingPlace.Y -= 32;
+        //    return startingPlace;
+        //}
 
         private void GetLevelInfo()
         {
@@ -107,7 +107,7 @@ namespace Pick_One.Levels
             {
                 SetLevel("Level1", "Level2");
                 LevelMusic(SoundContainer.Instance.LevelTheme);
-                Timer(30);
+                Timer(5);
             }
             else if (CurrentLevel == "Level2")
             {

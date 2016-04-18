@@ -49,6 +49,7 @@ namespace Pick_One.Character
         {
             PlayerLocation = new Location();
             PlayerLocation.XLocation = initialLocation.X;
+            initialLocation.Y -= 32;
             PlayerLocation.YLocation = initialLocation.Y;
             var PlayerHitbox = new HitBox(PlayerLocation.XLocation, PlayerLocation.YLocation, 32, 32);
             MaxJump = 117;
@@ -390,7 +391,7 @@ namespace Pick_One.Character
                 {
                     // Move to the next level.
                     LevelManager.Instance.EndLevel();
-                    Location = LevelManager.Instance.GetPlayerStartingLocation();
+                    RestartPlayer();
                 }
             }
 
@@ -471,6 +472,23 @@ namespace Pick_One.Character
             //}
         }
 
+        public void RestartPlayer()
+        {
+            var position = LevelManager.Instance.GetStartingPosition();
+            position.Y -= 32;
+
+            MovementVector.X = 0;
+            MovementVector.Y = 0;
+
+            PlayerLocation.XLocation = position.X;
+            PlayerLocation.YLocation = position.Y;
+
+            NormalSpeciality.UpdateHitBox(PlayerLocation.XLocation, PlayerLocation.YLocation);
+            SpeedSpeciality.UpdateHitBox(PlayerLocation.XLocation, PlayerLocation.YLocation);
+            StretchSpeciality.UpdateHitBox(PlayerLocation.XLocation, PlayerLocation.YLocation);
+            VerticalSpeciality.UpdateHitBox(PlayerLocation.XLocation, PlayerLocation.YLocation);
+            WallClimbSpeciality.UpdateHitBox(PlayerLocation.XLocation, PlayerLocation.YLocation);
+        }
 
         private void UpdateSprite()
         {
