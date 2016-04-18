@@ -155,7 +155,7 @@ namespace Pick_One.Character
 
         private void correctPlayerLocationForTransform(AbstractPlayerSpeciality speciality)
         {
-            vdar heightDiff = speciality.Height - CurrentPlayerSpeciality.Height;
+            var heightDiff = speciality.Height - CurrentPlayerSpeciality.Height;
             if (Math.Abs(heightDiff) > 0)
             {
                 if (LevelManager.Instance.GetBlocksAt(PlayerLocation.XLocation, PlayerLocation.YLocation - heightDiff, heightDiff, 1).Count() > 0)
