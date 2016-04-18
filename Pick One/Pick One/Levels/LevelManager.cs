@@ -7,6 +7,7 @@ using Pick_One.Character;
 using Pick_One.Levels;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,11 +20,16 @@ namespace Pick_One.Levels
 
         private static readonly Lazy<LevelManager> lazy = new Lazy<LevelManager>(() => new LevelManager());
 
-        private static List<Tile> Level;
-        private static string NextLevel;
+        private List<Tile> Level;
+        private string NextLevel;
 
-        private static CollisionManager Collision;
+        private CollisionManager Collision;
 
+        private static Stopwatch levelTimer;
+        public static Stopwatch LevelTimer { get { return levelTimer; } }
+
+        private static int levelTimeLimit = 10;
+        public static int LevelTimeLimit { get { return levelTimeLimit; } }
 
         public static LevelManager Instance { get { return lazy.Value; } }
 
@@ -33,6 +39,7 @@ namespace Pick_One.Levels
 
         private LevelManager()
         {
+            levelTimer = new Stopwatch();
         }
 
         public void SetLevel(string levelname)
@@ -93,6 +100,7 @@ namespace Pick_One.Levels
                 MediaPlayer.Stop();
                 MediaPlayer.IsRepeating = true;
                 MediaPlayer.Play(SoundContainer.Instance.Tutorial);
+                Timer(30);
             }
             else if (NextLevel == "Level2")
             {
@@ -100,6 +108,7 @@ namespace Pick_One.Levels
                 SetLevel(FOLDER_PATH + "Level2","Level3");
                 MediaPlayer.Stop();
                 MediaPlayer.Play(SoundContainer.Instance.LevelTheme);
+                Timer(30);
             }
             else if (NextLevel == "Level3")
             {
@@ -107,6 +116,7 @@ namespace Pick_One.Levels
                 SetLevel(FOLDER_PATH + "Level3", "Level4");
                 MediaPlayer.Stop();
                 MediaPlayer.Play(SoundContainer.Instance.LevelTheme);
+                Timer(30);
             }
             else if (NextLevel == "Level4")
             {
@@ -114,6 +124,7 @@ namespace Pick_One.Levels
                 SetLevel(FOLDER_PATH + "Level4", "Level1");
                 MediaPlayer.Stop();
                 MediaPlayer.Play(SoundContainer.Instance.LevelTheme);
+                Timer(30);
             }
         }
 
@@ -130,6 +141,13 @@ namespace Pick_One.Levels
         public IEnumerable<Tile> GetBlocksAt(float x, float y, float height, float width)
         {
             return Collision.GetBlocksAt(x, y, height, width);
+        }
+
+        private void Timer(int timeLimit)
+        {
+            levelTimeLimit = timeLimit;
+            LevelTimer.Reset();
+            LevelTimer.Start();
         }
     }
 }
