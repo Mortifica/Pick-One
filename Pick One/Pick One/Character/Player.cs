@@ -479,15 +479,16 @@ namespace Pick_One.Character
 
             MovementVector.X = 0;
             MovementVector.Y = 0;
-
+            Transform(Keys.D1);
             PlayerLocation.XLocation = position.X;
             PlayerLocation.YLocation = position.Y;
-
+            
             NormalSpeciality.UpdateHitBox(PlayerLocation.XLocation, PlayerLocation.YLocation);
             SpeedSpeciality.UpdateHitBox(PlayerLocation.XLocation, PlayerLocation.YLocation);
             StretchSpeciality.UpdateHitBox(PlayerLocation.XLocation, PlayerLocation.YLocation);
             VerticalSpeciality.UpdateHitBox(PlayerLocation.XLocation, PlayerLocation.YLocation);
             WallClimbSpeciality.UpdateHitBox(PlayerLocation.XLocation, PlayerLocation.YLocation);
+            
         }
 
         private void UpdateSprite()

@@ -71,7 +71,7 @@ namespace Pick_One
 
             // Set inital level
             MediaPlayer.IsRepeating = true;
-            MediaPlayer.Volume = (float)0.10;
+            MediaPlayer.Volume = (float)0.01;
 
         }
 
@@ -282,7 +282,7 @@ namespace Pick_One
                 if (isLoading)
                 {
                     loadingTime += gameTime.ElapsedGameTime;
-                    if (loadingTime > TimeSpan.FromMilliseconds(1000))
+                    if (loadingTime > TimeSpan.FromMilliseconds(500))
                     {
                         isLoading = false;
                     }
@@ -632,7 +632,7 @@ namespace Pick_One
                 if (isLoading)
                 {
                     loadingTime += gameTime.ElapsedGameTime;
-                    if (loadingTime > TimeSpan.FromMilliseconds(1000))
+                    if (loadingTime > TimeSpan.FromMilliseconds(500))
                     {
                         isLoading = false;
                     }
@@ -831,7 +831,7 @@ namespace Pick_One
                 if (isLoading)
                 {
                     loadingTime += gameTime.ElapsedGameTime;
-                    if (loadingTime > TimeSpan.FromMilliseconds(1000))
+                    if (loadingTime > TimeSpan.FromMilliseconds(500))
                     {
                         isLoading = false;
                     }

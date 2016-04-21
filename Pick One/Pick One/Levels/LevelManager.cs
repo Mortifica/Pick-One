@@ -107,28 +107,28 @@ namespace Pick_One.Levels
             {
                 SetLevel("Level1", "Level2");
                 LevelMusic(SoundContainer.Instance.LevelTheme);
-                Timer(30);
+                Timer(50);
             }
             else if (CurrentLevel == "Level2")
             {
                 // Next level
                 SetLevel("Level2", "Level3");
                 LevelMusic(SoundContainer.Instance.LevelTheme);
-                Timer(30);
+                Timer(45);
             }
             else if (CurrentLevel == "Level3")
             {
                 // Next level
                 SetLevel("Level3", "Level4");
                 LevelMusic(SoundContainer.Instance.LevelTheme);
-                Timer(30);
+                Timer(45);
             }
             else if (CurrentLevel == "Level4")
             {
                 // Next level
                 SetLevel("Level4", "");
                 LevelMusic(SoundContainer.Instance.LevelTheme);
-                Timer(60);
+                Timer(50);
             }
         }
 
